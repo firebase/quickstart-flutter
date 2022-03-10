@@ -1,3 +1,14 @@
-# Firebase quickstarts for Flutter
-A collection of quickstart samples demonstrating the Firebase APIs on Android.
-For more information, see https://firebase.google.com.
+# Firebase Quickstarts for Flutter
+
+A collection of quickstart samples demonstrating the Firebase Flutter plugins. For more information, see https://firebase.google.com.
+
+## Samples
+
+You can open each of the following samples as an individual project, and run
+them on a mobile device, virtual device or browser.
+
+- [Functions](functions/README.md)
+
+## How to make contributions?
+Please read and follow the steps in the [CONTRIBUTING.md](CONTRIBUTING.md)
+
