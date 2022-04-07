@@ -1,0 +1,25 @@
+name: Run CI tests
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+    - "functions/**"
+    - "analytics/**"
+    - "crashlytics/**"
+    - ".github/workflows"
+  push:
+    paths-ignore:
+    - "**.md"
+  workflow_dispatch:
+
+jobs:
+  android:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+    - name: "Git Checkout"
+      uses: actions/checkout@v2
+    - name: "Install Flutter"
+      run: |
+        sh .github/workflows/scripts/install-flutter.sh stable
