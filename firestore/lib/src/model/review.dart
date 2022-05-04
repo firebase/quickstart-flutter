@@ -72,5 +72,5 @@ class Review {
     );
   }
 
-  bool get isPositive => this.rating > 3.0;
+  bool get isPositive => this.rating >= 3.0;
 }

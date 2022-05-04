@@ -45,15 +45,13 @@ class _RestaurantPageState extends State<RestaurantPage> {
   }
 
   void _initAsyncData(String restaurantId) async {
-    final credential = await FirebaseAuth.instance.signInAnonymously();
-
     final restaurant =
         await _firestoreRestaurantProvider.getRestaurantById(restaurantId);
     final reviews = await _firestoreRestaurantProvider
         .getReviewsForRestaurant(restaurantId);
 
     setState(() {
-      _user = credential.user!;
+      _user = FirebaseAuth.instance.currentUser!;
       _restaurant = restaurant;
       _reviews = reviews;
       _isLoading = false;
