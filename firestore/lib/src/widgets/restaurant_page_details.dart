@@ -65,8 +65,7 @@ class RestaurantDetails extends StatelessWidget {
           ),
           child: Row(
             children: [
-              SmoothStarRating(
-                onRatingChanged: (rating) {},
+              StaticStarRating(
                 rating: restaurant.avgRating,
                 color: Colors.blue,
                 size: 24,

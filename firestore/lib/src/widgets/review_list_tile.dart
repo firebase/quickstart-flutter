@@ -64,8 +64,7 @@ class _ReviewDetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SmoothStarRating(
-                onRatingChanged: (double rating) {},
+              StaticStarRating(
                 rating: review.rating,
                 color: Colors.blue,
                 size: 20,
