@@ -17,7 +17,7 @@ class FriendlyEatsApp extends StatelessWidget {
                 settings.arguments as RestaurantPageArguments;
             return MaterialPageRoute(
               builder: (context) => RestaurantPage(
-                restaurantId: arguments.restaurantId,
+                restaurant: arguments.restaurant,
               ),
             );
 

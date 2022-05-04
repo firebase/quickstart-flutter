@@ -19,12 +19,12 @@ import 'package:flutter/material.dart';
 typedef void RatingChangeCallback(double rating);
 
 class SmoothStarRating extends StatelessWidget {
-  final int starCount;
+  final int? starCount;
   final double rating;
   final RatingChangeCallback onRatingChanged;
   final Color? color;
   final Color? borderColor;
-  final double size;
+  final double? size;
   final bool allowHalfRating;
   final IconData? filledIconData;
   final IconData? halfFilledIconData;
@@ -39,7 +39,7 @@ class SmoothStarRating extends StatelessWidget {
     required this.onRatingChanged,
     this.color,
     this.borderColor,
-    this.size = 25,
+    this.size = 24,
     this.filledIconData,
     this.halfFilledIconData,
     this.allowHalfRating = true,
@@ -73,10 +73,10 @@ class SmoothStarRating extends StatelessWidget {
       onHorizontalDragUpdate: (dragDetails) {
         RenderBox? box = context.findRenderObject() as RenderBox?;
         var _pos = box!.globalToLocal(dragDetails.globalPosition);
-        var i = _pos.dx / size;
+        var i = _pos.dx / size!;
         var newRating = allowHalfRating ? i : i.round().toDouble();
-        if (newRating > starCount) {
-          newRating = starCount.toDouble();
+        if (newRating > starCount!) {
+          newRating = starCount!.toDouble();
         }
         if (newRating < 0) {
           newRating = 0.0;
@@ -95,10 +95,39 @@ class SmoothStarRating extends StatelessWidget {
         alignment: WrapAlignment.start,
         spacing: spacing,
         children: new List.generate(
-          starCount,
+          starCount!,
           (index) => buildStar(context, index),
         ),
       ),
+    );
+  }
+}
+
+class StaticStarRating extends StatelessWidget {
+  const StaticStarRating({
+    Key? key,
+    this.color,
+    this.borderColor,
+    this.size,
+    this.starCount,
+    required this.rating,
+  }) : super(key: key);
+
+  final Color? color;
+  final Color? borderColor;
+  final double? size;
+  final int? starCount;
+  final double rating;
+
+  @override
+  Widget build(BuildContext context) {
+    return SmoothStarRating(
+      onRatingChanged: (double rating) {},
+      color: color,
+      borderColor: borderColor,
+      size: size,
+      starCount: starCount,
+      rating: rating,
     );
   }
 }

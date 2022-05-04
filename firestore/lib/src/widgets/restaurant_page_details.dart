@@ -30,14 +30,17 @@ class RestaurantDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 200.0,
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                alignment: Alignment.center,
-                image: NetworkImage(restaurant.photo!),
-                fit: BoxFit.cover,
+        Hero(
+          tag: 'restaurant-image-${restaurant.id}',
+          child: SizedBox(
+            height: 200.0,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  alignment: Alignment.center,
+                  image: NetworkImage(restaurant.photo!),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

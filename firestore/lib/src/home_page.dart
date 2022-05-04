@@ -109,11 +109,11 @@ class _HomePageState extends State<HomePage> {
                   : _restaurants.isNotEmpty
                       ? RestaurantGrid(
                           restaurants: _restaurants,
-                          onRestaurantPressed: (id) {
+                          onRestaurantPressed: (restaurant) {
                             Navigator.pushNamed(
                               context,
                               RestaurantPage.route,
-                              arguments: RestaurantPageArguments(id),
+                              arguments: RestaurantPageArguments(restaurant),
                             );
                           },
                         )

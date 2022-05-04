@@ -32,20 +32,22 @@ class RestaurantCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         child: InkWell(
-      onTap: () => _onPressed(restaurant.id!),
+      onTap: () => _onPressed(restaurant),
       splashColor: Colors.blue.withAlpha(30),
       child: Container(
         height: 250,
         child: Column(
           children: <Widget>[
-            // TODO: Make this a Hero widget so we can transition to it?
             Expanded(
-              child: Container(
-                alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(restaurant.photo!),
-                    fit: BoxFit.cover,
+              child: Hero(
+                tag: 'restaurant-image-${restaurant.id}',
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(restaurant.photo!),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),

@@ -18,7 +18,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './values.dart';
 
-typedef RestaurantPressedCallback = void Function(String restaurantId);
+typedef RestaurantPressedCallback = void Function(Restaurant restaurant);
 
 typedef CloseRestaurantPressedCallback = void Function();
 
