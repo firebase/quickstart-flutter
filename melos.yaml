@@ -5,6 +5,7 @@ packages:
 - analytics/**
 - crashlytics/**
 - functions/**
+- firestore/**
 
 scripts:
   analyze: melos exec -- "dart analyze ."
