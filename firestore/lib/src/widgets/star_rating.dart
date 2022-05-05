@@ -107,16 +107,12 @@ class StaticStarRating extends StatelessWidget {
   const StaticStarRating({
     Key? key,
     this.color,
-    this.borderColor,
     this.size,
-    this.starCount,
     required this.rating,
   }) : super(key: key);
 
   final Color? color;
-  final Color? borderColor;
   final double? size;
-  final int? starCount;
   final double rating;
 
   @override
@@ -124,9 +120,7 @@ class StaticStarRating extends StatelessWidget {
     return SmoothStarRating(
       onRatingChanged: (double rating) {},
       color: color,
-      borderColor: borderColor,
       size: size,
-      starCount: starCount,
       rating: rating,
     );
   }
