@@ -118,7 +118,7 @@ class _NonFatalErrorTestState extends State<NonFatalErrorTest> {
     return Column(
       children: [
         SwitchListTile(
-          title: const Text("Should crash on tap?"),
+          title: const Text("Should send non-fatal error?"),
           onChanged: (bool value) {
             setState(() {
               shouldCatchNonFatal = value;
