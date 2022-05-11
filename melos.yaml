@@ -3,6 +3,7 @@ repository: https://github.com/firebase/quickstart-flutter
 
 packages:
 - analytics/**
+- authentication/**
 - crashlytics/**
 - functions/**
 - firestore/**
@@ -13,5 +14,3 @@ scripts:
   lint:all:
     run: melos run analyze && melos run format
     description: Run all static analysis checks.
-
-  

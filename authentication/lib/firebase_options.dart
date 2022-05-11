@@ -54,21 +54,21 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBiSxSJDnw5IaZGb17-qO-nHs0oKsAtydY',
-    appId: '1:879683392852:ios:151dacb4759e4a795324c1',
+    appId: '1:879683392852:ios:06ea0b0032b9383b5324c1',
     messagingSenderId: '879683392852',
     projectId: 'quickstart-flutter',
     storageBucket: 'quickstart-flutter.appspot.com',
-    iosClientId: '879683392852-d1p6iotb3pldp5ro3fiiifnvgipqs0h7.apps.googleusercontent.com',
-    iosBundleId: 'com.auth.com',
+    iosClientId: '879683392852-033rm5j7vc5spd6frsolbs4g8jqfd7jg.apps.googleusercontent.com',
+    iosBundleId: 'com.example.authentication',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyBiSxSJDnw5IaZGb17-qO-nHs0oKsAtydY',
-    appId: '1:879683392852:ios:3be669d9b4bcd5195324c1',
+    appId: '1:879683392852:ios:06ea0b0032b9383b5324c1',
     messagingSenderId: '879683392852',
     projectId: 'quickstart-flutter',
     storageBucket: 'quickstart-flutter.appspot.com',
-    iosClientId: '879683392852-3jtk5k1dckcgcla0f75aecbllndg82l8.apps.googleusercontent.com',
-    iosBundleId: 'com.authmac.com',
+    iosClientId: '879683392852-033rm5j7vc5spd6frsolbs4g8jqfd7jg.apps.googleusercontent.com',
+    iosBundleId: 'com.example.authentication',
   );
 }
