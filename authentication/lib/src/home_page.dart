@@ -13,6 +13,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    // Detect when a user signs in (or out, when sign out is implemented)
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
         setState(() {
@@ -29,8 +30,8 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: _user != null
-            ? Text('Welcome ${_user?.displayName ?? '...'}')
-            : const Text(''),
+            ? Text('Welcome ${_user?.displayName}')
+            : const Text('Welcome'),
       ),
       body: const Center(
         child: Text('New application incoming....'),
