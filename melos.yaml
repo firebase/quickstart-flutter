@@ -2,11 +2,9 @@ name: quickstart-flutter
 repository: https://github.com/firebase/quickstart-flutter
 
 packages:
-- analytics/**
 - authentication/**
 - crashlytics/**
 - functions/**
-- firestore/**
 
 scripts:
   analyze: melos exec -- "dart analyze ."
