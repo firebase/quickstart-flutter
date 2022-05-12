@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'restaurant.dart';
-
 final cities = [
   'Albuquerque',
   'Arlington',
@@ -121,15 +119,6 @@ final _reviewTextPerRating = {
     'I recommend this to all my friends and family!'
   ],
 };
-
-final _restaurants = <Restaurant>[
-  Restaurant.random(),
-  Restaurant.random(),
-  Restaurant.random(),
-  Restaurant.random(),
-  Restaurant.random(),
-  Restaurant.random(),
-];
 
 final random = Random();
 

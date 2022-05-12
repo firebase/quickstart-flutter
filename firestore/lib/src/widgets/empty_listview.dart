@@ -34,11 +34,9 @@ class EmptyListView extends StatelessWidget {
           ),
           child,
           MaterialButton(
-              child: Text('ADD SOME'),
-              onPressed: onPressed ??
-                  () => {
-                        // todo: handle no on pressed
-                      }),
+            child: Text('ADD SOME'),
+            onPressed: onPressed,
+          ),
         ],
       ),
     );

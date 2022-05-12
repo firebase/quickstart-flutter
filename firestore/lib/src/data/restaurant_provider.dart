@@ -60,13 +60,14 @@ class FirestoreRestaurantProvider implements RestaurantProvider {
   }
 
   @override
-  void addRestaurantsBatch(List<Restaurant> restaurants) {
-    for (var restaurant in restaurants) addRestaurant(restaurant);
-  }
+  void addRestaurantsBatch(List<Restaurant> restaurants) =>
+      restaurants.forEach(addRestaurant);
 
   @override
-  Future<void> addReview(
-      {required String restaurantId, required Review review}) async {
+  Future<void> addReview({
+    required String restaurantId,
+    required Review review,
+  }) async {
     final restaurant = await FirebaseFirestore.instance
         .collection('restaurants')
         .doc(restaurantId);

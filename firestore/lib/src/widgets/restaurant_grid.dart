@@ -17,9 +17,6 @@ import 'package:flutter/material.dart';
 import '../model/restaurant.dart';
 import 'restaurant_card.dart';
 
-const double _minSpacingPx = 16;
-const double _cardWidth = 360;
-
 class RestaurantGrid extends StatelessWidget {
   RestaurantGrid({
     required RestaurantPressedCallback onRestaurantPressed,

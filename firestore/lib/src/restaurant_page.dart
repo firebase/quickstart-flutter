@@ -18,13 +18,13 @@ import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:friendlyeats_flutter_firestore/src/widgets/restaurant_page_review_list.dart';
 
 import 'data/restaurant_provider.dart';
 import 'model/restaurant.dart';
 import 'model/review.dart';
 import 'widgets/dialogs/review_create.dart';
 import 'widgets/restaurant_page_details.dart';
+import 'widgets/restaurant_page_review_list.dart';
 
 class RestaurantPage extends StatefulWidget {
   static const route = '/restaurant';
@@ -118,41 +118,37 @@ class _RestaurantPageState extends State<RestaurantPage> {
               tooltip: 'Tap to add a review',
               onPressed: () => _onCreateReviewPressed(context),
             ),
-      body: Builder(
-        builder: (BuildContext context) {
-          return Center(
-            child: Container(
-              color: Colors.white,
-              constraints: BoxConstraints(maxWidth: 900),
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  RestaurantDetails(restaurant: _restaurant),
-                  Divider(thickness: 1),
-                  _isLoading
-                      ? Center(child: LinearProgressIndicator())
-                      : RestaurantPageReviewList(reviews: _reviews),
-                  if (!_isLoading && _reviews.isEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 24.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            'There are no reviews yet! Generate random reviews with button.',
-                          ),
-                          ElevatedButton(
-                            onPressed: _onAddRandomReviewsPressed,
-                            child: Text('Add Random Reviews'),
-                          )
-                        ],
+      body: Center(
+        child: Container(
+          color: Colors.white,
+          constraints: BoxConstraints(maxWidth: 900),
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              RestaurantDetails(restaurant: _restaurant),
+              Divider(thickness: 1),
+              _isLoading
+                  ? Center(child: LinearProgressIndicator())
+                  : RestaurantPageReviewList(reviews: _reviews),
+              if (!_isLoading && _reviews.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(top: 24.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        'There are no reviews yet! Generate random reviews with button.',
                       ),
-                    ),
-                ],
-              ),
-            ),
-          );
-        },
+                      ElevatedButton(
+                        onPressed: _onAddRandomReviewsPressed,
+                        child: Text('Add Random Reviews'),
+                      )
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
