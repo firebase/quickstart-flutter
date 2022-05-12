@@ -1,16 +1,51 @@
-# authentication
+Firebase Auth Quickstart
+==============================
 
-A new Flutter project.
+Introduction
+------------
 
-## Getting Started
+- [Read more about Firebase Auth](https://firebase.google.com)
 
-This project is a starting point for a Flutter application.
+Getting Started
+---------------
 
-A few resources to get you started if this is your first Flutter project:
+- [Add Firebase to your Flutter Project](https://firebase.google.com/docs/flutter/setup).
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+This example contains Email / Password login and signup using Firebase in a 
+Flutter app. In order to run the example, you'll need to set up your 
+Firebase console.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Email/Password Setup
+
+- Go to the [Firebase Console][fir-console] and navigate to your project:
+    - Select the **Auth** panel and then click the **Sign In Method** tab.
+    - Click **Email/Password** and turn on the **Enable** switch, then click **Save**.
+    - Under **Authorized Domains** click **Add Domain** and add `auth.example.com`.
+
+Support
+-------
+
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/firebase-authentication)
+- [Firebase Support](https://firebase.google.com/support/)
+
+License
+-------
+
+Copyright 2022 Google, Inc.
+
+Licensed to the Apache Software Foundation (ASF) under one or more contributor
+license agreements.  See the NOTICE file distributed with this work for
+additional information regarding copyright ownership.  The ASF licenses this
+file to you under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License.  You may obtain a copy of
+the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+License for the specific language governing permissions and limitations under
+the License.
+
+[fir-console]: https://console.firebase.google.com
