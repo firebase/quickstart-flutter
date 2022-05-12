@@ -7,6 +7,7 @@ on:
     - "functions/**"
     - "analytics/**"
     - "crashlytics/**"
+    - "authentication/**"
     - ".github/workflows"
   push:
     paths-ignore:
