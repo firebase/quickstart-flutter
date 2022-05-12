@@ -37,6 +37,8 @@ class _LoginPageState extends State<LoginPage> {
 
       return _credential;
     } on FirebaseAuthException catch (e) {
+      /// These are two examples of several possible error messages from
+      /// FirebaseAuth. Find the [complete list of error messages here.](https://firebase.google.com/docs/auth/admin/errors)
       if (e.code == 'invalid-email') {
         // ... ask user to update email value
       }
@@ -74,6 +76,9 @@ class _LoginPageState extends State<LoginPage> {
               );
             });
       }
+
+      /// These are two examples of several possible error messages from
+      /// FirebaseAuth. Find the [complete list of error messages here.](https://firebase.google.com/docs/auth/admin/errors)
       if (e.code == 'email-doesnt-exist') {
         // tell use to sign up...
       }
