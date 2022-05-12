@@ -7,7 +7,9 @@ A collection of quickstart samples demonstrating the Firebase Flutter plugins. F
 You can open each of the following samples as an individual project, and run
 them on a mobile device, virtual device or browser.
 
-- [Functions](functions/README.md)
+- [Firestore](firestore/README.md)
+- [Authentication](authentication/README.md)
+- [Crashlytics](crashlytics/README.md)
 
 ## How to make contributions?
 Please read and follow the steps in the [CONTRIBUTING.md](CONTRIBUTING.md)
