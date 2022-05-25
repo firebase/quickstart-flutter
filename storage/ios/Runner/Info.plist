@@ -47,5 +47,7 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
   <string>Camera usage needed in order to take pictures.</string>
+  	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Camera usage needed in order to take pictures.</string>
 </dict>
 </plist>

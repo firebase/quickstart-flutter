@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:camera/camera.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
+// Uploading images to Firestore is done in this widget
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -13,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final Reference _storage = FirebaseStorage.instance.ref();
+  final _imagePicker = ImagePicker();
+
   File? _image;
 
   @override
@@ -37,110 +40,56 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               if (_image != null) Image.file(_image!),
               if (_image != null)
-                ElevatedButton(
-                  onPressed: () async {
-                    final _imageName = _image!.path.split('/').last;
-                    final newImageRef = _storage.child('images/$_imageName');
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        final _imageName = _image!.path.split('/').last;
 
-                    try {
-                      await newImageRef.putFile(_image!);
-                    } on FirebaseException catch (error) {
-                      // ignore: avoid_print
-                      print(error);
-                    }
-                  },
-                  child: const Text('Upload to Firebase'),
+                        // create a new reference in your Firebase Cloud Storage
+                        final newImageRef =
+                            _storage.child('images/$_imageName');
+
+                        try {
+                          // put a file at this references location
+                          await newImageRef.putFile(_image!);
+                        } on FirebaseException catch (error) {
+                          // ignore: avoid_print
+                          print(error);
+                        }
+                      },
+                      child: const Text('Upload to Firebase'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        setState(() {
+                          _image = null;
+                        });
+                      },
+                      child: const Text('Remove Image'),
+                    ),
+                  ],
                 ),
-              if (_image == null)
-                const Text('Take a photo to upload to Firestore'),
+              const Text('Choose a photo to upload to Firestore'),
+              // This button will bring up the native Image Library
+              // The button is disabled if there is already an image picked.
+              ElevatedButton(
+                onPressed: _image == null
+                    ? () async {
+                        final XFile? image = await _imagePicker.pickImage(
+                            source: ImageSource.gallery);
+
+                        setState(() {
+                          _image = File(image!.path);
+                        });
+                      }
+                    : null,
+                child: const Text('Choose Image'),
+              )
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {},
-        child: const Icon(Icons.camera_alt),
-      ),
-    );
-  }
-}
-
-class TakePictureScreen extends StatefulWidget {
-  const TakePictureScreen({Key? key, required this.camera}) : super(key: key);
-
-  final CameraDescription camera;
-
-  @override
-  State<TakePictureScreen> createState() => _TakePictureScreenState();
-}
-
-class _TakePictureScreenState extends State<TakePictureScreen> {
-  late CameraController _controller;
-  late Future<void> _initializeControllerFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    // To display the current output from the Camera,
-    // create a CameraController.
-    _controller = CameraController(
-      // Get a specific camera from the list of available cameras.
-      widget.camera,
-      // Define the resolution to use.
-      ResolutionPreset.medium,
-    );
-
-    // Next, initialize the controller. This returns a Future.
-    _initializeControllerFuture = _controller.initialize();
-  }
-
-  @override
-  void dispose() {
-    // Dispose of the controller when the widget is disposed.
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // You must wait until the controller is initialized before displaying the
-      // camera preview. Use a FutureBuilder to display a loading spinner until the
-      // controller has finished initializing.
-      body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            // If the Future is complete, display the preview.
-            return CameraPreview(_controller);
-          } else {
-            // Otherwise, display a loading indicator.
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        // Provide an onPressed callback.
-        onPressed: () async {
-          // Take the Picture in a try / catch block. If anything goes wrong,
-          // catch the error.
-          try {
-            // Ensure that the camera is initialized.
-            await _initializeControllerFuture;
-
-            // Attempt to take a picture and get the file `image`
-            // where it was saved.
-            final image = await _controller.takePicture();
-
-            // If the picture was taken, pass it back to the home screen
-            Navigator.of(context).pop(File(image.path));
-          } catch (e) {
-            // If an error occurs, log the error to the console.
-            // ignore: avoid_print
-            print(e);
-          }
-        },
-        child: const Icon(Icons.camera_alt),
       ),
     );
   }
