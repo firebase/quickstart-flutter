@@ -14,8 +14,7 @@ google.com/docs].
   com/project/quickstart-flutter/authentication/users] page and enable 
   the 'Anonymous sign in provider'.
 * Create a Firestore database in the console. 
-* For Firestore information for Flutter, visit [https://firebase.google.
-  com/docs/firestore/quickstart#dart]
+* For Firestore information for Flutter, visit [https://firebase.google.com/docs/firestore/quickstart#dart]
   
 
 ### Security Rules
