@@ -10,6 +10,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   User? _user;
+  String uid = "";
 
   @override
   void initState() {
@@ -18,7 +19,15 @@ class _HomePageState extends State<HomePage> {
       if (user != null) {
         setState(() {
           _user = FirebaseAuth.instance.currentUser!;
+          uid = _user!.uid;
         });
+      } else {
+        if (this.mounted) {
+          setState(() {
+            _user = null;
+            uid = "";
+          });
+        }
       }
     });
     super.initState();
@@ -27,15 +36,30 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: ValueKey(uid),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: _user != null
             ? Text('Welcome ${_user?.displayName}')
             : const Text('Welcome'),
       ),
-      body: const Center(
-        child: Text('New application incoming....'),
-      ),
+      body: _user != null
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                    "User Info:\nEmail: ${_user?.email}\nId: ${_user?.uid}\nDisplayName: ${_user?.displayName}"),
+                TextButton(
+                    onPressed: () => {
+                          Navigator.of(context).pushNamed('/profile'),
+                        },
+                    child: const Text('Proflie Screen'))
+              ],
+            )
+          : const Center(
+              child: Text('No user detected'),
+            ),
     );
   }
 }

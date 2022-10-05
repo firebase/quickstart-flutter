@@ -3,7 +3,8 @@
    <application
         android:label="authentication"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:networkSecurityConfig="@xml/network_config"> <!-- WARNING: Only use this policy when using firebase emulators! -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
