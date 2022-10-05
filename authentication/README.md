@@ -12,8 +12,9 @@ Getting Started
 - [Add Firebase to your Flutter Project](https://firebase.google.com/docs/flutter/setup).
 
 This example contains Email / Password login and signup using Firebase in a 
-Flutter app. In order to run the example, you'll need to set up your 
-Firebase console.
+Flutter app. In order to run the example, you'll need to set up your app in 
+the Firebase console. You will then want to run the flutterfire_cli to
+sync all API keys locally to this application.
 
 ### Email/Password Setup
 
