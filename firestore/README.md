@@ -8,14 +8,12 @@ google.com/docs].
 
 ## Getting Started
 
-* [Set up your Flutter app for Firestore][https://firebase.google.com/docs/flutter/setup]
+* [Set up your Flutter app for Firestore](https://firebase.google.com/docs/flutter/setup)
 * In the Authentication tab of the Firebase console go to the
-  [Sign-in Method][https://firebase.corp.google.
-  com/project/quickstart-flutter/authentication/users] page and enable 
+  [Sign-in Method](https://console.firebase.google.com/project/_/authentication/users) page and enable 
   the 'Anonymous sign in provider'.
 * Create a Firestore database in the console. 
-* For Firestore information for Flutter, visit [https://firebase.google.
-  com/docs/firestore/quickstart#dart]
+* For Firestore information for Flutter, visit [setting up your flutter development environment](https://firebase.google.com/docs/firestore/quickstart#dart)
   
 
 ### Security Rules
