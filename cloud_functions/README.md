@@ -1,6 +1,6 @@
-# cloud_functions
+# Cloud Functions Quickstart
 
-A new Flutter project.
+This quickstart aims to show you how to get up and running with firebase cloud functions quickly and easily.
 
 ## Getting Started
 
