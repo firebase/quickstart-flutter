@@ -11,7 +11,7 @@ import { HttpsError, onCall } from "firebase-functions/v2/https";
 //   response.send("Hello from Firebase!");
 // });
 
-export const callableVTwo = onCall((request) => {
+export const callablevtwo = onCall((request) => {
     const data = request.data;
     // Uncomment to enforce app check
     // const appCheckData = request.app;
@@ -29,7 +29,7 @@ export const callableVTwo = onCall((request) => {
     return `You sent me : ${data.word}`;
 });
 
-export const callableVOne = functions
+export const callablevone = functions
     .runWith({
         allowInvalidAppCheckToken: true  // Opt-out: Requests with invalid App
         // Check tokens continue to your code.
