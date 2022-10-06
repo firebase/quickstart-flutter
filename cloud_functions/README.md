@@ -2,6 +2,10 @@
 
 This quickstart aims to show you how to get up and running with firebase cloud functions quickly and easily. This assumes that you want to call cloud functions using the callable trigger rather than the HTTPS trigger. In this directory, you will see a folder called `firebase_functions` which contains the function code to test against.
 
+## Before running the code
+
+You will want to call `flutterfire configure` before running this code so your project is associated with a Firebase project. The [setup info](https://firebase.google.com/docs/flutter/setup) can be found here.
+
 ## firebase_functions
 
 In testing firebase_functions, we encourage you to try using the [emulators](https://firebase.google.com/docs/emulator-suite) before deploying to production. We have written a V2 function and a V1 function for comparison. If you are interested in handling multiple requests concurrently and the power of [eventarc](https://cloud.google.com/eventarc/docs) + [cloudrun](https://cloud.google.com/run) function enviornments, we encourage you to look into [V2 functions](https://firebase.google.com/docs/functions/beta).
