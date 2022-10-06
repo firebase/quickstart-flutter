@@ -9,6 +9,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  // Comment out the following to run against production
   FirebaseFunctions.instance.useFunctionsEmulator("localhost", 5001);
 
   runApp(const MyApp());

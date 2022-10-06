@@ -1,16 +1,25 @@
 # Cloud Functions Quickstart
 
-This quickstart aims to show you how to get up and running with firebase cloud functions quickly and easily.
+This quickstart aims to show you how to get up and running with firebase cloud functions quickly and easily. This assumes that you want to call cloud functions using the callable trigger rather than the HTTPS trigger. In this directory, you will see a folder called `firebase_functions` which contains the function code to test against.
 
-## Getting Started
+## firebase_functions
 
-This project is a starting point for a Flutter application.
+In testing firebase_functions, we encourage you to try using the [emulators](https://firebase.google.com/docs/emulator-suite) before deploying to production. We have written a V2 function and a V1 function for comparison. If you are interested in handling multiple requests concurrently and the power of [eventarc](https://cloud.google.com/eventarc/docs) + [cloudrun](https://cloud.google.com/run) function enviornments, we encourage you to look into [V2 functions](https://firebase.google.com/docs/functions/beta).
 
-A few resources to get you started if this is your first Flutter project:
+To start running the functions locally in this folder, change into the `firebase_functions/functions` folder and run `npm run serve`. This will automatically start the emulator suite to test the functions locally.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+We have optionally added the code to manage auth state and appcheck state in the functions but have left those commented out. AppCheck will allow you to verify that function requests are coming from authorized applications while auth ensures that users are authorized users of your application.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Dart code
+
+The dart code invokes the function via:
+
+```dart
+FirebaseFunctions.instance
+    .httpsCallable(
+        'callablevtwo',
+    )
+    .call();
+```
+
+You can optionally supply a [`Map`](https://api.flutter.dev/flutter/dart-core/Map-class.html) object to the call method which will be passed as arguments to the cloud function. In this quickstart, `word` is the parameter that we are passing to the cloud function.
