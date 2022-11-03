@@ -1,6 +1,6 @@
 {
-    "name": "authentication",
-    "short_name": "authentication",
+    "name": "authentication_quickstart",
+    "short_name": "authentication_quickstart",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

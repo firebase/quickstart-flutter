@@ -1,52 +1,16 @@
-Firebase Auth Quickstart
-==============================
+# authentication_quickstart
 
-Introduction
-------------
+A new Flutter project.
 
-- [Read more about Firebase Auth](https://firebase.google.com)
+## Getting Started
 
-Getting Started
----------------
+This project is a starting point for a Flutter application.
 
-- [Add Firebase to your Flutter Project](https://firebase.google.com/docs/flutter/setup).
+A few resources to get you started if this is your first Flutter project:
 
-This example contains Email / Password login and signup using Firebase in a 
-Flutter app. In order to run the example, you'll need to set up your app in 
-the Firebase console. You will then want to run the flutterfire_cli to
-sync all API keys locally to this application.
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-### Email/Password Setup
-
-- Go to the [Firebase Console][fir-console] and navigate to your project:
-    - Select the **Auth** panel and then click the **Sign In Method** tab.
-    - Click **Email/Password** and turn on the **Enable** switch, then click **Save**.
-    - Under **Authorized Domains** click **Add Domain** and add `auth.example.com`.
-
-Support
--------
-
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/firebase-authentication)
-- [Firebase Support](https://firebase.google.com/support/)
-
-License
--------
-
-Copyright 2022 Google, Inc.
-
-Licensed to the Apache Software Foundation (ASF) under one or more contributor
-license agreements.  See the NOTICE file distributed with this work for
-additional information regarding copyright ownership.  The ASF licenses this
-file to you under the Apache License, Version 2.0 (the "License"); you may not
-use this file except in compliance with the License.  You may obtain a copy of
-the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
-License for the specific language governing permissions and limitations under
-the License.
-
-[fir-console]: https://console.firebase.google.com
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
