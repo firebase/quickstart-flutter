@@ -1,8 +1,9 @@
 import 'package:authentication_quickstart/common/authentication_providers.dart';
-import 'package:authentication_quickstart/main.dart';
 import 'package:authentication_quickstart/widgets/login_provider_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../state/application_state.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -31,7 +32,15 @@ class LoginScreen extends StatelessWidget {
             providerIcon: const Icon(Icons.g_mobiledata_outlined),
             providerName: 'Email / Password',
             onClick: () => {debugPrint('Google Login')},
-          )
+          ),
+          Consumer<ApplicationState>(
+            builder: (context, appState, _) => LoginProviderChip(
+              providerIcon: const Icon(Icons.supervised_user_circle_outlined),
+              providerName: 'Anonymouse',
+              onClick: () =>
+                  {appState.login(AuthenticationProviders.anonymous)},
+            ),
+          ),
         ],
       ),
     );

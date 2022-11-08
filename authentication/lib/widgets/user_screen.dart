@@ -1,8 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-
-import '../main.dart';
 
 class UserScreen extends StatelessWidget {
   const UserScreen({super.key});
