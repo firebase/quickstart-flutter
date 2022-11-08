@@ -1,0 +1,4 @@
+enum AuthenticationProviders {
+  google,
+  emailPassword,
+}
