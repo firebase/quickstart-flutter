@@ -14,7 +14,12 @@ class LoginScreen extends StatelessWidget {
           LoginProviderChip(
             providerIcon: const Icon(Icons.g_mobiledata_outlined),
             providerName: 'Google',
-            onClick: () => {},
+            onClick: () => {debugPrint('Google Login')},
+          ),
+          LoginProviderChip(
+            providerIcon: const Icon(Icons.g_mobiledata_outlined),
+            providerName: 'Email / Password',
+            onClick: () => {debugPrint('Google Login')},
           )
         ],
       ),

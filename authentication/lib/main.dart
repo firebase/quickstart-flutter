@@ -1,8 +1,14 @@
 import 'package:authentication_quickstart/widgets/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(ChangeNotifierProvider(
+    create: (context) => ApplicationState(),
+    builder: (context, child) => const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -25,24 +31,27 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: Consumer<ApplicationState>(
+        builder: (context, appState, _) => MyHomePage(appState),
+      ),
     );
   }
 }
 
 // Should probably be a stateful widget since we need up update selectedIndex
 class MyHomePage extends StatelessWidget {
-  int _selectedIndex = 0;
-  MyHomePage({super.key});
+  const MyHomePage(this.appState, {super.key});
+
+  final ApplicationState appState;
 
   void _onItemTapped(int index) {
-    _selectedIndex = index;
+    appState.setSelectedScreen(index);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const LoginScreen(),
+      body: const SafeArea(child: LoginScreen()),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -54,9 +63,25 @@ class MyHomePage extends StatelessWidget {
             label: 'User Info',
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: appState.selectedScreen,
         onTap: _onItemTapped,
       ),
     );
+  }
+}
+
+class ApplicationState extends ChangeNotifier {
+  ApplicationState() {
+    init();
+  }
+
+  int _selectedScreen = 0;
+  int get selectedScreen => _selectedScreen;
+
+  Future<void> init() async {}
+
+  void setSelectedScreen(int selectedScreen) {
+    _selectedScreen = selectedScreen;
+    notifyListeners();
   }
 }
