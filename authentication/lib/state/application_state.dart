@@ -60,7 +60,8 @@ class ApplicationState extends ChangeNotifier {
             // https://developers.google.com/identity/protocols/oauth2/scopes
             // google
             //     .addScope('https://www.googleapis.com/auth/contacts.readonly');
-            FirebaseAuth.instance.signInWithProvider(google);
+            await FirebaseAuth.instance.signInWithPopup(google);
+            setSelectedScreen(1);
             return;
           }
           // Trigger the authentication flow
