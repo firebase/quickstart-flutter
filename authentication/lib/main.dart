@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      darkTheme: ThemeData.dark(useMaterial3: true),
       home: Consumer<ApplicationState>(
         builder: (context, appState, _) => MyHomePage(appState),
       ),
