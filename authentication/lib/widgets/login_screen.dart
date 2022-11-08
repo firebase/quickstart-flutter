@@ -8,7 +8,11 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // ignore: todo
+          // TODO(@nohe427): Eventually replace this with sliverAppBar
+          // https://api.flutter.dev/flutter/material/SliverAppBar-class.html
           const Text('Firebase Auth'),
           const Text('Identity Providers'),
           LoginProviderChip(

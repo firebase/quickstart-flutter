@@ -43,16 +43,5 @@ class LoginProviderChip extends StatelessWidget {
         ),
       ),
     );
-    // Container(
-    //   margin: const EdgeInsets.all(16.0),
-    //   padding: const EdgeInsets.all(8.0),
-    //   color: const Color.fromARGB(31, 0, 0, 0),
-    //   child: Row(
-    //     children: [
-    //       providerIcon,
-    //       Text(providerName),
-    //     ],
-    //   ),
-    // );
   }
 }
