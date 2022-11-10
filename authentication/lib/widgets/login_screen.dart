@@ -1,4 +1,5 @@
 import 'package:authentication_quickstart/common/authentication_providers.dart';
+import 'package:authentication_quickstart/common/styles/text_styles.dart';
 import 'package:authentication_quickstart/widgets/login_provider_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,8 +18,14 @@ class LoginScreen extends StatelessWidget {
           // ignore: todo
           // TODO(@nohe427): Eventually replace this with sliverAppBar
           // https://api.flutter.dev/flutter/material/SliverAppBar-class.html
-          const Text('Firebase Auth'),
-          const Text('Identity Providers'),
+          Text(
+            'Firebase Auth',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          Text(
+            'Identity Providers',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           Consumer<ApplicationState>(
             builder: (context, appState, _) => LoginProviderChip(
               providerIcon: const Icon(Icons.g_mobiledata_outlined),
