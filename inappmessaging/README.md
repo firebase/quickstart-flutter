@@ -6,6 +6,8 @@ This quickstart demonstrates basic usage of Firebase In-App Messaging. To learn 
 
 ## Getting Started
 
+### Using a in-app messaging campaign tied to an analytics event:
+
   * Follow the instructions to [add Firebase to your Flutter app](https://firebase.google.com/docs/flutter/setup?platform=android).
   * In the Firebase console, navigate to the [**In-App Messaging**](https://console.firebase.google.com/project/_/inappmessaging/compose) section.
   * Click **New Campaign**
@@ -18,6 +20,15 @@ This quickstart demonstrates basic usage of Firebase In-App Messaging. To learn 
     * In the **Conversion events** tab choose the `ecommerce_purchase` conversion event.
   * **Run** the sample app on your device
     * Press the **Trigger** button to fire the event.
+
+### Using the Firebase Installation ID:
+* Follow the instructions to [add Firebase to your Flutter app](https://firebase.google.com/docs/flutter/setup?platform=android).
+  * In the Firebase console, navigate to the [**In-App Messaging**](https://console.firebase.google.com/project/_/inappmessaging/compose) section.
+  * Click **New Campaign**
+    * In the **Style and content** section, design a campaign using one of the provided layouts (Modal, Image, or Banner),
+      then click in the upper right hand corner **Test on Device**.
+    * Place your **Firebase Installation ID** in the box and then press test
+    * Background the app and bring it to the foreground. You should now see your in-app message.
 
 
 ## Result
