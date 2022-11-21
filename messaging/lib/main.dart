@@ -19,8 +19,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
+// Background message handler :
+// https://firebase.google.com/docs/cloud-messaging/flutter/receive#background_messages
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+
+  print("Handling a background message: ${message.messageId}");
+}
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(ChangeNotifierProvider(
     create: (context) => ApplicationState(),
@@ -55,26 +67,54 @@ class MyHomePage extends StatelessWidget {
         title: Text(title),
       ),
       body: Center(
-        child: Column(
-          children: <Widget>[
-            const Image(
-                image: AssetImage('assets/fcm_horizontal_lockup_light.png')),
-            const Text(
-              'Click the SUBSCRIBE TO WEATHER button below to subscribe to the'
-              ' weather topic. Messages sent to the weather topic will be'
-              ' received.',
-            ),
-            Consumer<ApplicationState>(
-              builder: (context, appState, _) =>
-                  Text('FCM Token: ${appState.fcmToken}'),
-            ),
-            Consumer<ApplicationState>(
-              builder: (context, appState, _) => ElevatedButton(
-                onPressed: () => appState.subscribeToTopic('weather'),
-                child: const Text('Subscribe To Weather'),
+        child: Consumer<ApplicationState>(
+          builder: (context, appState, _) => Column(
+            children: <Widget>[
+              const Image(
+                  image: AssetImage('assets/fcm_horizontal_lockup_light.png')),
+              Visibility(
+                visible: appState.messagingAllowed,
+                child: Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Click the "Subscribe To Weather" button below to subscribe to the'
+                        ' "weather" topic. Messages sent to the weather topic will be'
+                        ' received.',
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('FCM Token: ${appState.fcmToken}'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => appState.subscribeToTopic('weather'),
+                      child: const Text('Subscribe To Weather'),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              Visibility(
+                visible: !appState.messagingAllowed,
+                child: Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Thi quickstart requires notification permissions to be'
+                        ' activated.',
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => appState.requestMessagingPermission(),
+                      child: const Text('Request Notification Permission'),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -103,6 +143,7 @@ class ApplicationState extends ChangeNotifier {
 
     firebaseMessaging.onTokenRefresh.listen((token) {
       _fcmToken = token;
+      debugPrint(token);
       notifyListeners();
       // If necessary send token to application server.
 
@@ -110,10 +151,27 @@ class ApplicationState extends ChangeNotifier {
       // token is generated.
     });
 
+    firebaseMessaging.getToken().then((token) {
+      if (token != null) {
+        _fcmToken = token;
+        debugPrint(token);
+        notifyListeners();
+      }
+    });
+
     firebaseMessaging.getNotificationSettings().then((settings) {
       if (settings.authorizationStatus == AuthorizationStatus.authorized) {
         _messagingAllowed = true;
         notifyListeners();
+      }
+    });
+
+    FirebaseMessaging.onMessage.listen((remoteMessage) {
+      debugPrint('Got a message in the foreground');
+      debugPrint('message data: ${remoteMessage.data}');
+
+      if (remoteMessage.notification != null) {
+        debugPrint('message is a notification');
       }
     });
   }
