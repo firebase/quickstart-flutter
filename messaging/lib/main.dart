@@ -151,7 +151,9 @@ class ApplicationState extends ChangeNotifier {
       // token is generated.
     });
 
-    firebaseMessaging.getToken().then((token) {
+    // Replace this with your key for web apps.
+    const vapidKey = '';
+    firebaseMessaging.getToken(vapidKey: vapidKey).then((token) {
       if (token != null) {
         _fcmToken = token;
         debugPrint(token);
@@ -172,6 +174,8 @@ class ApplicationState extends ChangeNotifier {
 
       if (remoteMessage.notification != null) {
         debugPrint('message is a notification');
+        // On Android, foreground notifications are not shown, only when the app
+        // is backgrounded.
       }
     });
   }
