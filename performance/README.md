@@ -1,16 +1,42 @@
-# performance_quickstart
+Firebase Performance Quickstart
+==============================
 
-A new Flutter project.
+The Firebase Performance Android Quickstart app demonstrates measuring the performance of
+activities in your application.
 
-## Getting Started
+Introduction
+------------
 
-This project is a starting point for a Flutter application.
+- [Read more about Firebase Performance](https://firebase.google.com/docs/perf-mon/)
 
-A few resources to get you started if this is your first Flutter project:
+Getting Started
+---------------
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [Add Firebase to your Flutter Project](https://firebase.google.com/docs/perf-mon/flutter/get-started).
+- Run the sample on a device.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Support
+-------
+
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/firebase-performance)
+- [Firebase Support](https://firebase.google.com/support/).
+
+License
+-------
+
+Copyright 2022 Google, Inc.
+
+Licensed to the Apache Software Foundation (ASF) under one or more contributor
+license agreements.  See the NOTICE file distributed with this work for
+additional information regarding copyright ownership.  The ASF licenses this
+file to you under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License.  You may obtain a copy of
+the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+License for the specific language governing permissions and limitations under
+the License.
