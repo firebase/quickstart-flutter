@@ -1,8 +1,13 @@
 Firebase Performance Quickstart
 ==============================
 
-The Firebase Performance Android Quickstart app demonstrates measuring the performance of
-activities in your application.
+The Firebase Performance Flutter Quickstart app demonstrates measuring the performance of
+activities in your application. It does this through a custom trace that is deployed with
+a call to `var trace = FirebasePerformance.instance.newTrace('myTag');`. The custom trace
+is then recorded by awaiting the start and the stop of the trace. Once this information
+has been recorded by performance monitoring, you can check the status of the trace by
+visiting the [Firebase console ](https://firebase.corp.google.com/project/_/performance/)
+and looking under custom traces for your trace.
 
 Introduction
 ------------
@@ -13,7 +18,7 @@ Getting Started
 ---------------
 
 - [Add Firebase to your Flutter Project](https://firebase.google.com/docs/perf-mon/flutter/get-started).
-- Run the sample on a device.
+- Run the sample on a simulator, emulator, or real device.
 
 Support
 -------
