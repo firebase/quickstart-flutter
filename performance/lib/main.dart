@@ -104,9 +104,9 @@ class ApplicationState extends ChangeNotifier {
     await FirebasePerformance.instance.setPerformanceCollectionEnabled(true);
   }
 
-  void updateRandomString() {
+  void updateRandomString() async {
     var trace = FirebasePerformance.instance.newTrace('updateRandomString');
-    trace.start();
+    await trace.start();
     var buffer = StringBuffer();
     const options = 'abcdfghijklmnopqrstuvwxyz0123456789';
     var random = Random();
@@ -117,6 +117,6 @@ class ApplicationState extends ChangeNotifier {
     }
     _randomString = buffer.toString();
     notifyListeners();
-    trace.stop();
+    await trace.stop();
   }
 }
