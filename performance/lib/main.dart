@@ -104,7 +104,7 @@ class ApplicationState extends ChangeNotifier {
     await FirebasePerformance.instance.setPerformanceCollectionEnabled(true);
   }
 
-  void updateRandomString() async {
+  Future<void> updateRandomString() async {
     var trace = FirebasePerformance.instance.newTrace('updateRandomString');
     await trace.start();
     var buffer = StringBuffer();
