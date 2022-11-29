@@ -57,27 +57,30 @@ class MyHomePage extends StatelessWidget {
         title: Text(title),
       ),
       body: Center(
-        child: Column(
-          children: <Widget>[
-            const Image(
-                image: AssetImage('assets/fiam_horizontal_lockup_light.png')),
-            const Text(
-              'Welcome to the Firebase In-App Messaging Quickstart app. Press the button to trigger an analytics event!',
-            ),
-            const Text(
-              'You may need to background and then re-foreground the app after a fresh install.',
-            ),
-            Consumer<ApplicationState>(
-              builder: (context, appState, _) =>
-                  Text('Firebase Installation ID: ${appState.installationId}'),
-            ),
-            Consumer<ApplicationState>(
-              builder: (context, appState, _) => ElevatedButton(
-                onPressed: () => appState.logEvent('engagement_party'),
-                child: const Text("Trigger 'engagement_party' event"),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              const Image(
+                  image: AssetImage('assets/fiam_horizontal_lockup_light.png')),
+              const Text(
+                'Welcome to the Firebase In-App Messaging Quickstart app. Press the button to trigger an analytics event!',
               ),
-            ),
-          ],
+              const Text(
+                'You may need to background and then re-foreground the app after a fresh install.',
+              ),
+              Consumer<ApplicationState>(
+                builder: (context, appState, _) => Text(
+                    'Firebase Installation ID: ${appState.installationId}'),
+              ),
+              Consumer<ApplicationState>(
+                builder: (context, appState, _) => ElevatedButton(
+                  onPressed: () => appState.logEvent('engagement_party'),
+                  child: const Text("Trigger 'engagement_party' event"),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
