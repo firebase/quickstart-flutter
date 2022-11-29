@@ -53,6 +53,8 @@ dependencies:
   firebase_core: ^2.3.0
   provider: ^6.0.4
   firebase_performance: ^0.9.0+6
+  http: ^0.13.5
+  url_launcher: ^6.1.7
 
 dev_dependencies:
   flutter_test:
