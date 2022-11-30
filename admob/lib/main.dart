@@ -48,34 +48,44 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Center(
-        child: Consumer<ApplicationState>(
-          builder: (context, appState, _) => Column(
-            children: <Widget>[
-              const Image(image: AssetImage('assets/logo-standard.png')),
-              Expanded(child: const SizedBox.shrink()),
-              ElevatedButton(
-                child: Text('Load Interstitial'),
-                onPressed: appState.interstitialAd != null
-                    ? () {
-                        appState.showInterstitial();
-                      }
-                    : null,
+      body: Consumer<ApplicationState>(
+        builder: (context, appState, _) => Column(
+          children: <Widget>[
+            const Padding(
+              padding: EdgeInsets.all(64.0),
+              child: Image(
+                image: AssetImage('assets/logo-standard.png'),
               ),
-              Expanded(child: const SizedBox.shrink()),
-              appState.bannerAd != null
-                  ? Align(
+            ),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                  'AdMob is Googles mobile advertising platform that you'
+                  ' can use to generate revenue from your app. Using AdMob with '
+                  'Firebase provides you with additional app usage data and '
+                  'analytics capabilities.'),
+            ),
+            ElevatedButton(
+              onPressed: appState.interstitialAd != null
+                  ? () {
+                      appState.showInterstitial();
+                    }
+                  : null,
+              child: const Text('Load Interstitial'),
+            ),
+            const Expanded(child: SizedBox.shrink()),
+            appState.bannerAd != null
+                ? Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
                       alignment: Alignment.bottomCenter,
-                      child: Container(
-                        alignment: Alignment.bottomCenter,
-                        child: AdWidget(ad: appState.bannerAd!),
-                        width: appState.bannerAd!.size.width.toDouble(),
-                        height: appState.bannerAd!.size.height.toDouble(),
-                      ),
-                    )
-                  : const SizedBox.shrink(),
-            ],
-          ),
+                      width: appState.bannerAd!.size.width.toDouble(),
+                      height: appState.bannerAd!.size.height.toDouble(),
+                      child: AdWidget(ad: appState.bannerAd!),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ],
         ),
       ),
     );
@@ -126,6 +136,7 @@ class ApplicationState extends ChangeNotifier {
     if (Platform.isAndroid) {
       return 'ca-app-pub-3940256099942544/6300978111';
     }
+    // return an iOS ad unit
     return 'ca-app-pub-3940256099942544/2934735716';
   }
 
@@ -133,6 +144,7 @@ class ApplicationState extends ChangeNotifier {
     if (Platform.isAndroid) {
       return 'ca-app-pub-3940256099942544/1033173712';
     }
+    // return an iOS ad unit
     return 'ca-app-pub-3940256099942544/4411468910';
   }
 
@@ -141,7 +153,7 @@ class ApplicationState extends ChangeNotifier {
     final BannerAd myBanner = BannerAd(
       adUnitId: getBannerAdUnitId(),
       size: AdSize.banner,
-      request: AdRequest(),
+      request: const AdRequest(),
       listener: listener,
     );
     myBanner.load();
@@ -150,7 +162,7 @@ class ApplicationState extends ChangeNotifier {
   void loadInterstitialAd() {
     InterstitialAd.load(
       adUnitId: getInterstitialAdUnit(),
-      request: AdRequest(),
+      request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
           // Keep a reference to the ad so you can show it later.
