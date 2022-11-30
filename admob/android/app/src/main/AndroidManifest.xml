@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.google.firebase.quickstart.admob_quickstart">
    <application
-        android:label="admob_quickstart"
+        android:label="AdMob Quickstart"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <meta-data
