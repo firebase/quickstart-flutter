@@ -6,7 +6,7 @@ activities in your application. It does this through a custom trace that is depl
 a call to `var trace = FirebasePerformance.instance.newTrace('myTag');`. The custom trace
 is then recorded by awaiting the start and the stop of the trace. Once this information
 has been recorded by performance monitoring, you can check the status of the trace by
-visiting the [Firebase console ](https://firebase.corp.google.com/project/_/performance/)
+visiting the [Firebase console ](https://console.firebase.google.com/project/_/performance/)
 and looking under custom traces for your trace.
 
 Introduction
@@ -19,6 +19,13 @@ Getting Started
 
 - [Add Firebase to your Flutter Project](https://firebase.google.com/docs/perf-mon/flutter/get-started).
 - Run the sample on a simulator, emulator, or real device.
+- Click the `Get Random String` button.
+- A random string should appear on the screen below the buttons text.
+- The generation of the random string has a custom trace placed upon it. We can then go to the
+[Firebase console ](https://console.firebase.google.com/project/_/performance/) and find under the
+custom traces tab a trace for `updateRandomString`.
+- You can modify the `updateRandomString` method in the main.dart file to see add complexity to the
+function to see how it changes over time.
 
 Support
 -------
