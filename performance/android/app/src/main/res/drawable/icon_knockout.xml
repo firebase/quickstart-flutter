@@ -1,0 +1,31 @@
+<!--
+ Copyright 2022 Google LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="192dp"
+    android:height="192dp"
+    android:viewportWidth="192"
+    android:viewportHeight="192">
+  <group
+      android:pivotX="96"
+      android:pivotY="96"
+      android:scaleX="0.5"
+      android:scaleY="0.5">
+    <path
+        android:pathData="M36.23,122.93L53.65,11.39a4,4 0,0 1,7.48 -1.27l18.74,34.96zM101.6,182.49a11.99,11.99 0,0 1,-11.7 -0.02L32,150 136.64,45.17a3.99,3.99 0,0 1,6.77 2.16l8.29,51.3A46.31,46.31 0,0 0,144 98c-25.41,0 -46,20.59 -46,46 0,12.86 5.27,24.48 13.77,32.83zM33.58,139.92L92.46,34.89a4,4 0,0 1,7.08 0l13.41,25.52zM104,144c0,-22.09 17.91,-40 40,-40s40,17.91 40,40 -17.91,40 -40,40 -40,-17.91 -40,-40zM124,144c0,11 9,20 20,20s20,-9 20,-20 -9,-20 -20,-20 -20,9 -20,20zM144,152c-4.2,0 -7.8,1.6 -10.6,4 -3.2,-3 -5.4,-7.2 -5.4,-12 0,-8.8 7.2,-16 16,-16s16,7.2 16,16c0,4.8 -2.2,9 -5.4,12 -2.8,-2.4 -6.4,-4 -10.6,-4zM132,140c0,1.2 0.8,2 2,2s2,-0.8 2,-2 -0.8,-2 -2,-2 -2,0.8 -2,2zM140,132c-1.2,0 -2,0.8 -2,2s0.8,2 2,2 2,-0.8 2,-2 -0.8,-2 -2,-2zM152,140c0,1.2 0.8,2 2,2s2,-0.8 2,-2 -0.8,-2 -2,-2 -2,0.8 -2,2zM140.67,141.77a4,4 0,1 0,7.27 2.95c0.67,-3.42 1.34,-6.84 2.01,-10.26a2,2 0,0 0,-3.63 -1.54z"
+        android:fillColor="#fff"/>
+  </group>
+</vector>
