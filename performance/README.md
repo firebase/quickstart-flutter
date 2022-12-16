@@ -24,7 +24,7 @@ Getting Started
 - The generation of the random string has a custom trace placed upon it. We can then go to the
 [Firebase console ](https://console.firebase.google.com/project/_/performance/) and find under the
 custom traces tab a trace for `updateRandomString`.
-- You can modify the `updateRandomString` method in the main.dart file to see add complexity to the
+- You can modify the `updateRandomString` method in the main.dart file to see and add complexity to the
 function to see how it changes over time.
 
 Support
