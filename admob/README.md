@@ -27,7 +27,8 @@ Getting Started
 - Configure your AdMob app id:
   - In `ios/Runner/Info.plist` change the `ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy` value to your AdMob app id.
 - Run the sample on your iOS device or simulator.
-- The running sample displays a test banner ad and a test interstitial add.
+- The running sample displays a test banner ad by default.
+- Press the button in the center of the screen to display a test interstitial ad.
 
 Result
 -----------
