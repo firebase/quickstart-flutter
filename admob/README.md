@@ -19,7 +19,8 @@ Getting Started
 - Configure your AdMob app id:
   - In `android/app/src/main/AndroidManifest.xml` change the `ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy` value to your AdMob app id.
 - Run the sample on your Android device or emulator.
-- The running sample displays a test banner ad and a test interstitial add.
+- The running sample displays a test banner ad by default.
+- Press the button in the center of the screen to display a test interstitial ad.
 
 ## iOS
 
