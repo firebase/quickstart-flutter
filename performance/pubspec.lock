@@ -84,7 +84,7 @@ packages:
       name: firebase_performance
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.0+9"
+    version: "0.9.0+10"
   firebase_performance_platform_interface:
     dependency: transitive
     description:
