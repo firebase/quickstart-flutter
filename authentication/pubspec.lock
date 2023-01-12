@@ -189,7 +189,7 @@ packages:
       name: firebase_ui_localizations
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.1.0"
   firebase_ui_oauth:
     dependency: transitive
     description:
