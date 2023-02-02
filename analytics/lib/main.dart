@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => ApplicationState(),
+    builder: (context, child) => const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -23,13 +27,14 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -44,72 +49,233 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      body: Padding(
+        padding: const EdgeInsets.all(32.0),
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Title(
+              color: Colors.orange,
+              child: const Text(
+                'Firebase Analytics',
+              ),
+            ),
             const Text(
-              'You have pushed the button this many times:',
+              'Interact with the various controls to start collecting analytics data.',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            const Text(
+              'Set user properties',
             ),
+            Consumer<ApplicationState>(
+              builder: (context, appState, _) => SegmentedButton<Season>(
+                segments: const <ButtonSegment<Season>>[
+                  ButtonSegment<Season>(
+                    value: Season.spring,
+                    label: Text('Spring'),
+                  ),
+                  ButtonSegment<Season>(
+                    value: Season.summer,
+                    label: Text('Summer'),
+                  ),
+                  ButtonSegment<Season>(
+                    value: Season.autumn,
+                    label: Text('Autumn'),
+                  ),
+                  ButtonSegment<Season>(
+                    value: Season.winter,
+                    label: Text('Winter'),
+                  ),
+                ],
+                selected: <Season>{appState.selectedSeason.first},
+                emptySelectionAllowed: true,
+                onSelectionChanged: (Set<Season> newSeason) {
+                  appState.selectSeason(newSeason);
+                },
+              ),
+            ),
+            Row(
+              children: [
+                Text('Preferred Temperature Units:'),
+                Consumer<ApplicationState>(
+                  builder: (context, appState, _) =>
+                      SegmentedButton<PreferredTempUnits>(
+                    segments: const <ButtonSegment<PreferredTempUnits>>[
+                      ButtonSegment<PreferredTempUnits>(
+                        value: PreferredTempUnits.c,
+                        label: Text('\u00b0C'),
+                      ),
+                      ButtonSegment<PreferredTempUnits>(
+                        value: PreferredTempUnits.f,
+                        label: Text('\u00b0F'),
+                      ),
+                    ],
+                    selected: <PreferredTempUnits>{
+                      appState.selectedTempUnts.first
+                    },
+                    emptySelectionAllowed: true,
+                    onSelectionChanged: (Set<PreferredTempUnits> tempUnits) {
+                      appState.selectTempUnits(tempUnits);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const Text('Log user interactions with events'),
+            Row(
+              children: [
+                Text('Hot or cold weather?'),
+                Consumer<ApplicationState>(
+                  builder: (context, appState, _) =>
+                      SegmentedButton<PreferredWeatherTemp>(
+                    segments: const <ButtonSegment<PreferredWeatherTemp>>[
+                      ButtonSegment<PreferredWeatherTemp>(
+                        value: PreferredWeatherTemp.hot,
+                        label: Text('Hot'),
+                      ),
+                      ButtonSegment<PreferredWeatherTemp>(
+                        value: PreferredWeatherTemp.cold,
+                        label: Text('Cold'),
+                      ),
+                    ],
+                    selected: <PreferredWeatherTemp>{
+                      appState.selectedWeatherTemp.first
+                    },
+                    emptySelectionAllowed: true,
+                    onSelectionChanged:
+                        (Set<PreferredWeatherTemp> weatherTemp) {
+                      appState.selectWeatherTemp(weatherTemp);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text('Rainy or sunny days?'),
+                Consumer<ApplicationState>(
+                  builder: (context, appState, _) =>
+                      SegmentedButton<PreferredWeatherCond>(
+                    segments: const <ButtonSegment<PreferredWeatherCond>>[
+                      ButtonSegment<PreferredWeatherCond>(
+                        value: PreferredWeatherCond.rain,
+                        label: Text('Rainy'),
+                      ),
+                      ButtonSegment<PreferredWeatherCond>(
+                        value: PreferredWeatherCond.sun,
+                        label: Text('Sunny'),
+                      ),
+                    ],
+                    selected: <PreferredWeatherCond>{
+                      appState.weatherCond.first
+                    },
+                    emptySelectionAllowed: true,
+                    onSelectionChanged:
+                        (Set<PreferredWeatherCond> weatherCond) {
+                      appState.selectWeatherCond(weatherCond);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Consumer<ApplicationState>(
+                builder: (context, appState, _) => Column(
+                      children: [
+                        Text(
+                          'Preferred temperature: ${appState.preferredTemp.round()}',
+                        ),
+                        Slider(
+                          value: appState.preferredTemp,
+                          divisions: 100,
+                          max: 100,
+                          min: 0,
+                          onChanged: (double newTemp) {
+                            appState.setPreferredTemp(newTemp);
+                          },
+                        )
+                      ],
+                    )),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+enum Season { spring, summer, autumn, winter, none }
+
+enum PreferredTempUnits { c, f, none }
+
+enum PreferredWeatherTemp { hot, cold, none }
+
+enum PreferredWeatherCond { rain, sun, none }
+
+class ApplicationState extends ChangeNotifier {
+  ApplicationState() {
+    init();
+  }
+
+  Set<Season> _selectedSeason = <Season>{Season.none};
+  Set<Season> get selectedSeason => _selectedSeason;
+
+  Set<PreferredWeatherTemp> _selectedWeatherTemp = <PreferredWeatherTemp>{
+    PreferredWeatherTemp.none
+  };
+  Set<PreferredWeatherTemp> get selectedWeatherTemp => _selectedWeatherTemp;
+
+  Set<PreferredTempUnits> _selectedTempUnts = <PreferredTempUnits>{
+    PreferredTempUnits.none
+  };
+  Set<PreferredTempUnits> get selectedTempUnts => _selectedTempUnts;
+
+  Set<PreferredWeatherCond> _weatherCond = <PreferredWeatherCond>{
+    PreferredWeatherCond.none
+  };
+  Set<PreferredWeatherCond> get weatherCond => _weatherCond;
+
+  double _preferredTemp = 0;
+  double get preferredTemp => _preferredTemp;
+
+  Future<void> init() async {}
+
+  void selectSeason(Set<Season> season) {
+    if (season.isEmpty) {
+      return;
+    }
+    _selectedSeason = <Season>{season.first};
+    notifyListeners();
+  }
+
+  void selectTempUnits(Set<PreferredTempUnits> tempUnits) {
+    if (tempUnits.isEmpty) {
+      return;
+    }
+    _selectedTempUnts = <PreferredTempUnits>{tempUnits.first};
+    notifyListeners();
+  }
+
+  void selectWeatherTemp(Set<PreferredWeatherTemp> weatherTemp) {
+    if (weatherTemp.isEmpty) {
+      return;
+    }
+    _selectedWeatherTemp = <PreferredWeatherTemp>{weatherTemp.first};
+    notifyListeners();
+  }
+
+  void selectWeatherCond(Set<PreferredWeatherCond> weatherCond) {
+    if (weatherCond.isEmpty) {
+      return;
+    }
+
+    _weatherCond = <PreferredWeatherCond>{weatherCond.first};
+    notifyListeners();
+  }
+
+  void setPreferredTemp(double newTemp) {
+    _preferredTemp = newTemp;
+    notifyListeners();
   }
 }
