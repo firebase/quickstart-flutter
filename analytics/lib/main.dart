@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Firebase Analytics Demo'),
     );
   }
 }
@@ -64,12 +64,12 @@ class MyHomePage extends StatelessWidget {
         child: Consumer<ApplicationState>(
           builder: (context, appState, _) => Column(
             children: <Widget>[
-              Title(
-                color: Colors.orange,
-                child: const Text(
-                  'Firebase Analytics',
-                ),
-              ),
+              // Title(
+              //   color: Colors.orange,
+              //   child: const Text(
+              //     'Firebase Analytics',
+              //   ),
+              // ),
               const Text(
                 'Interact with the various controls to start collecting analytics data.',
               ),
