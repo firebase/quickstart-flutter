@@ -1,5 +1,8 @@
+import 'package:analytics_quickstart/selection_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'app_state.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized;
@@ -58,226 +61,31 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(32.0),
-        child: Column(
-          children: <Widget>[
-            Title(
-              color: Colors.orange,
-              child: const Text(
-                'Firebase Analytics',
+        child: Consumer<ApplicationState>(
+          builder: (context, appState, _) => Column(
+            children: <Widget>[
+              Title(
+                color: Colors.orange,
+                child: const Text(
+                  'Firebase Analytics',
+                ),
               ),
-            ),
-            const Text(
-              'Interact with the various controls to start collecting analytics data.',
-            ),
-            const Text(
-              'Set user properties',
-            ),
-            Consumer<ApplicationState>(
-              builder: (context, appState, _) => SegmentedButton<Season>(
-                segments: const <ButtonSegment<Season>>[
-                  ButtonSegment<Season>(
-                    value: Season.spring,
-                    label: Text('Spring'),
-                  ),
-                  ButtonSegment<Season>(
-                    value: Season.summer,
-                    label: Text('Summer'),
-                  ),
-                  ButtonSegment<Season>(
-                    value: Season.autumn,
-                    label: Text('Autumn'),
-                  ),
-                  ButtonSegment<Season>(
-                    value: Season.winter,
-                    label: Text('Winter'),
-                  ),
-                ],
-                selected: <Season>{appState.selectedSeason.first},
-                emptySelectionAllowed: true,
-                onSelectionChanged: (Set<Season> newSeason) {
-                  appState.selectSeason(newSeason);
-                },
+              const Text(
+                'Interact with the various controls to start collecting analytics data.',
               ),
-            ),
-            Row(
-              children: [
-                Text('Preferred Temperature Units:'),
-                Consumer<ApplicationState>(
-                  builder: (context, appState, _) =>
-                      SegmentedButton<PreferredTempUnits>(
-                    segments: const <ButtonSegment<PreferredTempUnits>>[
-                      ButtonSegment<PreferredTempUnits>(
-                        value: PreferredTempUnits.c,
-                        label: Text('\u00b0C'),
-                      ),
-                      ButtonSegment<PreferredTempUnits>(
-                        value: PreferredTempUnits.f,
-                        label: Text('\u00b0F'),
-                      ),
-                    ],
-                    selected: <PreferredTempUnits>{
-                      appState.selectedTempUnts.first
-                    },
-                    emptySelectionAllowed: true,
-                    onSelectionChanged: (Set<PreferredTempUnits> tempUnits) {
-                      appState.selectTempUnits(tempUnits);
-                    },
-                  ),
-                ),
-              ],
-            ),
-            const Text('Log user interactions with events'),
-            Row(
-              children: [
-                Text('Hot or cold weather?'),
-                Consumer<ApplicationState>(
-                  builder: (context, appState, _) =>
-                      SegmentedButton<PreferredWeatherTemp>(
-                    segments: const <ButtonSegment<PreferredWeatherTemp>>[
-                      ButtonSegment<PreferredWeatherTemp>(
-                        value: PreferredWeatherTemp.hot,
-                        label: Text('Hot'),
-                      ),
-                      ButtonSegment<PreferredWeatherTemp>(
-                        value: PreferredWeatherTemp.cold,
-                        label: Text('Cold'),
-                      ),
-                    ],
-                    selected: <PreferredWeatherTemp>{
-                      appState.selectedWeatherTemp.first
-                    },
-                    emptySelectionAllowed: true,
-                    onSelectionChanged:
-                        (Set<PreferredWeatherTemp> weatherTemp) {
-                      appState.selectWeatherTemp(weatherTemp);
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text('Rainy or sunny days?'),
-                Consumer<ApplicationState>(
-                  builder: (context, appState, _) =>
-                      SegmentedButton<PreferredWeatherCond>(
-                    segments: const <ButtonSegment<PreferredWeatherCond>>[
-                      ButtonSegment<PreferredWeatherCond>(
-                        value: PreferredWeatherCond.rain,
-                        label: Text('Rainy'),
-                      ),
-                      ButtonSegment<PreferredWeatherCond>(
-                        value: PreferredWeatherCond.sun,
-                        label: Text('Sunny'),
-                      ),
-                    ],
-                    selected: <PreferredWeatherCond>{
-                      appState.weatherCond.first
-                    },
-                    emptySelectionAllowed: true,
-                    onSelectionChanged:
-                        (Set<PreferredWeatherCond> weatherCond) {
-                      appState.selectWeatherCond(weatherCond);
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Consumer<ApplicationState>(
-                builder: (context, appState, _) => Column(
-                      children: [
-                        Text(
-                          'Preferred temperature: ${appState.preferredTemp.round()}',
-                        ),
-                        Slider(
-                          value: appState.preferredTemp,
-                          divisions: 100,
-                          max: 100,
-                          min: 0,
-                          onChanged: (double newTemp) {
-                            appState.setPreferredTemp(newTemp);
-                          },
-                        )
-                      ],
-                    )),
-          ],
+              const Text(
+                'Set user properties',
+              ),
+              seasonSelector(appState),
+              preferredTempSelector(appState),
+              const Text('Log user interactions with events'),
+              hotOrColdSelector(appState),
+              rainOrSunshineSelector(appState),
+              preferredTemperatureSelector(appState),
+            ],
+          ),
         ),
       ),
     );
-  }
-}
-
-enum Season { spring, summer, autumn, winter, none }
-
-enum PreferredTempUnits { c, f, none }
-
-enum PreferredWeatherTemp { hot, cold, none }
-
-enum PreferredWeatherCond { rain, sun, none }
-
-class ApplicationState extends ChangeNotifier {
-  ApplicationState() {
-    init();
-  }
-
-  Set<Season> _selectedSeason = <Season>{Season.none};
-  Set<Season> get selectedSeason => _selectedSeason;
-
-  Set<PreferredWeatherTemp> _selectedWeatherTemp = <PreferredWeatherTemp>{
-    PreferredWeatherTemp.none
-  };
-  Set<PreferredWeatherTemp> get selectedWeatherTemp => _selectedWeatherTemp;
-
-  Set<PreferredTempUnits> _selectedTempUnts = <PreferredTempUnits>{
-    PreferredTempUnits.none
-  };
-  Set<PreferredTempUnits> get selectedTempUnts => _selectedTempUnts;
-
-  Set<PreferredWeatherCond> _weatherCond = <PreferredWeatherCond>{
-    PreferredWeatherCond.none
-  };
-  Set<PreferredWeatherCond> get weatherCond => _weatherCond;
-
-  double _preferredTemp = 0;
-  double get preferredTemp => _preferredTemp;
-
-  Future<void> init() async {}
-
-  void selectSeason(Set<Season> season) {
-    if (season.isEmpty) {
-      return;
-    }
-    _selectedSeason = <Season>{season.first};
-    notifyListeners();
-  }
-
-  void selectTempUnits(Set<PreferredTempUnits> tempUnits) {
-    if (tempUnits.isEmpty) {
-      return;
-    }
-    _selectedTempUnts = <PreferredTempUnits>{tempUnits.first};
-    notifyListeners();
-  }
-
-  void selectWeatherTemp(Set<PreferredWeatherTemp> weatherTemp) {
-    if (weatherTemp.isEmpty) {
-      return;
-    }
-    _selectedWeatherTemp = <PreferredWeatherTemp>{weatherTemp.first};
-    notifyListeners();
-  }
-
-  void selectWeatherCond(Set<PreferredWeatherCond> weatherCond) {
-    if (weatherCond.isEmpty) {
-      return;
-    }
-
-    _weatherCond = <PreferredWeatherCond>{weatherCond.first};
-    notifyListeners();
-  }
-
-  void setPreferredTemp(double newTemp) {
-    _preferredTemp = newTemp;
-    notifyListeners();
   }
 }
