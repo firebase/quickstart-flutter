@@ -39,7 +39,11 @@ Widget preferredTempSelector(ApplicationState appState) {
     padding: const EdgeInsets.all(4.0),
     child: Row(
       children: [
-        const Text('Preferred Temperature Units:'),
+        const Expanded(
+          child: Text(
+            'Preferred Temperature Units:',
+          ),
+        ),
         const Spacer(),
         SegmentedButton<PreferredTempUnits>(
           segments: const <ButtonSegment<PreferredTempUnits>>[
@@ -68,7 +72,9 @@ Widget hotOrColdSelector(ApplicationState appState) {
     padding: const EdgeInsets.all(4.0),
     child: Row(
       children: [
-        const Text('Hot or cold weather?'),
+        const Expanded(
+          child: Text('Hot or cold weather?'),
+        ),
         const Spacer(),
         SegmentedButton<PreferredWeatherTemp>(
           segments: const <ButtonSegment<PreferredWeatherTemp>>[
@@ -97,7 +103,9 @@ Widget rainOrSunshineSelector(ApplicationState appState) {
     padding: const EdgeInsets.all(4.0),
     child: Row(
       children: [
-        const Text('Rainy or sunny days?'),
+        const Expanded(
+          child: Text('Rainy or sunny days?'),
+        ),
         const Spacer(),
         SegmentedButton<PreferredWeatherCond>(
           segments: const <ButtonSegment<PreferredWeatherCond>>[
