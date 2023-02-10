@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+migrate_working_dir/
 
 # IntelliJ related
 *.iml
@@ -31,9 +32,6 @@
 .pub/
 /build/
 
-# Web related
-lib/generated_plugin_registrant.dart
-
 # Symbolication related
 app.*.symbols
 
@@ -44,10 +42,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-analytics/android/app/google-services.json
-analytics/ios/firebase_app_id_file.json
-analytics/ios/Runner/GoogleService-Info.plist
-analytics/macos/firebase_app_id_file.json
-analytics/macos/Runner/GoogleService-Info.plist
-analytics/lib/firebase_options.dart
-dynamic_links/lib/firebase_options.dart

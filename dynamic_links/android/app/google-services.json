@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "1192241498",
+    "firebase_url": "https://quickstartsnohe-default-rtdb.firebaseio.com",
+    "project_id": "quickstartsnohe",
+    "storage_bucket": "quickstartsnohe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1192241498:android:23bc26e39b8408a6a96b63",
+        "android_client_info": {
+          "package_name": "com.example.authentication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1192241498-50b23ebqbu5iiurtj1pvpcgno3ql6eh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA5xb5LiiepAzq1TEvgf0HnrGsilXdJ2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1192241498-50b23ebqbu5iiurtj1pvpcgno3ql6eh4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1192241498-2ef8273cnbf9g2ohovlfe5mel2ptc5co.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.google.firebase.quickstart.DatabaseExample"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1192241498:android:fe28c2a63e5ac5f9a96b63",
+        "android_client_info": {
+          "package_name": "com.google.firebase.quickstart.analytics_quickstart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1192241498-50b23ebqbu5iiurtj1pvpcgno3ql6eh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA5xb5LiiepAzq1TEvgf0HnrGsilXdJ2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1192241498-50b23ebqbu5iiurtj1pvpcgno3ql6eh4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1192241498-2ef8273cnbf9g2ohovlfe5mel2ptc5co.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.google.firebase.quickstart.DatabaseExample"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1192241498:android:e34a888de31b2b23a96b63",
+        "android_client_info": {
+          "package_name": "com.google.firebase.quickstart.dynamiclinks_quickstart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1192241498-50b23ebqbu5iiurtj1pvpcgno3ql6eh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA5xb5LiiepAzq1TEvgf0HnrGsilXdJ2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1192241498-50b23ebqbu5iiurtj1pvpcgno3ql6eh4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1192241498-2ef8273cnbf9g2ohovlfe5mel2ptc5co.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.google.firebase.quickstart.DatabaseExample"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
