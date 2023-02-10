@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,9 +73,14 @@ class MyHomePage extends StatelessWidget {
                   : "No link received"),
               const Text('Send:'),
               Text(appState.dynamicLink),
-              const ElevatedButton(
-                onPressed: null,
-                child: Text('someUrl'),
+              ElevatedButton(
+                onPressed: () => {
+                  Share.share(
+                    appState.dynamicLink,
+                    subject: 'Come see dynamic links in action',
+                  )
+                },
+                child: Text('Share Dynamic Link'),
               )
             ],
           ),
@@ -135,10 +141,16 @@ class ApplicationState extends ChangeNotifier {
       link: Uri.parse(url),
       uriPrefix: uriPrefix,
       androidParameters: const AndroidParameters(
-          packageName:
-              'com.google.firebase.quickstart.dynamiclinks_quickstart'),
-      iosParameters: const IOSParameters(
-          bundleId: 'com.google.firebase.quickstart.dynamiclinksQuickstart'),
+        packageName: 'com.google.firebase.quickstart.dynamiclinks_quickstart',
+      ),
+      iosParameters: IOSParameters(
+        bundleId: 'com.google.firebase.quickstart.dynamiclinksQuickstart',
+        appStoreId: '', // 🔥 Add in your own AppStoreID here.
+        fallbackUrl: Uri.parse(url),
+      ),
+      navigationInfoParameters: const NavigationInfoParameters(
+        forcedRedirectEnabled: true,
+      ),
     );
     final shortLink = await dynamicLinks.buildShortLink(
       dynamicLinkParams,
