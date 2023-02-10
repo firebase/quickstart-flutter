@@ -1,7 +1,16 @@
+import 'package:dynamiclinks_quickstart/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(ChangeNotifierProvider(
+    create: (context) => ApplicationState(),
+    builder: (context, child) => const MyApp(),
+  ));
 }
 
 const title = 'Firebase Dynamic Links Quickstart';
@@ -54,17 +63,21 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: const [
-            Text('Recieved:'),
-            Text('stuff'),
-            Text('Send:'),
-            Text('url'),
-            ElevatedButton(
-              onPressed: null,
-              child: Text('someUrl'),
-            )
-          ],
+        child: Consumer<ApplicationState>(
+          builder: (context, appState, _) => Column(
+            children: [
+              const Text('Recieved:'),
+              Text(appState.receivedLink != null
+                  ? appState.receivedLink.toString()
+                  : "No link received"),
+              const Text('Send:'),
+              Text(appState.dynamicLink),
+              const ElevatedButton(
+                onPressed: null,
+                child: Text('someUrl'),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -76,5 +89,62 @@ class ApplicationState extends ChangeNotifier {
     init();
   }
 
-  Future<void> init() async {}
+  // Found at https://console.firebase.google.com/project/_/durablelinks/links/
+  final uriPrefix = 'https://dynamiclinksquickstart.page.link'; // 🔥
+  final url = 'https://flutter.dev/firebase?magical=yes';
+
+  late FirebaseDynamicLinks dynamicLinks;
+
+  Uri? _receivedLink;
+  Uri? get receivedLink => _receivedLink;
+
+  String _dynamicLink = '';
+  String get dynamicLink => _dynamicLink;
+
+  Future<void> init() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+
+    dynamicLinks = FirebaseDynamicLinks.instance;
+    final initialLink = await dynamicLinks.getInitialLink();
+
+    if (initialLink != null) {
+      debugPrint('initial Link Received!');
+      _receivedLink = initialLink.link;
+      notifyListeners();
+    }
+
+    FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) {
+      print('received dynamic link');
+      _receivedLink = dynamicLinkData.link;
+      notifyListeners();
+    }).onError((error) {
+      // Handle errors
+      print('error with link ${error.toString()}');
+    });
+
+    createDynamicLink().then((value) {
+      _dynamicLink = value;
+      notifyListeners();
+    });
+  }
+
+  Future<String> createDynamicLink() async {
+    final dynamicLinkParams = DynamicLinkParameters(
+      link: Uri.parse(url),
+      uriPrefix: uriPrefix,
+      androidParameters: const AndroidParameters(
+          packageName:
+              'com.google.firebase.quickstart.dynamiclinks_quickstart'),
+      iosParameters: const IOSParameters(
+          bundleId: 'com.google.firebase.quickstart.dynamiclinksQuickstart'),
+    );
+    final shortLink = await dynamicLinks.buildShortLink(
+      dynamicLinkParams,
+      shortLinkType: ShortDynamicLinkType.unguessable,
+    );
+    debugPrint(shortLink.shortUrl.toString());
+    return shortLink.shortUrl.toString();
+  }
 }
