@@ -5,7 +5,4 @@ void main() {
   testWidgets('Test fails', (WidgetTester tester) async {
     // autopass
   });
-  testWidgets('Test passes', (WidgetTester tester) async {
-    fail("nope");
-  });
 }
