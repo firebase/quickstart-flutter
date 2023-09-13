@@ -25,8 +25,8 @@ jobs:
     #   run: |
     #     sh .github/workflows/scripts/install-flutter.sh stable
     - name: "Run widget tests"
-      working-directory: firestore/test
-      run: $(cd firestore/test && flutter test)
+      working-directory: firestore
+      run: flutter test
   # test_lab:
   #   runs-on: idk
   #   timeout-minutes:30
