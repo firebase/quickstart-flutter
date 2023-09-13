@@ -18,7 +18,9 @@ jobs:
     - name: "checkout"
       uses: actions/checkout@v2
     - name: "install flutter"
-      uses: actions/flutter-action@v1 # FIXME check this is correct
+      # uses: actions/flutter-action@v1 # FIXME check this is correct
+      uses: subosito/flutter-action@v2
+
     # - name: "Install Flutter"
     #   run: |
     #     sh .github/workflows/scripts/install-flutter.sh stable
