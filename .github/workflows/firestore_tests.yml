@@ -32,7 +32,7 @@ jobs:
       - id: ftl_test
         uses: FirebaseExtended/github-actions/firebase-test-lab@v1.2
         with:
-          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIALS }} # FIXME do this
+          credentials_json: ${{ secrets.TEST_LAB }} # FIXME test this
           test_type: "robo" # FIXME instrumentation better
           testapp_dir: firestore/testapp
           test_devices: model=redfin,version=30
