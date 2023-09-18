@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "905001072058",
+    "project_id": "ctflutterquickstart",
+    "storage_bucket": "ctflutterquickstart.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905001072058:android:6b4d615e68771837801983",
+        "android_client_info": {
+          "package_name": "com.example.firestore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905001072058-o40uoh0mn4staje7e49gudg3rl8b1723.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeYHWDZI-VYzraflj-GJ9Yj-5vKdqd1uE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "905001072058-o40uoh0mn4staje7e49gudg3rl8b1723.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "905001072058-58k5uvhubqhj8loen93npuv833qqnte5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firestore"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
