@@ -43,7 +43,7 @@ class Review {
     return Review._(
       id: snapshot.id,
       userId: _snapshot['userId'],
-      rating: _snapshot['rating'],
+      rating: _snapshot['rating'].toDouble(),
       text: _snapshot['text'],
       userName: _snapshot['userName'],
       timestamp: _snapshot['timestamp'],
