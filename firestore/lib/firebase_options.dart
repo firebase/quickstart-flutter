@@ -35,21 +35,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAfj_GOB5yKD6lPaVS9hSskKITPuquzpZQ',
-    appId: '1:993083111617:web:380d3567efd5f99a67bc40',
-    messagingSenderId: '993083111617',
-    projectId: 'friendlyeats-flutter-68d79',
-    authDomain: 'friendlyeats-flutter-68d79.firebaseapp.com',
-    storageBucket: 'friendlyeats-flutter-68d79.appspot.com',
-    measurementId: 'G-FSYS2SH1N4',
+    apiKey: 'AIzaSyC8VCwBMvvfKAqnXC5vxBvgEmEISz1N5XA',
+    appId: '1:905001072058:web:e25193a00a843ca7801983',
+    messagingSenderId: '905001072058',
+    projectId: 'ctflutterquickstart',
+    authDomain: 'ctflutterquickstart.firebaseapp.com',
+    storageBucket: 'ctflutterquickstart.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAiC9yhzOEeMcP6dIuKEZCfOdknTzNtYGM',
-    appId: '1:993083111617:android:a1aded9943e3dd0367bc40',
-    messagingSenderId: '993083111617',
-    projectId: 'friendlyeats-flutter-68d79',
-    storageBucket: 'friendlyeats-flutter-68d79.appspot.com',
+    apiKey: 'AIzaSyBeYHWDZI-VYzraflj-GJ9Yj-5vKdqd1uE',
+    appId: '1:905001072058:android:6b4d615e68771837801983',
+    messagingSenderId: '905001072058',
+    projectId: 'ctflutterquickstart',
+    storageBucket: 'ctflutterquickstart.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -58,7 +57,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '993083111617',
     projectId: 'friendlyeats-flutter-68d79',
     storageBucket: 'friendlyeats-flutter-68d79.appspot.com',
-    iosClientId: '993083111617-a9q0thbihk8tl0487gfem1hm1ahaieab.apps.googleusercontent.com',
+    iosClientId:
+        '993083111617-a9q0thbihk8tl0487gfem1hm1ahaieab.apps.googleusercontent.com',
     iosBundleId: 'friendlyeats.example.app',
   );
 
@@ -68,7 +68,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '993083111617',
     projectId: 'friendlyeats-flutter-68d79',
     storageBucket: 'friendlyeats-flutter-68d79.appspot.com',
-    iosClientId: '993083111617-lh0dmnumalopnegi244kmfm2o0brl7dg.apps.googleusercontent.com',
+    iosClientId:
+        '993083111617-lh0dmnumalopnegi244kmfm2o0brl7dg.apps.googleusercontent.com',
     iosBundleId: 'friendlyears.example.app',
   );
 }

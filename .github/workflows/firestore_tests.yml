@@ -1,4 +1,4 @@
-name: Run CI tests
+name: Run unit/integration/testlab
 
 on:
   workflow_dispatch:
@@ -22,3 +22,178 @@ jobs:
     - name: "Run widget tests"
       working-directory: firestore
       run: flutter test
+  test_lab:
+      runs-on: ubuntu-latest
+      timeout-minutes: 30
+      steps:
+      - uses: actions/checkout@v3
+      # FIXME need to build the app here
+      - name: "Test lab run"
+        id: ftl_test # removed - here
+        uses: FirebaseExtended/github-actions/firebase-test-lab@v1.2
+        with:
+          credentials_json: ${{ secrets.TEST_LAB }} # FIXME test this
+          test_type: "robo" # FIXME instrumentation better
+          testapp_dir: firestore/testapp
+          test_devices: model=redfin,version=30
+      - run: echo '${{ steps.ftl_test.outputs.test_summary }}'
+
+
+# firebase-ios-sdk .github/workflows/dynamiclinks.yml 
+# See also .github/workflows/crashlytics.yml
+    #       env:
+    #   plist_secret: ${{ secrets.GHASecretsGPGPassphrase1 }}
+    #   signin_secret: ${{ secrets.GHASecretsGPGPassphrase1 }}
+    # runs-on: macos-12
+    # steps:
+    # - uses: actions/checkout@v3
+    # - uses: ruby/setup-ruby@v1
+    # - name: Setup quickstart
+    #   run: scripts/setup_quickstart.sh DynamicLinks
+    # - name: Install Secret GoogleService-Info.plist
+    #   run: scripts/decrypt_gha_secret.sh scripts/gha-encrypted/qs-dynamiclinks.plist.gpg \
+    #       quickstart-ios/dynamiclinks/GoogleService-Info.plist "$plist_secret"
+    # - name: Update Environment Variable For DynamicLinks
+    #   run: |
+    #     sed -i '' 's#DYNAMIC_LINK_DOMAIN#https://qpf6m.app.goo.gl#' quickstart-ios/dynamiclinks/DynamicLinksExample/DynamicLinksExample.entitlements
+    #     sed -i '' 's#YOUR_DOMAIN_URI_PREFIX";#https://qpf6m.app.goo.gl";#' quickstart-ios/dynamiclinks/DynamicLinksExample/ViewController.m
+    #     sed -i '' 's#YOUR_DOMAIN_URI_PREFIX";#https://qpf6m.app.goo.gl";#' quickstart-ios/dynamiclinks/DynamicLinksExampleSwift/ViewController.swift
+    # # - name: Build objc quickstart
+    # #   run: ([ -z $plist_secret ] || scripts/third_party/travis/retry.sh scripts/test_quickstart_ftl.sh DynamicLinks)
+    # - name: Build swift quickstart
+    #   if: ${{ always() }}
+    #   run: ([ -z $plist_secret ] || scripts/third_party/travis/retry.sh scripts/test_quickstart_ftl.sh DynamicLinks swift)
+    # - id: ftl_test
+    #   uses: FirebaseExtended/github-actions/firebase-test-lab@v1.2
+    #   with:
+    #     credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIALS }}
+    #     testapp_dir: quickstart-ios/build-for-testing
+    #     test_type: "xctest"
+
+
+    # firebase-cpp-sdk
+    #   test_android:
+    # name: test-android-${{ matrix.build_os }}-${{ matrix.android_device }}-${{ matrix.test_type }}
+    # needs: [check_and_prepare, build_android]
+    # runs-on: macos-12
+    # if: contains(needs.check_and_prepare.outputs.matrix_platform, 'Android') && needs.check_and_prepare.outputs.apis != '' && !cancelled()
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     build_os: ${{ fromJson(needs.check_and_prepare.outputs.matrix_os) }}
+    #     android_device: ${{ fromJson(needs.check_and_prepare.outputs.android_device) }}
+    #     test_type: ["gameloop"]
+    #     exclude:
+    #       -  android_device: "android_target"
+    #          test_type: "uitest"
+    #       -  android_device: "android_latest"
+    #          test_type: "uitest"
+    # steps:
+    #   - uses: actions/checkout@v3
+    #     with:
+    #       ref: ${{needs.check_and_prepare.outputs.github_ref}}
+    #   - name: Download Android integration tests artifact
+    #     uses: actions/download-artifact@v3
+    #     with:
+    #       path: testapps/testapps-android-${{ matrix.build_os }}
+    #       name: testapps-android-${{ matrix.build_os }}
+    #   - name: Setup python
+    #     uses: actions/setup-python@v4
+    #     with:
+    #       python-version: ${{ env.pythonVersion }}
+    #   - name: Install prerequisites for testing
+    #     uses: nick-invision/retry@v2
+    #     with:
+    #       shell: bash
+    #       timeout_minutes: 5
+    #       max_attempts: 3
+    #       command: scripts/gha/install_test_workflow_prereqs.sh -p Android -t true
+    #   - name: Get Device Info
+    #     id: device-info
+    #     run: |
+    #       echo "device_type=$( python scripts/gha/print_matrix_configuration.py -k ${{ matrix.android_device }} -get_device_type)" >> $GITHUB_OUTPUT
+    #       echo "device=$( python scripts/gha/print_matrix_configuration.py -k ${{ matrix.android_device }} -get_ftl_device)" >> $GITHUB_OUTPUT
+    #   - name: Setup java 8 for test_simulator.py
+    #     uses: actions/setup-java@v3
+    #     with:
+    #       distribution: 'temurin'
+    #       java-version: '8'
+    #   - name: Run Android integration tests on Emulator locally
+    #     timeout-minutes: 150
+    #     if: steps.device-info.outputs.device_type == 'virtual'
+    #     run: |
+    #       python scripts/gha/test_simulator.py --testapp_dir testapps \
+    #         --test_type "${{ matrix.test_type }}" \
+    #         --android_device "${{ matrix.android_device }}" \
+    #         --logfile_name "android-${{ matrix.build_os }}-${{ matrix.android_device }}-${{ matrix.test_type }}" \
+    #         --ci
+    #   - id: ftl_test
+    #     if: steps.device-info.outputs.device_type == 'ftl'
+    #     uses: FirebaseExtended/github-actions/firebase-test-lab@v1.2
+    #     timeout-minutes: 90
+    #     with:
+    #       credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIALS }}
+    #       testapp_dir: testapps
+    #       test_type: "game-loop"
+    #       test_devices: ${{ steps.device-info.outputs.device }}
+    #       max_attempts: 3
+    #       validator: ${GITHUB_WORKSPACE}/scripts/gha/integration_testing/ftl_gha_validator.py
+    #   - name: Read FTL Test Result
+    #     if: ${{ steps.device-info.outputs.device_type == 'ftl' && !cancelled() }}
+    #     shell: bash
+    #     run: |
+    #       python scripts/gha/read_ftl_test_result.py --test_result '${{ steps.ftl_test.outputs.test_summary }}' \
+    #         --output_path testapps/test-results-android-${{ matrix.build_os }}-${{ matrix.android_device }}-${{ matrix.test_type }}.log
+    #   - name: Prepare results summary artifact
+    #     if: ${{ !cancelled() }}
+    #     shell: bash
+    #     run: |
+    #       # If testapps do not exist, then it's a build error not test error. 
+    #       if [ -d "testapps/testapps-android-${{ matrix.build_os }}" ] && [ ! -f "testapps/test-results-android-${{ matrix.build_os }}-${{ matrix.android_device }}-${{ matrix.test_type }}.log.json" ]; then
+    #         mkdir -p testapps && echo "__SUMMARY_MISSING__" > "testapps/test-results-android-${{ matrix.build_os }}-${{ matrix.android_device }}-${{ matrix.test_type }}.log.json"
+    #       fi
+    #   - name: Upload Android test results artifact
+    #     if: ${{ !cancelled() }}
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: log-artifact
+    #       path: testapps/test-results-android-${{ matrix.build_os }}-${{ matrix.android_device }}-${{ matrix.test_type }}*
+    #       retention-days: ${{ env.artifactRetentionDays }}
+    #   - name: Upload Android test video artifact
+    #     if: ${{ steps.device-info.outputs.device_type == 'virtual' && !cancelled() }}
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: mobile-simulator-test-video-artifact
+    #       path: testapps/video-*-android-${{ matrix.build_os }}-${{ matrix.android_device }}-${{ matrix.test_type }}.mp4
+    #       retention-days: ${{ env.artifactRetentionDays }}
+    #   - name: Upload Android test logcat artifact
+    #     if: ${{ steps.device-info.outputs.device_type == 'virtual' && !cancelled() }}
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: mobile-simulator-test-logcat-artifact
+    #       path: testapps/logcat-*-android-${{ matrix.build_os }}-${{ matrix.android_device }}-${{ matrix.test_type }}.txt
+    #       retention-days: ${{ env.artifactRetentionDays }}
+    #   - name: Download log artifacts
+    #     if: ${{ needs.check_and_prepare.outputs.pr_number && failure() && !cancelled() }}
+    #     uses: actions/download-artifact@v3
+    #     with:
+    #       path: test_results
+    #       name: log-artifact
+    #   - name: Update PR label and comment
+    #     if: ${{ needs.check_and_prepare.outputs.pr_number && failure() && !cancelled() }}
+    #     shell: bash
+    #     run: |
+    #       python scripts/gha/it_workflow.py --stage progress \
+    #         --token ${{github.token}} \
+    #         --issue_number ${{needs.check_and_prepare.outputs.pr_number}}\
+    #         --actor ${{github.actor}} \
+    #         --commit ${{needs.check_and_prepare.outputs.github_ref}} \
+    #         --run_id ${{github.run_id}}
+    #   - name: Summarize test results
+    #     if: ${{ !cancelled() }}
+    #     shell: bash
+    #     run: |
+    #       cat "testapps/test-results-android-${{ matrix.build_os }}-${{ matrix.android_device }}-${{ matrix.test_type }}.log"
+    #       if [[ "${{ job.status }}" != "success" ]]; then
+    #         exit 1
+    #       fi
