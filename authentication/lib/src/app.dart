@@ -18,24 +18,26 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 
 class AuthApp extends StatelessWidget {
-  const AuthApp({Key? key}) : super(key: key);
+  const AuthApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
-        '/login': (context) {
+        '/': (context) {
           return SignInScreen(
             actions: [
               ForgotPasswordAction(
-                ((context, email) {
-                  Navigator.of(context).pushNamed('/forgot-password',
-                      arguments: {'email': email});
-                }),
+                (context, email) {
+                  Navigator.of(context).pushNamed(
+                    '/forgot-password',
+                    arguments: email,
+                  );
+                },
               ),
               AuthStateChangeAction(
-                ((context, state) {
+                (context, state) {
                   if (state is UserCreated || state is SignedIn) {
                     var user = (state is SignedIn)
                         ? state.user
@@ -52,36 +54,39 @@ class AuthApp extends StatelessWidget {
                         user.updateDisplayName(defaultDisplayName);
                       }
                     }
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/', ((route) => false));
+                    // We replace the current route with the home page
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      '/home',
+                      (_) => false,
+                    );
                   }
-                }),
+                },
               ),
             ],
           );
         },
-        '/forgot-password': ((context) {
-          final arguments = ModalRoute.of(context)?.settings.arguments
-              as Map<String, dynamic>?;
-
+        '/forgot-password': (context) {
+          final email = ModalRoute.of(context)?.settings.arguments as String;
           return ForgotPasswordScreen(
-            email: arguments?['email'] as String,
+            email: email,
             headerMaxExtent: 200,
           );
-        }),
-        '/profile': ((context) {
+        },
+        '/profile': (context) {
           return ProfileScreen(
+            appBar: AppBar(title: const Text('Profile')),
             providers: const [],
             actions: [
               SignedOutAction(
-                ((context) {
-                  Navigator.of(context).popUntil(ModalRoute.withName('/'));
-                }),
+                (context) {
+                  // We handle routing back to the login page in HomePage
+                  Navigator.of(context).pop();
+                },
               ),
             ],
           );
-        }),
-        '/': (context) => const HomePage(),
+        },
+        '/home': (context) => const HomePage(),
       },
     );
   }
