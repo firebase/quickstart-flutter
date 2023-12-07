@@ -12,68 +12,97 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  User? _user;
-  String uid = "";
+  late StreamSubscription<User?> _userSubscription;
+  late User _user;
 
   @override
   void initState() {
-    // Detect when a user signs in (or out, when sign out is implemented)
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        setState(() {
-          _user = FirebaseAuth.instance.currentUser!;
-          uid = _user!.uid;
-        });
-      } else {
-        if (this.mounted) {
+    super.initState();
+    _user = FirebaseAuth.instance.currentUser!;
+
+    // Detect when a user signs in or out
+    _userSubscription = FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (mounted) {
+        if (user != null) {
           setState(() {
-            _user = null;
-            uid = "";
+            _user = FirebaseAuth.instance.currentUser!;
+          });
+        } else {
+          setState(() {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                '/',
+                (_) => false,
+              );
+            });
           });
         }
       }
     });
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _userSubscription.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: ValueKey(uid),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: _user != null
-            ? Text('Welcome ${_user?.displayName}')
+        title: _user.displayName != null
+            ? Text('Welcome ${_user.displayName}')
             : const Text('Welcome'),
       ),
-      body: _user != null
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                    "User Info:\nEmail: ${_user?.email}\nId: ${_user?.uid}\nDisplayName: ${_user?.displayName}"),
-                TextButton(
-                    onPressed: () => {
-                          Navigator.of(context).pushNamed('/profile'),
-                        },
-                    child: const Text('Proflie Screen'))
-              ],
-            )
-          : const Center(
-              child: Text('No user detected'),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "User Info",
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
+            Text(
+              "Email: ${_user.email}\n"
+              "Id: ${_user.uid}\n"
+              "DisplayName: ${_user.displayName}",
+            ),
+            TextButton(
+              onPressed: () async {
+                await Navigator.of(context).pushNamed('/profile');
+                if (!mounted) {
+                  return;
+                }
+                if (FirebaseAuth.instance.currentUser != null) {
+                  // Refresh the UI with a new user instance
+                  // to catch any changes done in the profile screen
+                  setState(() {
+                    _user = FirebaseAuth.instance.currentUser!;
+                  });
+                }
+              },
+              child: const Text('Proflie Screen'),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
