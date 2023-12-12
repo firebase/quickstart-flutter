@@ -14,12 +14,10 @@
 
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
-
 import 'model/restaurant.dart';
 
 String imagePath(str) {
-  return (kIsWeb) ? 'assets/$str' : str;
+  return 'assets/$str';
 }
 
 List<Restaurant> createRandomRestaurants() {

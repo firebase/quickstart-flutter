@@ -39,23 +39,23 @@ class Restaurant {
     this.city,
     this.price,
     this.photo,
-    this.id = null,
+    this.id,
     this.numRatings = 0,
     this.avgRating = 0,
-    this.reference = null,
+    this.reference,
   });
 
   factory Restaurant.fromSnapshot(DocumentSnapshot snapshot) {
-    final _snapshot = snapshot.data() as Map<String, dynamic>;
+    final data = snapshot.data() as Map<String, dynamic>;
     return Restaurant._(
       id: snapshot.id,
-      name: _snapshot['name'],
-      category: _snapshot['category'],
-      city: _snapshot['city'],
-      avgRating: _snapshot['avgRating'].toDouble(),
-      numRatings: _snapshot['numRatings'],
-      price: _snapshot['price'],
-      photo: _snapshot['photo'],
+      name: data['name'],
+      category: data['category'],
+      city: data['city'],
+      avgRating: data['avgRating'].toDouble(),
+      numRatings: data['numRatings'],
+      price: data['price'],
+      photo: data['photo'],
       reference: snapshot.reference,
     );
   }

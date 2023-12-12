@@ -16,7 +16,7 @@
 
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' hide Filter;
 
 import '../model/filter.dart';
 import '../model/restaurant.dart';
@@ -68,19 +68,18 @@ class FirestoreRestaurantProvider implements RestaurantProvider {
     required String restaurantId,
     required Review review,
   }) async {
-    final restaurant = await FirebaseFirestore.instance
-        .collection('restaurants')
-        .doc(restaurantId);
-    final newReview = await restaurant.collection('ratings').doc();
+    final restaurant =
+        FirebaseFirestore.instance.collection('restaurants').doc(restaurantId);
+    final newReview = restaurant.collection('ratings').doc();
 
     return FirebaseFirestore.instance
         .runTransaction((Transaction transaction) async {
-      final DocumentSnapshot _restaurantSnapshot =
+      final DocumentSnapshot restaurantSnapshot =
           await transaction.get(restaurant);
-      final _restaurant = Restaurant.fromSnapshot(_restaurantSnapshot);
-      final newRatings = _restaurant.numRatings + 1;
+      final restaurant0 = Restaurant.fromSnapshot(restaurantSnapshot);
+      final newRatings = restaurant0.numRatings + 1;
       final newAverage =
-          ((_restaurant.numRatings * _restaurant.avgRating) + review.rating) /
+          ((restaurant0.numRatings * restaurant0.avgRating) + review.rating) /
               newRatings;
 
       transaction.update(restaurant, {
@@ -100,18 +99,18 @@ class FirestoreRestaurantProvider implements RestaurantProvider {
 
   @override
   void loadAllRestaurants() {
-    final _querySnapshot = FirebaseFirestore.instance
+    final querySnapshot = FirebaseFirestore.instance
         .collection('restaurants')
         .orderBy('avgRating', descending: true)
         .limit(50)
         .snapshots();
 
-    _querySnapshot.listen((event) {
-      final _restaurants = event.docs.map((DocumentSnapshot doc) {
+    querySnapshot.listen((event) {
+      final restaurants = event.docs.map((DocumentSnapshot doc) {
         return Restaurant.fromSnapshot(doc);
       }).toList();
 
-      _allRestaurantsController.add(_restaurants);
+      _allRestaurantsController.add(restaurants);
     });
   }
 
@@ -127,20 +126,21 @@ class FirestoreRestaurantProvider implements RestaurantProvider {
     if (filter.price != null) {
       collection = collection.where('price', isEqualTo: filter.price);
     }
-    final _querySnapshot = collection
+    final querySnapshot = collection
         .orderBy(filter.sort ?? 'avgRating', descending: true)
         .limit(50)
         .snapshots();
 
-    _querySnapshot.listen((event) {
-      final _restaurants = event.docs.map((DocumentSnapshot doc) {
+    querySnapshot.listen((event) {
+      final restaurants = event.docs.map((DocumentSnapshot doc) {
         return Restaurant.fromSnapshot(doc);
       }).toList();
 
-      _allRestaurantsController.add(_restaurants);
+      _allRestaurantsController.add(restaurants);
     });
   }
 
+  @override
   void dispose() {
     _allRestaurantsController.close();
   }

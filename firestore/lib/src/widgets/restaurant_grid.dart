@@ -18,7 +18,8 @@ import '../model/restaurant.dart';
 import 'restaurant_card.dart';
 
 class RestaurantGrid extends StatelessWidget {
-  RestaurantGrid({
+  const RestaurantGrid({
+    super.key,
     required RestaurantPressedCallback onRestaurantPressed,
     required List<Restaurant> restaurants,
   })  : _onRestaurantPressed = onRestaurantPressed,

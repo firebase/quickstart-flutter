@@ -129,7 +129,7 @@ String getRandomReviewText(int rating) {
 
 String getRandomName() {
   final firstWord = random.nextInt(_words.length);
-  var nextWord;
+  int nextWord;
   do {
     nextWord = random.nextInt(_words.length);
   } while (firstWord == nextWord);

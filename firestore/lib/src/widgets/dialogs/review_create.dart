@@ -23,10 +23,14 @@ class ReviewCreateDialog extends StatefulWidget {
   final String userName;
   final String userId;
 
-  ReviewCreateDialog({required this.userName, required this.userId, Key? key});
+  const ReviewCreateDialog({
+    super.key,
+    required this.userName,
+    required this.userId,
+  });
 
   @override
-  _ReviewCreateDialogState createState() => _ReviewCreateDialogState();
+  State<ReviewCreateDialog> createState() => _ReviewCreateDialogState();
 }
 
 class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
@@ -37,15 +41,15 @@ class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
   Widget build(BuildContext context) {
     Color color = rating == 0 ? Colors.grey : Colors.amber;
     return AlertDialog(
-      title: Text('Add a Review'),
-      content: Container(
+      title: const Text('Add a Review'),
+      content: SizedBox(
         width: math.min(MediaQuery.of(context).size.width, 740),
         height: math.min(MediaQuery.of(context).size.height, 180),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 16),
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 16),
               child: SmoothStarRating(
                 starCount: 5,
                 rating: rating,
@@ -63,7 +67,7 @@ class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
             ),
             Expanded(
               child: TextField(
-                decoration: InputDecoration.collapsed(
+                decoration: const InputDecoration.collapsed(
                   hintText: 'Type your review here.',
                 ),
                 keyboardType: TextInputType.multiline,
@@ -82,11 +86,11 @@ class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
       ),
       actions: <Widget>[
         TextButton(
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
           onPressed: () => Navigator.pop(context, null),
         ),
         TextButton(
-          child: Text('Save'),
+          child: const Text('Save'),
           onPressed: () => Navigator.pop(
             context,
             Review.fromUserInput(

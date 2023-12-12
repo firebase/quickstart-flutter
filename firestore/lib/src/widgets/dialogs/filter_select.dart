@@ -22,24 +22,24 @@ import '../../model/filter.dart';
 import '../../model/values.dart' as hardcoded;
 
 class FilterSelectDialog extends StatefulWidget {
-  FilterSelectDialog({Key? key, Filter? filter})
-      : _filter = filter,
-        super(key: key);
+  const FilterSelectDialog({super.key, this.filter});
 
-  final Filter? _filter;
+  final Filter? filter;
 
   @override
-  _FilterSelectDialogState createState() =>
-      _FilterSelectDialogState(filter: _filter);
+  State<FilterSelectDialog> createState() => _FilterSelectDialogState();
 }
 
 class _FilterSelectDialogState extends State<FilterSelectDialog> {
-  _FilterSelectDialogState({Filter? filter}) {
-    if (filter != null && !filter.isDefault) {
-      _category = filter.category;
-      _city = filter.city;
-      _price = filter.price;
-      _sort = filter.sort;
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.filter != null && !widget.filter!.isDefault) {
+      _category = widget.filter!.category;
+      _city = widget.filter!.city;
+      _price = widget.filter!.price;
+      _sort = widget.filter!.sort;
     }
   }
 
@@ -79,7 +79,7 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
         Icon(icon),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
+            padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
             child: _buildDropdown<T>(
               labels: labels,
               values: values,
@@ -147,7 +147,7 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Row(
+      title: const Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Icon(Icons.filter_list),
@@ -157,7 +157,7 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
           ),
         ],
       ),
-      content: Container(
+      content: SizedBox(
         width: math.min(MediaQuery.of(context).size.width, 740),
         height: math.min(MediaQuery.of(context).size.height, 200),
         child: Column(
@@ -196,11 +196,11 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
       ),
       actions: [
         TextButton(
-          child: Text('CLEAR ALL'),
+          child: const Text('CLEAR ALL'),
           onPressed: () => Navigator.pop(context, Filter()),
         ),
         ElevatedButton(
-          child: Text('ACCEPT'),
+          child: const Text('ACCEPT'),
           onPressed: () => Navigator.pop(
               context,
               Filter(

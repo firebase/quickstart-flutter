@@ -5,9 +5,9 @@ import 'review_list_tile.dart';
 
 class RestaurantPageReviewList extends StatelessWidget {
   const RestaurantPageReviewList({
-    Key? key,
+    super.key,
     required this.reviews,
-  }) : super(key: key);
+  });
 
   final List<Review> reviews;
 
@@ -17,7 +17,7 @@ class RestaurantPageReviewList extends StatelessWidget {
       child: ListView.separated(
         shrinkWrap: true,
         itemCount: reviews.length,
-        separatorBuilder: (context, index) => Divider(thickness: 1),
+        separatorBuilder: (context, index) => const Divider(thickness: 1),
         itemBuilder: (context, index) {
           return ReviewListTile(
             review: reviews[index],
