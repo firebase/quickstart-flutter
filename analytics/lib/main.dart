@@ -1,21 +1,19 @@
 import 'package:analytics_quickstart/selection_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'app_state.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized;
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => ApplicationState(),
-    builder: (context, child) => const MyApp(),
-  ));
+  runApp(MyApp(state: ApplicationState()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  const MyApp({super.key, required this.state});
+  
+  final ApplicationState state;
+  
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -34,14 +32,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Firebase Analytics Demo'),
+      home: MyHomePage(title: 'Firebase Analytics Demo', state: state),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
-
+  const MyHomePage({super.key, required this.title, required this.state});
+  
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -52,6 +50,7 @@ class MyHomePage extends StatelessWidget {
   // always marked "final".
 
   final String title;
+  final ApplicationState state;
 
   @override
   Widget build(BuildContext context) {
@@ -61,27 +60,22 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(32.0),
-        child: Consumer<ApplicationState>(
-          builder: (context, appState, _) => Column(
+        child: ListenableBuilder(
+          listenable: state,
+          builder: (context, child) => Column(
             children: <Widget>[
-              // Title(
-              //   color: Colors.orange,
-              //   child: const Text(
-              //     'Firebase Analytics',
-              //   ),
-              // ),
               const Text(
                 'Interact with the various controls to start collecting analytics data.',
               ),
               const Text(
                 'Set user properties',
               ),
-              seasonSelector(appState),
-              preferredTempSelector(appState),
+              SeasonSelector(state: state),
+              PreferredTempSelector(state: state),
               const Text('Log user interactions with events'),
-              hotOrColdSelector(appState),
-              rainOrSunshineSelector(appState),
-              preferredTemperatureSelector(appState),
+              HotOrColdSelector(state: state),
+              RainOrSunshineSelector(state: state),
+              PreferredTemperatureSelector(state: state),
             ],
           ),
         ),
