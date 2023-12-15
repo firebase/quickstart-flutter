@@ -18,7 +18,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../model/filter.dart';
+import '../model/filter.dart' as SearchFilter;
 import '../model/restaurant.dart';
 import '../model/review.dart';
 
@@ -29,7 +29,7 @@ abstract class RestaurantProvider {
       {required String restaurantId, required Review review});
   void addRestaurantsBatch(List<Restaurant> restaurants);
   void loadAllRestaurants();
-  void loadFilteredRestaurants(Filter filter);
+  void loadFilteredRestaurants(SearchFilter.Filter filter);
   Future<Restaurant> getRestaurantById(String restaurantId);
   void dispose();
 }
@@ -116,7 +116,7 @@ class FirestoreRestaurantProvider implements RestaurantProvider {
   }
 
   @override
-  void loadFilteredRestaurants(Filter filter) {
+  void loadFilteredRestaurants(SearchFilter.Filter filter) {
     Query collection = FirebaseFirestore.instance.collection('restaurants');
     if (filter.category != null) {
       collection = collection.where('category', isEqualTo: filter.category);
