@@ -18,20 +18,18 @@ import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => ApplicationState(),
-    builder: (context, child) => const MyApp(),
-  ));
+  runApp(MyApp(state: ApplicationState()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.state});
+
+  final ApplicationState state;
 
   // This widget is the root of your application.
   @override
@@ -40,15 +38,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Firebase In App Messaging'),
+      home: MyHomePage(title: 'Firebase In App Messaging', state: state),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, required this.state});
 
   final String title;
+  final ApplicationState state;
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +68,15 @@ class MyHomePage extends StatelessWidget {
               const Text(
                 'You may need to background and then re-foreground the app after a fresh install.',
               ),
-              Consumer<ApplicationState>(
-                builder: (context, appState, _) => Text(
-                    'Firebase Installation ID: ${appState.installationId}'),
+              ListenableBuilder(
+                listenable: state,
+                builder: (context, child) =>
+                    Text('Firebase Installation ID: ${state.installationId}'),
               ),
-              Consumer<ApplicationState>(
-                builder: (context, appState, _) => ElevatedButton(
-                  onPressed: () => appState.logEvent('engagement_party'),
+              ListenableBuilder(
+                listenable: state,
+                builder: (context, child) => ElevatedButton(
+                  onPressed: () => state.logEvent('engagement_party'),
                   child: const Text("Trigger 'engagement_party' event"),
                 ),
               ),
@@ -96,6 +97,7 @@ class ApplicationState extends ChangeNotifier {
   late FirebaseInAppMessaging firebaseIam;
 
   String _installationId = "";
+
   String get installationId => _installationId;
 
   Future<void> init() async {
