@@ -3,20 +3,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(ChangeNotifierProvider(
-    create: (context) => ApplicationState(),
-    builder: (context, child) => const MyApp(),
-  ));
+  runApp(MyApp(state: ApplicationState()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.state});
+
+  final ApplicationState state;
 
   // This widget is the root of your application.
   @override
@@ -27,21 +24,21 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Firebase Functions Quickstart'),
+      home: MyHomePage(title: 'Firebase Functions Quickstart', state: state),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, required this.state});
 
   final String title;
+  final ApplicationState state;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
+      appBar: AppBar(title: Text(title)),
       body: Column(
         children: [
           Card(
@@ -53,12 +50,13 @@ class MyHomePage extends StatelessWidget {
                 Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: SizedBox(
                         width: 64.0,
-                        child: Consumer<ApplicationState>(
-                          builder: (context, appState, child) => TextField(
-                            onChanged: (value) => appState.mathInputOne = value,
+                        child: ListenableBuilder(
+                          listenable: state,
+                          builder: (context, child) => TextField(
+                            onChanged: (value) => state.mathInputOne = value,
                             textAlign: TextAlign.center,
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
@@ -73,12 +71,13 @@ class MyHomePage extends StatelessWidget {
                     ),
                     const Text('+'),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: SizedBox(
                         width: 64.0,
-                        child: Consumer<ApplicationState>(
-                          builder: (context, appState, child) => TextField(
-                            onChanged: (value) => appState.mathInputTwo = value,
+                        child: ListenableBuilder(
+                          listenable: state,
+                          builder: (context, child) => TextField(
+                            onChanged: (value) => state.mathInputTwo = value,
                             textAlign: TextAlign.center,
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
@@ -93,21 +92,24 @@ class MyHomePage extends StatelessWidget {
                     ),
                     const Text('='),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: SizedBox(
                         width: 64.0,
-                        child: Consumer<ApplicationState>(
-                          builder: (context, appState, child) =>
-                              Text(appState.mathOutput),
+                        child: ListenableBuilder(
+                          listenable: state,
+                          builder: (context, child) => Text(state.mathOutput),
                         ),
                       ),
                     ),
                   ],
                 ),
-                Consumer<ApplicationState>(
-                  builder: (context, appState, child) {
+                ListenableBuilder(
+                  listenable: state,
+                  builder: (context, child) {
                     return ElevatedButton(
-                      onPressed: () => {appState.callAddNumbers()},
+                      onPressed: () {
+                        state.callAddNumbers();
+                      },
                       child: const Text('Calculate'),
                     );
                   },
@@ -124,9 +126,10 @@ class MyHomePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
-                    child: Consumer<ApplicationState>(
-                      builder: (context, appState, child) => TextField(
-                        onChanged: (value) => appState.sanatizeInput = value,
+                    child: ListenableBuilder(
+                      listenable: state,
+                      builder: (context, child) => TextField(
+                        onChanged: (value) => state.sanatizeInput = value,
                         decoration: const InputDecoration(
                           labelText: 'Input',
                           border: UnderlineInputBorder(),
@@ -138,11 +141,12 @@ class MyHomePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
-                    child: Consumer<ApplicationState>(
-                      builder: (context, appState, child) => Align(
+                    child: ListenableBuilder(
+                      listenable: state,
+                      builder: (context, child) => Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Output: ${appState.sanatizeOutput}',
+                          'Output: ${state.sanatizeOutput}',
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -153,25 +157,25 @@ class MyHomePage extends StatelessWidget {
                   children: [
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: Consumer<ApplicationState>(
-                          builder: (context, appState, child) => Row(
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: appState.signedIn
-                                        ? null
-                                        : () => {appState.signIn()},
-                                    child: const Text('Sign In'),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () =>
-                                        {appState.callAddMessage()},
-                                    child: const Text('Sanitize'),
-                                  ),
-                                ],
-                              )),
+                      child: ListenableBuilder(
+                        listenable: state,
+                        builder: (context, child) => Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed:
+                                  state.signedIn ? null : () => state.signIn(),
+                              child: const Text('Sign In'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () => state.callAddMessage(),
+                              child: const Text('Sanitize'),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -207,6 +211,7 @@ class ApplicationState extends ChangeNotifier {
     );
 
     // Uncomment out the following to run against an emulator
+    FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
     FirebaseFunctions.instance.useFunctionsEmulator("localhost", 5001);
 
     functions = FirebaseFunctions.instance;
@@ -215,11 +220,7 @@ class ApplicationState extends ChangeNotifier {
     addMessage = functions.httpsCallable('addMessage');
 
     auth.authStateChanges().listen((event) {
-      if (auth.currentUser != null) {
-        _signedIn = true;
-      } else {
-        _signedIn = false;
-      }
+      _signedIn = auth.currentUser != null;
       notifyListeners();
     });
   }

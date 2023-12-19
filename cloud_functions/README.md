@@ -10,7 +10,7 @@ You will want to call `flutterfire configure` before running this code so your p
 
 In testing firebase_functions, we encourage you to try using the [emulators](https://firebase.google.com/docs/emulator-suite) before deploying to production. We have written a V1 function for your use. If you are interested in handling multiple requests concurrently and the power of [eventarc](https://cloud.google.com/eventarc/docs) + [cloudrun](https://cloud.google.com/run) function enviornments, we encourage you to look into [V2 functions](https://firebase.google.com/docs/functions/beta).
 
-To start running the functions locally in this folder, run `firebase emulators:start`. This will automatically start the emulator suite to test the functions locally.
+To start running the functions locally in this folder, run `npm run build && firebase emulators:start`. This will automatically start the emulator suite to test the functions locally.
 
 ## Dart code
 
