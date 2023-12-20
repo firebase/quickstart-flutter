@@ -21,9 +21,8 @@ import '../widgets/star_rating.dart';
 
 class _ReviewDetails extends StatelessWidget {
   const _ReviewDetails({
-    Key? key,
     required this.review,
-  }) : super(key: key);
+  });
 
   final Review review;
 
@@ -70,7 +69,7 @@ class _ReviewDetails extends StatelessWidget {
                 size: 20,
               ),
               Text(
-                '${reviewDate}',
+                reviewDate,
                 style: const TextStyle(
                   fontSize: 12.0,
                   color: Colors.black54,
@@ -86,9 +85,9 @@ class _ReviewDetails extends StatelessWidget {
 
 class ReviewListTile extends StatelessWidget {
   const ReviewListTile({
-    Key? key,
+    super.key,
     required this.review,
-  }) : super(key: key);
+  });
 
   final Review review;
 

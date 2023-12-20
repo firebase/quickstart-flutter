@@ -19,7 +19,8 @@ import '../model/restaurant.dart';
 import '../widgets/star_rating.dart';
 
 class RestaurantCard extends StatelessWidget {
-  RestaurantCard({
+  const RestaurantCard({
+    super.key,
     required this.restaurant,
     required RestaurantPressedCallback onRestaurantPressed,
   }) : _onPressed = onRestaurantPressed;
@@ -34,7 +35,7 @@ class RestaurantCard extends StatelessWidget {
         child: InkWell(
       onTap: () => _onPressed(restaurant),
       splashColor: Colors.blue.withAlpha(30),
-      child: Container(
+      child: SizedBox(
         height: 250,
         child: Column(
           children: <Widget>[
@@ -53,7 +54,7 @@ class RestaurantCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -64,17 +65,18 @@ class RestaurantCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           restaurant.name,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
                       Text(
                         '\$' * restaurant.price!,
-                        style: Theme.of(context).textTheme.caption,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(0, (kIsWeb ? 0 : 2), 0, 4),
+                    padding:
+                        const EdgeInsets.fromLTRB(0, (kIsWeb ? 0 : 2), 0, 4),
                     alignment: Alignment.bottomLeft,
                     child: StaticStarRating(
                       rating: restaurant.avgRating,
@@ -84,7 +86,7 @@ class RestaurantCard extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       '${restaurant.category} ● ${restaurant.city}',
-                      style: Theme.of(context).textTheme.caption,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
                 ],

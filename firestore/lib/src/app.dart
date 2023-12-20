@@ -4,12 +4,14 @@ import 'home_page.dart';
 import 'restaurant_page.dart';
 
 class FriendlyEatsApp extends StatelessWidget {
+  const FriendlyEatsApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FriendlyEats',
       initialRoute: '/',
-      home: HomePage(),
+      home: const HomePage(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case RestaurantPage.route:
@@ -22,7 +24,7 @@ class FriendlyEatsApp extends StatelessWidget {
             );
 
           default:
-            return MaterialPageRoute(builder: (context) => HomePage());
+            return MaterialPageRoute(builder: (context) => const HomePage());
         }
       },
     );

@@ -15,5 +15,5 @@ void main() async {
   // required to interact with Firestore due to security Rules
   await FirebaseAuth.instance.signInAnonymously();
 
-  runApp(FriendlyEatsApp());
+  runApp(const FriendlyEatsApp());
 }

@@ -31,22 +31,20 @@ class RestaurantPage extends StatefulWidget {
 
   final Restaurant restaurant;
 
-  RestaurantPage({Key? key, required Restaurant restaurant})
-      : restaurant = restaurant,
-        super(key: key);
+  const RestaurantPage({super.key, required this.restaurant});
 
   @override
-  _RestaurantPageState createState() => _RestaurantPageState(restaurant);
+  State<RestaurantPage> createState() => _RestaurantPageState();
 }
 
 class _RestaurantPageState extends State<RestaurantPage> {
-  _RestaurantPageState(Restaurant this._restaurant) {
+  _RestaurantPageState() {
     _initAsyncData();
   }
 
   void _initAsyncData() async {
     final reviews = await _firestoreRestaurantProvider
-        .getReviewsForRestaurant(_restaurant.id!);
+        .getReviewsForRestaurant(widget.restaurant.id!);
 
     setState(() {
       _isLoading = false;
@@ -55,7 +53,6 @@ class _RestaurantPageState extends State<RestaurantPage> {
     });
   }
 
-  final Restaurant _restaurant;
   late final User _user;
   late List<Review> _reviews;
   bool _isLoading = true;
@@ -73,7 +70,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
     if (newReview != null) {
       // Save the review
       await _firestoreRestaurantProvider.addReview(
-        restaurantId: _restaurant.id!,
+        restaurantId: widget.restaurant.id!,
         review: newReview,
       );
     }
@@ -86,7 +83,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
     final numReviews = Random().nextInt(5) + 5;
     for (var i = 0; i < numReviews; i++) {
       await _firestoreRestaurantProvider.addReview(
-        restaurantId: _restaurant.id!,
+        restaurantId: widget.restaurant.id!,
         review: Review.random(
           userId: _user.uid,
           userName: _user.displayName ?? 'Anonymous User',
@@ -99,7 +96,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
 
   void _updateReviews() async {
     final reviews = await _firestoreRestaurantProvider
-        .getReviewsForRestaurant(_restaurant.id!);
+        .getReviewsForRestaurant(widget.restaurant.id!);
     setState(() {
       _reviews = reviews;
     });
@@ -109,26 +106,26 @@ class _RestaurantPageState extends State<RestaurantPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_restaurant.name),
+        title: Text(widget.restaurant.name),
       ),
       floatingActionButton: _isLoading
           ? null
           : FloatingActionButton(
-              child: Icon(Icons.add),
               tooltip: 'Tap to add a review',
               onPressed: () => _onCreateReviewPressed(context),
+              child: const Icon(Icons.add),
             ),
       body: Center(
         child: Container(
           color: Colors.white,
-          constraints: BoxConstraints(maxWidth: 900),
+          constraints: const BoxConstraints(maxWidth: 900),
           alignment: Alignment.center,
           child: Column(
             children: [
-              RestaurantDetails(restaurant: _restaurant),
-              Divider(thickness: 1),
+              RestaurantDetails(restaurant: widget.restaurant),
+              const Divider(thickness: 1),
               _isLoading
-                  ? Center(child: LinearProgressIndicator())
+                  ? const Center(child: LinearProgressIndicator())
                   : RestaurantPageReviewList(reviews: _reviews),
               if (!_isLoading && _reviews.isEmpty)
                 Padding(
@@ -136,12 +133,12 @@ class _RestaurantPageState extends State<RestaurantPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(
+                      const Text(
                         'There are no reviews yet! Generate random reviews with button.',
                       ),
                       ElevatedButton(
                         onPressed: _onAddRandomReviewsPressed,
-                        child: Text('Add Random Reviews'),
+                        child: const Text('Add Random Reviews'),
                       )
                     ],
                   ),

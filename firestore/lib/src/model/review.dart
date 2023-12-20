@@ -39,14 +39,14 @@ class Review {
   });
 
   factory Review.fromSnapshot(DocumentSnapshot snapshot) {
-    final _snapshot = snapshot.data() as Map<String, dynamic>;
+    final data = snapshot.data() as Map<String, dynamic>;
     return Review._(
       id: snapshot.id,
-      userId: _snapshot['userId'],
-      rating: _snapshot['rating'].toDouble(),
-      text: _snapshot['text'],
-      userName: _snapshot['userName'],
-      timestamp: _snapshot['timestamp'],
+      userId: data['userId'],
+      rating: data['rating'].toDouble(),
+      text: data['text'],
+      userName: data['userName'],
+      timestamp: data['timestamp'],
       reference: snapshot.reference,
     );
   }
@@ -72,5 +72,5 @@ class Review {
     );
   }
 
-  bool get isPositive => this.rating >= 3.0;
+  bool get isPositive => rating >= 3.0;
 }

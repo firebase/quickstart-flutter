@@ -29,15 +29,15 @@ import 'widgets/restaurant_grid.dart';
 class HomePage extends StatefulWidget {
   static const route = '/';
 
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   bool _isLoading = true;
-  FirestoreRestaurantProvider _firestoreRestaurantProvider =
+  final FirestoreRestaurantProvider _firestoreRestaurantProvider =
       FirestoreRestaurantProvider();
   Filter _filter = Filter();
 
@@ -81,19 +81,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return StreamBuilder<List<Restaurant>>(
       stream: _firestoreRestaurantProvider.allRestaurants,
-      initialData: [],
+      initialData: const [],
       builder:
           (BuildContext context, AsyncSnapshot<List<Restaurant>> snapshot) {
-        final _restaurants = snapshot.data!;
+        final restaurants = snapshot.data!;
 
         return Scaffold(
           appBar: AppBar(
-            leading: Icon(Icons.restaurant),
-            title: Text('FriendlyEats'),
+            leading: const Icon(Icons.restaurant),
+            title: const Text('FriendlyEats'),
             bottom: PreferredSize(
-              preferredSize: Size(320, 48),
+              preferredSize: const Size(320, 48),
               child: Padding(
-                padding: EdgeInsets.fromLTRB(6, 0, 6, 4),
+                padding: const EdgeInsets.fromLTRB(6, 0, 6, 4),
                 child: FilterBar(
                   filter: _filter,
                   onPressed: _onFilterBarPressed,
@@ -103,12 +103,12 @@ class _HomePageState extends State<HomePage> {
           ),
           body: Center(
             child: Container(
-              constraints: BoxConstraints(maxWidth: 900),
+              constraints: const BoxConstraints(maxWidth: 900),
               child: _isLoading
-                  ? CircularProgressIndicator()
-                  : _restaurants.isNotEmpty
+                  ? const CircularProgressIndicator()
+                  : restaurants.isNotEmpty
                       ? RestaurantGrid(
-                          restaurants: _restaurants,
+                          restaurants: restaurants,
                           onRestaurantPressed: (restaurant) {
                             Navigator.pushNamed(
                               context,
@@ -118,8 +118,9 @@ class _HomePageState extends State<HomePage> {
                           },
                         )
                       : EmptyListView(
-                          child: Text('FriendlyEats has no restaurants yet!'),
                           onPressed: _onAddRandomRestaurantsPressed,
+                          child: const Text(
+                              'FriendlyEats has no restaurants yet!'),
                         ),
             ),
           ),

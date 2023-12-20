@@ -20,8 +20,7 @@ import '../model/restaurant.dart';
 import '../widgets/star_rating.dart';
 
 class RestaurantDetails extends StatelessWidget {
-  const RestaurantDetails({Key? key, required this.restaurant})
-      : super(key: key);
+  const RestaurantDetails({super.key, required this.restaurant});
 
   final Restaurant restaurant;
 
