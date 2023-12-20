@@ -12,6 +12,7 @@ Getting Started
 - [Add Firebase to your Flutter Project](https://firebase.google.com/docs/flutter/setup).
 - Configure the sample:
   - Run `flutterfire configure` to configure your Firebase project to work with your flutter project.
+- Change the `uriPrefix` in `lib/main.dart` to your domain.
 - Run the sample on your Android device or emulator, or run the app on an iOS device using the `flutter run --release` command.
 - Using the sample:
   - When the application is started, a deep link will be generated using your app code.

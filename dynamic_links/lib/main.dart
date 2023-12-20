@@ -16,22 +16,24 @@ import 'package:dynamiclinks_quickstart/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+
+// Found at https://console.firebase.google.com/project/_/durablelinks/links/
+const uriPrefix = 'https://<change-me>.page.link'; // 🔥
+const url = 'https://firebase.com/firebase?magical=yes';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => ApplicationState(),
-    builder: (context, child) => const MyApp(),
-  ));
+  runApp(MyApp(state: ApplicationState()));
 }
 
 const title = 'Firebase Dynamic Links Quickstart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.state});
+  
+  final ApplicationState state;
 
   // This widget is the root of your application.
   @override
@@ -51,14 +53,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: title),
+      home: MyHomePage(title: title, state: state),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
-
+  const MyHomePage({super.key, required this.title, required this.state});
+  
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -69,6 +71,7 @@ class MyHomePage extends StatelessWidget {
   // always marked "final".
 
   final String title;
+  final ApplicationState state;
 
   @override
   Widget build(BuildContext context) {
@@ -78,23 +81,24 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<ApplicationState>(
-          builder: (context, appState, _) => Column(
+        child: ListenableBuilder(
+          listenable: state,
+          builder: (context, child) => Column(
             children: [
-              const Text('Recieved:'),
-              Text(appState.receivedLink != null
-                  ? appState.receivedLink.toString()
+              const Text('Received:'),
+              Text(state.receivedLink != null
+                  ? state.receivedLink.toString()
                   : "No link received"),
               const Text('Send:'),
-              Text(appState.dynamicLink),
+              Text(state.dynamicLink),
               ElevatedButton(
                 onPressed: () => {
                   Share.share(
-                    appState.dynamicLink,
+                    state.dynamicLink,
                     subject: 'Come see dynamic links in action',
                   )
                 },
-                child: Text('Share Dynamic Link'),
+                child: const Text('Share Dynamic Link'),
               )
             ],
           ),
@@ -108,10 +112,6 @@ class ApplicationState extends ChangeNotifier {
   ApplicationState() {
     init();
   }
-
-  // Found at https://console.firebase.google.com/project/_/durablelinks/links/
-  final uriPrefix = 'https://dynamiclinksquickstart.page.link'; // 🔥
-  final url = 'https://flutter.dev/firebase?magical=yes';
 
   late FirebaseDynamicLinks dynamicLinks;
 

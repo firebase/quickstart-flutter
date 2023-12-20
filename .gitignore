@@ -57,3 +57,7 @@ dynamic_links/lib/firebase_options.dart
 
 # ignore .firebaserc for all examples
 **/.firebaserc
+
+**/GoogleService-Info.plist
+**/google-services.json
+**/firebase_app_id_file.json
