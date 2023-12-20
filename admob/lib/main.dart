@@ -2,19 +2,17 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => ApplicationState(),
-    builder: (context, child) => const MyApp(),
-  ));
+  runApp(MyApp(state: ApplicationState()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.state});
+
+  final ApplicationState state;
 
   // This widget is the root of your application.
   @override
@@ -33,13 +31,15 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'AdMob Quickstart'),
+      home: MyHomePage(title: 'AdMob Quickstart', state: state),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, required this.state});
+
+  final ApplicationState state;
 
   final String title;
   @override
@@ -48,8 +48,9 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Consumer<ApplicationState>(
-        builder: (context, appState, _) => Column(
+      body: ListenableBuilder(
+        listenable: state,
+        builder: (context, child) => Column(
           children: <Widget>[
             const Padding(
               padding: EdgeInsets.all(64.0),
@@ -66,22 +67,22 @@ class MyHomePage extends StatelessWidget {
                   'analytics capabilities.'),
             ),
             ElevatedButton(
-              onPressed: appState.interstitialAd != null
+              onPressed: state.interstitialAd != null
                   ? () {
-                      appState.showInterstitial();
+                      state.showInterstitial();
                     }
                   : null,
               child: const Text('Load Interstitial'),
             ),
             const Expanded(child: SizedBox.shrink()),
-            appState.bannerAd != null
+            state.bannerAd != null
                 ? Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
                       alignment: Alignment.bottomCenter,
-                      width: appState.bannerAd!.size.width.toDouble(),
-                      height: appState.bannerAd!.size.height.toDouble(),
-                      child: AdWidget(ad: appState.bannerAd!),
+                      width: state.bannerAd!.size.width.toDouble(),
+                      height: state.bannerAd!.size.height.toDouble(),
+                      child: AdWidget(ad: state.bannerAd!),
                     ),
                   )
                 : const SizedBox.shrink(),
