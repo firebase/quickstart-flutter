@@ -14,5 +14,5 @@ void main() async {
   // final camera = cameras.first;
 
   // runApp(App(camera: camera));
-  runApp(App());
+  runApp(const App());
 }
