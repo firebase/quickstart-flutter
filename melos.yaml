@@ -1,15 +1,23 @@
-name: quickstart-flutter
+name: quickstart_flutter
 repository: https://github.com/firebase/quickstart-flutter
 
 packages:
-- authentication/**
-- crashlytics/**
-- firestore/**
-- remote_config/**
-- storage/**
+  - admob
+  - authentication
+  - cloud_functions
+  - crashlytics
+  - dynamic_links
+  - firestore
+  - inappmessaging
+  - messaging
+  - performance
+  - remote_config
+  - storage
 
 scripts:
   analyze: melos exec -- "dart analyze ."
+  
+  format: melos exec -- "dart format ."
 
   lint:all:
     run: melos run analyze && melos run format
