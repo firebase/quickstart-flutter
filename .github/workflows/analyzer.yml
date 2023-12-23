@@ -12,8 +12,8 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - run: flutter pub get
-      - run: flutter pub global activate melos
+      - run: dart pub get
+      - run: dart pub global activate melos
       - run: melos bootstrap
       - uses: invertase/github-action-dart-analyzer@v1
         with:
