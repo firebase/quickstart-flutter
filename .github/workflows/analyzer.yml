@@ -15,3 +15,5 @@ jobs:
       - run: flutter pub global activate melos
       - run: melos bootstrap
       - uses: invertase/github-action-dart-analyzer@v1
+        with:
+          fatal-infos: true
