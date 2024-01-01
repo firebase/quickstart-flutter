@@ -3,6 +3,7 @@ repository: https://github.com/firebase/quickstart-flutter
 
 packages:
   - admob
+  - analytics
   - authentication
   - cloud_functions
   - crashlytics
