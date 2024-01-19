@@ -45,11 +45,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     ElevatedButton(
                       onPressed: () async {
-                        final _imageName = _image!.path.split('/').last;
+                        final imageName = _image!.path.split('/').last;
 
                         // create a new reference in your Firebase Cloud Storage
                         final newImageRef =
-                            _storage.child('images/$_imageName');
+                            _storage.child('images/$imageName');
 
                         try {
                           // put a file at this references location
