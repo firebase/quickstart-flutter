@@ -20,7 +20,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/material.dart';
 import 'package:performance_quickstart/firebase_status.dart';
-import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -29,14 +28,13 @@ import './firebase_options.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => ApplicationState(),
-    builder: (context, child) => const MyApp(),
-  ));
+  runApp(MyApp(state: ApplicationState()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.state});
+  
+  final ApplicationState state;
 
   // This widget is the root of your application.
   @override
@@ -55,15 +53,16 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Firebase Performance Monitoring'),
+      home: MyHomePage(title: 'Firebase Performance Monitoring', state: state),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, required this.state});
 
   final String title;
+  final ApplicationState state;
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +71,10 @@ class MyHomePage extends StatelessWidget {
         title: Text(title),
       ),
       body: Center(
-        child: Consumer<ApplicationState>(
-          builder: (context, appState, _) => Column(
+        child: ListenableBuilder
+          (
+          listenable: state,
+          builder: (context, child) => Column(
             children: <Widget>[
               const Image(
                   image:
@@ -81,18 +82,18 @@ class MyHomePage extends StatelessWidget {
               const Text('We are using Performance monitoring to monitor a '
                   'function that gets a random string.'),
               ElevatedButton(
-                onPressed: () => {appState.updateRandomString()},
+                onPressed: () => {state.updateRandomString()},
                 child: const Text('Get Random String'),
               ),
-              Text(appState.randomString),
+              Text(state.randomString),
               ElevatedButton(
-                onPressed: () => {appState.getFirebaseStatus()},
+                onPressed: () => {state.getFirebaseStatus()},
                 child: const Text('Get Firebase Status'),
               ),
               InkWell(
-                child: Text(appState.lastIncident),
-                onTap: () => appState
-                    ._launchInWebViewOrVC(Uri.parse(appState.lastIncidentUri)),
+                child: Text(state.lastIncident),
+                onTap: () => state
+                    ._launchInWebViewOrVC(Uri.parse(state.lastIncidentUri)),
               )
             ],
           ),
