@@ -32,7 +32,7 @@ const title = 'Firebase Dynamic Links Quickstart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.state});
-  
+
   final ApplicationState state;
 
   // This widget is the root of your application.
@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required this.title, required this.state});
-  
+
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.

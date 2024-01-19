@@ -49,11 +49,6 @@ analytics/ios/firebase_app_id_file.json
 analytics/ios/Runner/GoogleService-Info.plist
 analytics/macos/firebase_app_id_file.json
 analytics/macos/Runner/GoogleService-Info.plist
-analytics/lib/firebase_options.dart
-dynamic_links/lib/firebase_options.dart
-
-# ignore firebase_options.dart for all examples
-**/firebase_options.dart
 
 # ignore .firebaserc for all examples
 **/.firebaserc
