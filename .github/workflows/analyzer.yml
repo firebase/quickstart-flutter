@@ -1,0 +1,20 @@
+name: Dart Analyzer
+
+on:
+  pull_request:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: dart pub get
+      - run: dart pub global activate melos
+      - run: melos bootstrap
+      - uses: invertase/github-action-dart-analyzer@v1
+        with:
+          fatal-infos: true

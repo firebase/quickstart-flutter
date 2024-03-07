@@ -5,7 +5,8 @@ import '../utils.dart';
 typedef EmptyListActionButtonCallback = void Function();
 
 class EmptyListView extends StatelessWidget {
-  EmptyListView({
+  const EmptyListView({
+    super.key,
     required this.child,
     this.onPressed,
   });
@@ -25,7 +26,7 @@ class EmptyListView extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Container(
+          SizedBox(
             width: imageSize,
             height: imageSize,
             child: Image.asset(
@@ -34,8 +35,8 @@ class EmptyListView extends StatelessWidget {
           ),
           child,
           MaterialButton(
-            child: Text('ADD SOME'),
             onPressed: onPressed,
+            child: const Text('ADD SOME'),
           ),
         ],
       ),

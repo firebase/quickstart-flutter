@@ -19,7 +19,8 @@ import '../model/filter.dart';
 const _boldStyle = TextStyle(fontWeight: FontWeight.bold);
 
 class FilterBar extends StatelessWidget {
-  FilterBar({
+  const FilterBar({
+    super.key,
     required VoidCallback onPressed,
     required Filter filter,
   })  : _onPressed = onPressed,
@@ -31,10 +32,11 @@ class FilterBar extends StatelessWidget {
   List<InlineSpan> _buildCategorySpans(Filter filter) {
     final noneSelected = filter.isDefault || filter.category == null;
     return [
-      if (noneSelected) TextSpan(text: 'All Restaurants', style: _boldStyle),
+      if (noneSelected)
+        const TextSpan(text: 'All Restaurants', style: _boldStyle),
       if (!noneSelected) ...[
         TextSpan(text: '${filter.category}', style: _boldStyle),
-        TextSpan(text: ' places'),
+        const TextSpan(text: ' places'),
       ],
     ];
   }
@@ -42,7 +44,7 @@ class FilterBar extends StatelessWidget {
   List<InlineSpan> _buildPriceSpans(Filter filter) {
     return [
       if (filter.price != null) ...[
-        TextSpan(text: ' of '),
+        const TextSpan(text: ' of '),
         TextSpan(text: '\$' * filter.price!, style: _boldStyle),
       ],
     ];
@@ -58,7 +60,7 @@ class FilterBar extends StatelessWidget {
   List<InlineSpan> _buildCitySpans(Filter filter) {
     return [
       if (filter.city != null) ...[
-        TextSpan(text: 'in '),
+        const TextSpan(text: 'in '),
         TextSpan(text: '${filter.city} ', style: _boldStyle),
       ],
     ];
@@ -68,8 +70,8 @@ class FilterBar extends StatelessWidget {
     final orderedByRating = filter.sort == null || filter.sort == 'avgRating';
     return [
       ..._buildCitySpans(filter),
-      if (orderedByRating) TextSpan(text: 'by rating'),
-      if (!orderedByRating) TextSpan(text: 'by # reviews'),
+      if (orderedByRating) const TextSpan(text: 'by rating'),
+      if (!orderedByRating) const TextSpan(text: 'by # reviews'),
     ];
   }
 
@@ -77,28 +79,28 @@ class FilterBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       color: Colors.white,
-      padding: EdgeInsets.all(6),
+      padding: const EdgeInsets.all(6),
       onPressed: _onPressed,
       child: Row(
         children: [
-          Icon(Icons.filter_list),
+          const Icon(Icons.filter_list),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
+              padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   RichText(
                     overflow: TextOverflow.ellipsis,
                     text: TextSpan(
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme.of(context).textTheme.bodyMedium,
                       children: _buildTitleSpans(_filter),
                     ),
                   ),
                   RichText(
                     overflow: TextOverflow.ellipsis,
                     text: TextSpan(
-                      style: Theme.of(context).textTheme.caption,
+                      style: Theme.of(context).textTheme.bodySmall,
                       children: _buildSubtitleSpans(_filter),
                     ),
                   ),

@@ -16,7 +16,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 // Background message handler :
@@ -34,14 +33,13 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => ApplicationState(),
-    builder: (context, child) => const MyApp(),
-  ));
+  runApp(MyApp(state: ApplicationState()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.state});
+
+  final ApplicationState state;
 
   // This widget is the root of your application.
   @override
@@ -50,13 +48,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Firebase Cloud Messaging'),
+      home: MyHomePage(title: 'Firebase Cloud Messaging', state: state),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, required this.state});
+
+  final ApplicationState state;
 
   final String title;
 
@@ -67,13 +67,14 @@ class MyHomePage extends StatelessWidget {
         title: Text(title),
       ),
       body: Center(
-        child: Consumer<ApplicationState>(
-          builder: (context, appState, _) => Column(
+        child: ListenableBuilder(
+          listenable: state,
+          builder: (context, child) => Column(
             children: <Widget>[
               const Image(
                   image: AssetImage('assets/fcm_horizontal_lockup_light.png')),
               Visibility(
-                visible: appState.messagingAllowed,
+                visible: state.messagingAllowed,
                 child: Column(
                   children: [
                     const Padding(
@@ -86,17 +87,17 @@ class MyHomePage extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text('FCM Token: ${appState.fcmToken}'),
+                      child: Text('FCM Token: ${state.fcmToken}'),
                     ),
                     ElevatedButton(
-                      onPressed: () => appState.subscribeToTopic('weather'),
+                      onPressed: () => state.subscribeToTopic('weather'),
                       child: const Text('Subscribe To Weather'),
                     ),
                   ],
                 ),
               ),
               Visibility(
-                visible: !appState.messagingAllowed,
+                visible: !state.messagingAllowed,
                 child: Column(
                   children: [
                     const Padding(
@@ -107,7 +108,7 @@ class MyHomePage extends StatelessWidget {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () => appState.requestMessagingPermission(),
+                      onPressed: () => state.requestMessagingPermission(),
                       child: const Text('Request Notification Permission'),
                     ),
                   ],
@@ -129,9 +130,11 @@ class ApplicationState extends ChangeNotifier {
   late FirebaseMessaging firebaseMessaging;
 
   String _fcmToken = '';
+
   String get fcmToken => _fcmToken;
 
   bool _messagingAllowed = false;
+
   bool get messagingAllowed => _messagingAllowed;
 
   Future<void> init() async {

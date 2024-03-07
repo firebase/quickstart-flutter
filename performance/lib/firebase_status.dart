@@ -7,7 +7,7 @@ class ResponseJson {
     if (json['response'] != null) {
       response = <FirebaseStatus>[];
       json['response'].forEach((v) {
-        response!.add(new FirebaseStatus.fromJson(v));
+        response!.add(FirebaseStatus.fromJson(v));
       });
     }
   }
@@ -58,11 +58,11 @@ class FirebaseStatus {
     if (json['updates'] != null) {
       updates = <Updates>[];
       json['updates'].forEach((v) {
-        updates!.add(new Updates.fromJson(v));
+        updates!.add(Updates.fromJson(v));
       });
     }
     mostRecentUpdate = json['most_recent_update'] != null
-        ? new Updates.fromJson(json['most_recent_update'])
+        ? Updates.fromJson(json['most_recent_update'])
         : null;
     statusImpact = json['status_impact'];
     severity = json['severity'];
@@ -71,36 +71,36 @@ class FirebaseStatus {
     if (json['affected_products'] != null) {
       affectedProducts = <AffectedProducts>[];
       json['affected_products'].forEach((v) {
-        affectedProducts!.add(new AffectedProducts.fromJson(v));
+        affectedProducts!.add(AffectedProducts.fromJson(v));
       });
     }
     uri = json['uri'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['number'] = this.number;
-    data['begin'] = this.begin;
-    data['created'] = this.created;
-    data['end'] = this.end;
-    data['modified'] = this.modified;
-    data['external_desc'] = this.externalDesc;
-    if (this.updates != null) {
-      data['updates'] = this.updates!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['number'] = number;
+    data['begin'] = begin;
+    data['created'] = created;
+    data['end'] = end;
+    data['modified'] = modified;
+    data['external_desc'] = externalDesc;
+    if (updates != null) {
+      data['updates'] = updates!.map((v) => v.toJson()).toList();
     }
-    if (this.mostRecentUpdate != null) {
-      data['most_recent_update'] = this.mostRecentUpdate!.toJson();
+    if (mostRecentUpdate != null) {
+      data['most_recent_update'] = mostRecentUpdate!.toJson();
     }
-    data['status_impact'] = this.statusImpact;
-    data['severity'] = this.severity;
-    data['service_key'] = this.serviceKey;
-    data['service_name'] = this.serviceName;
-    if (this.affectedProducts != null) {
+    data['status_impact'] = statusImpact;
+    data['severity'] = severity;
+    data['service_key'] = serviceKey;
+    data['service_name'] = serviceName;
+    if (affectedProducts != null) {
       data['affected_products'] =
-          this.affectedProducts!.map((v) => v.toJson()).toList();
+          affectedProducts!.map((v) => v.toJson()).toList();
     }
-    data['uri'] = this.uri;
+    data['uri'] = uri;
     return data;
   }
 }
@@ -123,12 +123,12 @@ class Updates {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['created'] = this.created;
-    data['modified'] = this.modified;
-    data['when'] = this.when;
-    data['text'] = this.text;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['created'] = created;
+    data['modified'] = modified;
+    data['when'] = when;
+    data['text'] = text;
+    data['status'] = status;
     return data;
   }
 }
@@ -145,9 +145,9 @@ class AffectedProducts {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    data['id'] = id;
     return data;
   }
 }

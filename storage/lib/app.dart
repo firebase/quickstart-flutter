@@ -3,7 +3,7 @@ import 'package:storage/src/page/home.dart';
 import 'package:storage/src/page/library.dart';
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
   // const App({Key? key, required this.camera}) : super(key: key);
 
   @override
@@ -11,7 +11,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => HomeScreen(),
+        '/': (context) => const HomeScreen(),
         '/library': (context) => const LibraryPage()
       },
     );

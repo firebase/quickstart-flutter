@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 /// Retrieving files from Firebase Storage is done in this widget
 class LibraryPage extends StatefulWidget {
-  const LibraryPage({Key? key}) : super(key: key);
+  const LibraryPage({super.key});
 
   @override
   State<LibraryPage> createState() => _LibraryPageState();
