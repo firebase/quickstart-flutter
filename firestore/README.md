@@ -48,6 +48,13 @@ service cloud.firestore {
   **Add Some** from the overflow menu to add some
   new entries.
 
+### Run the App Web
+
+Don't forget to run `flutterfire configure` to set up your app's FirebaseOptions
+
+In order to display images without a CORS exception, use the --web-renderer html flag:
+`flutter run -d chrome --web-renderer html`
+
 ### Result
 
 <img src="./assets/home.png" height="534" width="300"/>
