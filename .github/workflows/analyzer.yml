@@ -12,9 +12,8 @@ jobs:
       - uses: subosito/flutter-action@2783a3f08e1baf891508463f8c6653c258246225
         with:
           channel: stable
-      - run: dart pub get
-      - run: dart pub global activate melos
-      - run: melos bootstrap
-      - uses: invertase/github-action-dart-analyzer@v3
+      - uses: bluefireteam/melos-action@5a8367ec4b9942d712528c398ff3f996e03bc230
         with:
-          fatal-infos: true
+          melos-version: '5.3.0'
+      - name: 'Run Analyze'
+        run: melos analyze-ci
