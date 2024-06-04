@@ -93,48 +93,22 @@ class _ChatWidgetState extends State<ChatWidget> {
       _functionCallModel = FirebaseVertexAI.instance.generativeModel(
         model: 'gemini-1.5-flash-preview-0514',
         tools: [
-          Tool(functionDeclarations: [exchangeRateTool]),
+          Tool(functionDeclarations: [
+            FunctionDeclaration(
+                'fetchCurrentWeather',
+                'Returns the weather in a given location.',
+                Schema(SchemaType.object, properties: {
+                  'location': Schema(SchemaType.string,
+                      description: 'A location name, like "London".'),
+                }, requiredProperties: [
+                  'location'
+                ]))
+          ])
         ],
       );
       _chat = _model.startChat();
     });
   }
-
-  Future<Map<String, Object?>> findExchangeRate(
-    Map<String, Object?> arguments,
-  ) async =>
-      // This hypothetical API returns a JSON such as:
-      // {"base":"USD","date":"2024-04-17","rates":{"SEK": 0.091}}
-      {
-        'date': arguments['currencyDate'],
-        'base': arguments['currencyFrom'],
-        'rates': <String, Object?>{arguments['currencyTo']! as String: 0.091},
-      };
-
-  final exchangeRateTool = FunctionDeclaration(
-    'findExchangeRate',
-    'Returns the exchange rate between currencies on given date.',
-    Schema(
-      SchemaType.object,
-      properties: {
-        'currencyDate': Schema(
-          SchemaType.string,
-          description: 'A date in YYYY-MM-DD format or '
-              'the exact value "latest" if a time period is not specified.',
-        ),
-        'currencyFrom': Schema(
-          SchemaType.string,
-          description: 'The currency code of the currency to convert from, '
-              'such as "USD".',
-        ),
-        'currencyTo': Schema(
-          SchemaType.string,
-          description: 'The currency code of the currency to convert to, '
-              'such as "USD".',
-        ),
-      },
-    ),
-  );
 
   Future<void> initFirebase() async {
     await Firebase.initializeApp();
@@ -223,20 +197,6 @@ class _ChatWidgetState extends State<ChatWidget> {
                       : null,
                   icon: Icon(
                     Icons.numbers,
-                    color: _loading
-                        ? Theme.of(context).colorScheme.secondary
-                        : Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                IconButton(
-                  tooltip: 'function calling Test',
-                  onPressed: !_loading
-                      ? () async {
-                          await _testFunctionCalling();
-                        }
-                      : null,
-                  icon: Icon(
-                    Icons.functions,
                     color: _loading
                         ? Theme.of(context).colorScheme.secondary
                         : Theme.of(context).colorScheme.primary,
@@ -423,43 +383,6 @@ class _ChatWidgetState extends State<ChatWidget> {
         _loading = false;
       });
       _textFieldFocus.requestFocus();
-    }
-  }
-
-  Future<void> _testFunctionCalling() async {
-    setState(() {
-      _loading = true;
-    });
-    final chat = _functionCallModel.startChat();
-    const prompt = 'How much is 50 US dollars worth in Swedish krona?';
-
-    // Send the message to the generative model.
-    var response = await chat.sendMessage(Content.text(prompt));
-
-    final functionCalls = response.functionCalls.toList();
-    // When the model response with a function call, invoke the function.
-    if (functionCalls.isNotEmpty) {
-      final functionCall = functionCalls.first;
-      final result = switch (functionCall.name) {
-        // Forward arguments to the hypothetical API.
-        'findExchangeRate' => await findExchangeRate(functionCall.args),
-        // Throw an exception if the model attempted to call a function that was
-        // not declared.
-        _ => throw UnimplementedError(
-            'Function not implemented: ${functionCall.name}',
-          )
-      };
-      // Send the response to the model so that it can use the result to generate
-      // text for the user.
-      response = await chat
-          .sendMessage(Content.functionResponse(functionCall.name, result));
-    }
-    // When the model responds with non-null text content, print it.
-    if (response.text case final text?) {
-      _generatedContent.add((image: null, text: text, fromUser: false));
-      setState(() {
-        _loading = false;
-      });
     }
   }
 
