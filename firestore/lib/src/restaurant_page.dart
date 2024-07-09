@@ -43,8 +43,9 @@ class _RestaurantPageState extends State<RestaurantPage> {
   }
 
   void _initAsyncData() async {
+    // widget is null or something
     final reviews = await _firestoreRestaurantProvider
-        .getReviewsForRestaurant(widget.restaurant.id!);
+        .getReviewsForRestaurant("wARqBbQnTHaxV8Tig7FM");
 
     setState(() {
       _isLoading = false;
