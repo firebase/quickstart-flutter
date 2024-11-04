@@ -1,7 +1,7 @@
 part of movies_connector;
 
 class SearchAllVariablesBuilder {
-  Optional<String?> _input = Optional.optional(nativeFromJson, nativeToJson);
+  Optional<String> _input = Optional.optional(nativeFromJson, nativeToJson);
 int minYear;
 int maxYear;
 double minRating;
@@ -856,7 +856,7 @@ return this;
 
   class SearchAllVariables {
   
-   late Optional<String?>input;
+   late Optional<String>input;
 
   
    int minYear;

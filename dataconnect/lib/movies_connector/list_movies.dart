@@ -1,9 +1,9 @@
 part of movies_connector;
 
 class ListMoviesVariablesBuilder {
-  Optional<OrderDirection?> _orderByRating = Optional.optional(orderDirectionDeserializer, enumSerializer);
-Optional<OrderDirection?> _orderByReleaseYear = Optional.optional(orderDirectionDeserializer, enumSerializer);
-Optional<int?> _limit = Optional.optional(nativeFromJson, nativeToJson);
+  Optional<OrderDirection> _orderByRating = Optional.optional(orderDirectionDeserializer, enumSerializer);
+Optional<OrderDirection> _orderByReleaseYear = Optional.optional(orderDirectionDeserializer, enumSerializer);
+Optional<int> _limit = Optional.optional(nativeFromJson, nativeToJson);
 
   
   FirebaseDataConnect _dataConnect;
@@ -313,13 +313,13 @@ return this;
 
   class ListMoviesVariables {
   
-   late Optional<OrderDirection?>orderByRating;
+   late Optional<OrderDirection>orderByRating;
 
   
-   late Optional<OrderDirection?>orderByReleaseYear;
+   late Optional<OrderDirection>orderByReleaseYear;
 
   
-   late Optional<int?>limit;
+   late Optional<int>limit;
 
   
   
