@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Firebase Data Connect',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Data Connect Flutter'),
     );
   }
 }
@@ -65,7 +65,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<ListMoviesMovies> _movies = [];
+  List<ListMoviesMovies> _topMovies = [];
+  List<ListMoviesMovies> _latestMovies = [];
+
   @override
   void initState() {
     super.initState();
@@ -74,13 +76,26 @@ class _MyHomePageState extends State<MyHomePage> {
     /// comes back from the server.
     // MoviesConnector.instance.dataConnect
     //     .useDataConnectEmulator('localhost', 9399);
-    MoviesConnector.instance.listMovies().execute().then((res) {
+    MoviesConnector.instance
+        .listMovies()
+        .orderByRating(OrderDirection.DESC)
+        .limit(10)
+        .execute()
+        .then((res) {
       setState(() {
-        _movies = res.data.movies;
+        _topMovies = res.data.movies;
       });
     });
-    MoviesConnector.instance.listMovies().ref().execute().then(() {} as FutureOr
-        Function(QueryResult<ListMoviesData, ListMoviesVariables> value));
+
+    MoviesConnector.instance
+        .listMovies()
+        .orderByReleaseYear(OrderDirection.DESC)
+        .execute()
+        .then((res) {
+      setState(() {
+        _latestMovies = res.data.movies;
+      });
+    });
   }
 
   void _refreshData() {
@@ -91,71 +106,74 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: const Text('Firebase Data Connect Flutter'),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      body: SingleChildScrollView(
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            FloatingActionButton(
-              onPressed: _refreshData,
-              tooltip: 'Refresh',
-              child: const Icon(Icons.refresh),
-            ), // This trailing comma makes auto-formatting nicer for build methods.
-            Center(
-              child: Text(_movies.length > 1
-                  ? "Congratulations! You have implemented all of the TODOs!"
-                  : "If you're seeing this, open lib/main.dart and implement the TODOs"),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                      child: Container(
-                          child: Card(
-                              child: Padding(
-                                  padding: EdgeInsets.all(50.0),
-                                  child: Text(
-                                    _movies[index].title,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  )))));
-                },
-                itemCount: _movies.length,
-              ),
-            )
+            _buildMovieList('Top 10 Movies', _topMovies),
+            _buildMovieList('Latest Movies', _latestMovies),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildMovieList(String title, List<ListMoviesMovies> movies) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            title,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(
+          height: 300, // Adjust the height as needed
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: movies.length,
+            itemBuilder: (context, index) {
+              return _buildMovieItem(movies[index]);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMovieItem(ListMoviesMovies movie) {
+    return Flexible(
+        child: Container(
+      width: 150, // Adjust the width as needed
+      padding: const EdgeInsets.all(4.0),
+      child: Card(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AspectRatio(
+              aspectRatio: 9 / 16, // 9:16 aspect ratio for the image
+              child: Image.network(
+                movie.imageUrl,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                movie.title,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 }
