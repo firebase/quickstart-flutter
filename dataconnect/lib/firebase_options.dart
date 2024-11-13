@@ -25,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -47,28 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAQ0QFQQ_e4TQv6mzRe6QjE5H4pvlsuRSI',
-    appId: '1:474248463284:web:c6676b8628d2086297e8e1',
-    messagingSenderId: '474248463284',
-    projectId: 'vertex-ai-devrel',
-    authDomain: 'vertex-ai-devrel.firebaseapp.com',
-    storageBucket: 'vertex-ai-devrel.appspot.com',
+    apiKey: 'AIzaSyDP_NulZ2xnDHFRAbBX45RPqkpzXfGjKJI',
+    appId: '1:731568610039:web:2896847d0f5655fb7251f2',
+    messagingSenderId: '731568610039',
+    projectId: 'quickstart-flutter-cc624',
+    authDomain: 'quickstart-flutter-cc624.firebaseapp.com',
+    storageBucket: 'quickstart-flutter-cc624.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBxNnSTRdHJ1bo0paLyjulOV6CbzSecaCQ',
-    appId: '1:474248463284:android:23f58dd553f5331f97e8e1',
-    messagingSenderId: '474248463284',
-    projectId: 'vertex-ai-devrel',
-    storageBucket: 'vertex-ai-devrel.appspot.com',
+    apiKey: 'AIzaSyA45BWLEXFb2SRqtMu6LoCL2f53k-6_0GM',
+    appId: '1:731568610039:android:2fda8b27330be9447251f2',
+    messagingSenderId: '731568610039',
+    projectId: 'quickstart-flutter-cc624',
+    storageBucket: 'quickstart-flutter-cc624.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDpBD_g5f6lX72JnnPfke9MeWqr8SMEysg',
-    appId: '1:474248463284:ios:1bee535bf196651197e8e1',
-    messagingSenderId: '474248463284',
-    projectId: 'vertex-ai-devrel',
-    storageBucket: 'vertex-ai-devrel.appspot.com',
+    apiKey: 'AIzaSyCqVWdSdrCPRZ6Ld_6j1hjpWfPIUg-7_5I',
+    appId: '1:731568610039:ios:e78b43f1d75a77d87251f2',
+    messagingSenderId: '731568610039',
+    projectId: 'quickstart-flutter-cc624',
+    storageBucket: 'quickstart-flutter-cc624.firebasestorage.app',
     iosBundleId: 'com.example.dataconnect',
   );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyCqVWdSdrCPRZ6Ld_6j1hjpWfPIUg-7_5I',
+    appId: '1:731568610039:ios:e78b43f1d75a77d87251f2',
+    messagingSenderId: '731568610039',
+    projectId: 'quickstart-flutter-cc624',
+    storageBucket: 'quickstart-flutter-cc624.firebasestorage.app',
+    iosBundleId: 'com.example.dataconnect',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyDP_NulZ2xnDHFRAbBX45RPqkpzXfGjKJI',
+    appId: '1:731568610039:web:3c1e404f955f0b467251f2',
+    messagingSenderId: '731568610039',
+    projectId: 'quickstart-flutter-cc624',
+    authDomain: 'quickstart-flutter-cc624.firebaseapp.com',
+    storageBucket: 'quickstart-flutter-cc624.firebasestorage.app',
+  );
+
 }

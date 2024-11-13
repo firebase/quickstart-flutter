@@ -1,1 +1,44 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"vertex-ai-devrel","appId":"1:474248463284:android:23f58dd553f5331f97e8e1","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"vertex-ai-devrel","appId":"1:474248463284:ios:1bee535bf196651197e8e1","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"vertex-ai-devrel","configurations":{"android":"1:474248463284:android:23f58dd553f5331f97e8e1","ios":"1:474248463284:ios:1bee535bf196651197e8e1","web":"1:474248463284:web:c6676b8628d2086297e8e1"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "quickstart-flutter-cc624",
+          "appId": "1:731568610039:android:2fda8b27330be9447251f2",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "quickstart-flutter-cc624",
+          "appId": "1:731568610039:ios:e78b43f1d75a77d87251f2",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "quickstart-flutter-cc624",
+          "configurations": {
+            "android": "1:731568610039:android:2fda8b27330be9447251f2",
+            "ios": "1:731568610039:ios:e78b43f1d75a77d87251f2",
+            "macos": "1:731568610039:ios:e78b43f1d75a77d87251f2",
+            "web": "1:731568610039:web:2896847d0f5655fb7251f2",
+            "windows": "1:731568610039:web:3c1e404f955f0b467251f2"
+          }
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "quickstart-flutter-cc624",
+          "appId": "1:731568610039:ios:e78b43f1d75a77d87251f2",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      }
+    }
+  },
+  "dataconnect": {
+    "source": "dataconnect"
+  }
+}
