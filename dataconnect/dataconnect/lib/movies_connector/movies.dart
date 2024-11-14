@@ -16,6 +16,8 @@ part 'delete_review.dart';
 
 part 'list_movies.dart';
 
+part 'list_genres.dart';
+
 part 'get_movie_by_id.dart';
 
 part 'get_actor_by_id.dart';
@@ -82,6 +84,11 @@ class MoviesConnector {
   
   ListMoviesVariablesBuilder listMovies () {
     return ListMoviesVariablesBuilder(dataConnect, );
+  }
+  
+  
+  ListGenresVariablesBuilder listGenres () {
+    return ListGenresVariablesBuilder(dataConnect, );
   }
   
   

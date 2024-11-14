@@ -1,36 +1,19 @@
-import 'dart:async';
-
-import 'package:firebase_data_connect/firebase_data_connect.dart';
+import 'package:dataconnect/router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
 import 'firebase_options.dart';
-import 'movie_detail.dart';
 import 'movies_connector/movies.dart';
-
-final _router = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => MyHomePage(),
-    ),
-    GoRoute(
-      path: '/movies/:movieId',
-      builder: (context, state) =>
-          MovieDetail(id: state.pathParameters['movieId']!),
-    )
-  ],
-  redirect: (context, state) {
-    print(state.path);
-    return null;
-  },
-);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  MoviesConnector.instance.dataConnect
+      .useDataConnectEmulator('localhost', 9399);
+  FirebaseAuth.instance.useAuthEmulator('localhost', 9400);
   runApp(const MyApp());
 }
 
@@ -42,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       theme: ThemeData.dark(),
-      routerConfig: _router,
+      routerConfig: router,
     );
   }
 }
@@ -73,8 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     /// TODO: Uncomment the following lines to update the movies state when data
     /// comes back from the server.
-    MoviesConnector.instance.dataConnect
-        .useDataConnectEmulator('localhost', 9399);
+
     MoviesConnector.instance
         .listMovies()
         .orderByRating(OrderDirection.DESC)

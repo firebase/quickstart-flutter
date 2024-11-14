@@ -40,5 +40,13 @@
   },
   "dataconnect": {
     "source": "dataconnect"
+  },
+  "emulators": {
+    "dataconnect": {
+      "port": 9399
+    },
+    "auth": {
+      "port": 9400
+    }
   }
 }

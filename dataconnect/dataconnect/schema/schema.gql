@@ -78,6 +78,13 @@ type MovieActor @table(key: ["movie", "actor"]) {
   role: String! # "main" or "supporting"
 }
 
+type Genre @view(sql: """
+SELECT DISTINCT genre from "movie"
+"""
+) {
+  genre: String
+}
+
 # Join table for many-to-many relationship for users and favorite movies
 # TODO: Fill out FavoriteMovie table
 type FavoriteMovie

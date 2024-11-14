@@ -17,6 +17,32 @@ query ListMovies($orderByRating: OrderDirection, $orderByReleaseYear: OrderDirec
     description
   }
 }
+query ListMoviesByGenre($genre: String!, $orderByRating: OrderDirection, $orderByReleaseYear: OrderDirection, $limit: Int) @auth(level: PUBLIC) {
+  movies(where: {
+    genre: {
+      eq: $genre
+    }
+  }, orderBy: [
+      { rating: $orderByRating },
+      { releaseYear: $orderByReleaseYear }
+    ]
+    limit: $limit) {
+    id
+    title
+    imageUrl
+    releaseYear
+    genre
+    rating
+    tags
+    description
+  }
+}
+
+query ListGenres @auth(level: PUBLIC) {
+  genres {
+    genre
+  }
+}
 
 # Get movie by id
 query GetMovieById($id: UUID!) @auth(level: PUBLIC) {
