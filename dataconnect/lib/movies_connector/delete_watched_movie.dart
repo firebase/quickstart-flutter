@@ -1,26 +1,26 @@
 part of movies_connector;
 
-class DeleteReviewVariablesBuilder {
+class DeleteWatchedMovieVariablesBuilder {
   String movieId;
 
   
   FirebaseDataConnect _dataConnect;
   
-  DeleteReviewVariablesBuilder(this._dataConnect, {required String this.movieId,});
-  Deserializer<DeleteReviewData> dataDeserializer = (dynamic json)  => DeleteReviewData.fromJson(jsonDecode(json));
-  Serializer<DeleteReviewVariables> varsSerializer = (DeleteReviewVariables vars) => jsonEncode(vars.toJson());
-  Future<OperationResult<DeleteReviewData, DeleteReviewVariables>> execute() {
+  DeleteWatchedMovieVariablesBuilder(this._dataConnect, {required String this.movieId,});
+  Deserializer<DeleteWatchedMovieData> dataDeserializer = (dynamic json)  => DeleteWatchedMovieData.fromJson(jsonDecode(json));
+  Serializer<DeleteWatchedMovieVariables> varsSerializer = (DeleteWatchedMovieVariables vars) => jsonEncode(vars.toJson());
+  Future<OperationResult<DeleteWatchedMovieData, DeleteWatchedMovieVariables>> execute() {
     return this.ref().execute();
   }
-  MutationRef<DeleteReviewData, DeleteReviewVariables> ref() {
-    DeleteReviewVariables vars=DeleteReviewVariables(movieId: movieId,);
+  MutationRef<DeleteWatchedMovieData, DeleteWatchedMovieVariables> ref() {
+    DeleteWatchedMovieVariables vars=DeleteWatchedMovieVariables(movieId: movieId,);
 
-    return _dataConnect.mutation("DeleteReview", dataDeserializer, varsSerializer, vars);
+    return _dataConnect.mutation("DeleteWatchedMovie", dataDeserializer, varsSerializer, vars);
   }
 }
 
 
-  class DeleteReviewReviewDelete {
+  class DeleteWatchedMovieWatchedMovieDelete {
   
    String userId;
 
@@ -32,7 +32,7 @@ class DeleteReviewVariablesBuilder {
     
     
     
-    DeleteReviewReviewDelete.fromJson(dynamic json):
+    DeleteWatchedMovieWatchedMovieDelete.fromJson(dynamic json):
         userId = 
  
     nativeFromJson<String>(json['userId'])
@@ -79,7 +79,7 @@ class DeleteReviewVariablesBuilder {
     return json;
   }
 
-  DeleteReviewReviewDelete({
+  DeleteWatchedMovieWatchedMovieDelete({
     
       required this.userId,
     
@@ -90,19 +90,19 @@ class DeleteReviewVariablesBuilder {
 
 
 
-  class DeleteReviewData {
+  class DeleteWatchedMovieData {
   
-   DeleteReviewReviewDelete? review_delete;
+   DeleteWatchedMovieWatchedMovieDelete? watched_movie_delete;
 
   
   
     
     
     
-    DeleteReviewData.fromJson(dynamic json):
-        review_delete = json['review_delete'] == null ? null : 
+    DeleteWatchedMovieData.fromJson(dynamic json):
+        watched_movie_delete = json['watched_movie_delete'] == null ? null : 
  
-    DeleteReviewReviewDelete.fromJson(json['review_delete'])
+    DeleteWatchedMovieWatchedMovieDelete.fromJson(json['watched_movie_delete'])
   
 
         
@@ -118,10 +118,10 @@ class DeleteReviewVariablesBuilder {
     Map<String, dynamic> json = {};
     
       
-        if (review_delete != null) {
-          json['review_delete'] = 
+        if (watched_movie_delete != null) {
+          json['watched_movie_delete'] = 
   
-      review_delete!.toJson()
+      watched_movie_delete!.toJson()
   
 ;
         }
@@ -130,16 +130,16 @@ class DeleteReviewVariablesBuilder {
     return json;
   }
 
-  DeleteReviewData({
+  DeleteWatchedMovieData({
     
-       this.review_delete,
+       this.watched_movie_delete,
     
   });
 }
 
 
 
-  class DeleteReviewVariables {
+  class DeleteWatchedMovieVariables {
   
    String movieId;
 
@@ -150,7 +150,7 @@ class DeleteReviewVariablesBuilder {
      @Deprecated('fromJson is deprecated for Variable classes as they are no longer required for deserialization.')
     
     
-    DeleteReviewVariables.fromJson(Map<String, dynamic> json):
+    DeleteWatchedMovieVariables.fromJson(Map<String, dynamic> json):
         movieId = 
  
     nativeFromJson<String>(json['movieId'])
@@ -179,7 +179,7 @@ class DeleteReviewVariablesBuilder {
     return json;
   }
 
-  DeleteReviewVariables({
+  DeleteWatchedMovieVariables({
     
       required this.movieId,
     

@@ -1,3 +1,13 @@
+extend type FavoriteActor {
+  """
+  ✨ Implicit foreign key field based on `FavoriteActor`.`user`. It must match the value of `User`.`id`. See `@ref` for how to customize it.
+  """
+  userId: String! @fdc_generated(from: "FavoriteActor.user", purpose: IMPLICIT_REF_FIELD)
+  """
+  ✨ Implicit foreign key field based on `FavoriteActor`.`actor`. It must match the value of `Actor`.`id`. See `@ref` for how to customize it.
+  """
+  actorId: UUID! @fdc_generated(from: "FavoriteActor.actor", purpose: IMPLICIT_REF_FIELD)
+}
 extend type FavoriteMovie {
   """
   ✨ Implicit foreign key field based on `FavoriteMovie`.`user`. It must match the value of `User`.`id`. See `@ref` for how to customize it.
@@ -37,4 +47,14 @@ extend type Review {
   ✨ Implicit foreign key field based on `Review`.`user`. It must match the value of `User`.`id`. See `@ref` for how to customize it.
   """
   userId: String! @fdc_generated(from: "Review.user", purpose: IMPLICIT_REF_FIELD)
+}
+extend type WatchedMovie {
+  """
+  ✨ Implicit foreign key field based on `WatchedMovie`.`user`. It must match the value of `User`.`id`. See `@ref` for how to customize it.
+  """
+  userId: String! @fdc_generated(from: "WatchedMovie.user", purpose: IMPLICIT_REF_FIELD)
+  """
+  ✨ Implicit foreign key field based on `WatchedMovie`.`movie`. It must match the value of `Movie`.`id`. See `@ref` for how to customize it.
+  """
+  movieId: UUID! @fdc_generated(from: "WatchedMovie.movie", purpose: IMPLICIT_REF_FIELD)
 }

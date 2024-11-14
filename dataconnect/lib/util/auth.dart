@@ -1,9 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Auth {
-  static isLoggedIn() async {
+  static Future<bool> isLoggedIn() async {
     User? user = await FirebaseAuth.instance.authStateChanges().first;
-    return user != null;
+    if (user == null) {
+      return false;
+    }
+    try {
+      String? idToken = await user.getIdToken();
+      print(idToken);
+      return idToken != null;
+    } catch (_) {
+      return false;
+    }
   }
 
   static getCurrentUser() {

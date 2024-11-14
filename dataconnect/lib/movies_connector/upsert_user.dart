@@ -2,18 +2,19 @@ part of movies_connector;
 
 class UpsertUserVariablesBuilder {
   String username;
+String name;
 
   
   FirebaseDataConnect _dataConnect;
   
-  UpsertUserVariablesBuilder(this._dataConnect, {required String this.username,});
+  UpsertUserVariablesBuilder(this._dataConnect, {required String this.username,required String this.name,});
   Deserializer<UpsertUserData> dataDeserializer = (dynamic json)  => UpsertUserData.fromJson(jsonDecode(json));
   Serializer<UpsertUserVariables> varsSerializer = (UpsertUserVariables vars) => jsonEncode(vars.toJson());
   Future<OperationResult<UpsertUserData, UpsertUserVariables>> execute() {
     return this.ref().execute();
   }
   MutationRef<UpsertUserData, UpsertUserVariables> ref() {
-    UpsertUserVariables vars=UpsertUserVariables(username: username,);
+    UpsertUserVariables vars=UpsertUserVariables(username: username,name: name,);
 
     return _dataConnect.mutation("UpsertUser", dataDeserializer, varsSerializer, vars);
   }
@@ -119,6 +120,9 @@ class UpsertUserVariablesBuilder {
    String username;
 
   
+   String name;
+
+  
   
     
     
@@ -132,8 +136,18 @@ class UpsertUserVariablesBuilder {
   
 
         
+        ,
+      
+        name = 
+ 
+    nativeFromJson<String>(json['name'])
+  
+
+        
         
        {
+      
+        
       
         
       
@@ -151,12 +165,22 @@ class UpsertUserVariablesBuilder {
 ;
       
     
+      
+      json['name'] = 
+  
+    nativeToJson<String>(name)
+    
+;
+      
+    
     return json;
   }
 
   UpsertUserVariables({
     
       required this.username,
+    
+      required this.name,
     
   });
 }

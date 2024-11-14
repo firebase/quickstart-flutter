@@ -19,6 +19,20 @@ extend type Query {
     first: Actor_FirstRow
   ): Actor @fdc_generated(from: "Actor", purpose: QUERY_SINGLE)
   """
+  ✨ Look up a single `FavoriteActor` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  favorite_actor(
+    """
+    The key used to identify the object.
+    """
+    key: FavoriteActor_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: FavoriteActor_FirstRow
+  ): FavoriteActor @fdc_generated(from: "FavoriteActor", purpose: QUERY_SINGLE)
+  """
   ✨ Look up a single `FavoriteMovie` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
   """
   favorite_movie(
@@ -123,6 +137,20 @@ extend type Query {
     first: User_FirstRow
   ): User @fdc_generated(from: "User", purpose: QUERY_SINGLE)
   """
+  ✨ Look up a single `WatchedMovie` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  watched_movie(
+    """
+    The key used to identify the object.
+    """
+    key: WatchedMovie_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: WatchedMovie_FirstRow
+  ): WatchedMovie @fdc_generated(from: "WatchedMovie", purpose: QUERY_SINGLE)
+  """
   ✨ List `Actor` objects in the table, optionally filtered by `where` conditions.
   """
   actors(
@@ -146,6 +174,30 @@ extend type Query {
     """
     limit: Int = 100
   ): [Actor!]! @fdc_generated(from: "Actor", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `FavoriteActor` objects in the table, optionally filtered by `where` conditions.
+  """
+  favorite_actors(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: FavoriteActor_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [FavoriteActor_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+  ): [FavoriteActor!]! @fdc_generated(from: "FavoriteActor", purpose: QUERY_MULTIPLE)
   """
   ✨ List `FavoriteMovie` objects in the table, optionally filtered by `where` conditions.
   """
@@ -314,4 +366,28 @@ extend type Query {
     """
     limit: Int = 100
   ): [User!]! @fdc_generated(from: "User", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `WatchedMovie` objects in the table, optionally filtered by `where` conditions.
+  """
+  watched_movies(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: WatchedMovie_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [WatchedMovie_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+  ): [WatchedMovie!]! @fdc_generated(from: "WatchedMovie", purpose: QUERY_MULTIPLE)
 }

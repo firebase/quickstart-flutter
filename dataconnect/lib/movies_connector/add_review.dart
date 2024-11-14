@@ -22,7 +22,7 @@ String reviewText;
 }
 
 
-  class AddReviewReviewInsert {
+  class AddReviewReviewUpsert {
   
    String userId;
 
@@ -34,7 +34,7 @@ String reviewText;
     
     
     
-    AddReviewReviewInsert.fromJson(dynamic json):
+    AddReviewReviewUpsert.fromJson(dynamic json):
         userId = 
  
     nativeFromJson<String>(json['userId'])
@@ -81,7 +81,7 @@ String reviewText;
     return json;
   }
 
-  AddReviewReviewInsert({
+  AddReviewReviewUpsert({
     
       required this.userId,
     
@@ -94,7 +94,7 @@ String reviewText;
 
   class AddReviewData {
   
-   AddReviewReviewInsert review_insert;
+   AddReviewReviewUpsert review_upsert;
 
   
   
@@ -102,9 +102,9 @@ String reviewText;
     
     
     AddReviewData.fromJson(dynamic json):
-        review_insert = 
+        review_upsert = 
  
-    AddReviewReviewInsert.fromJson(json['review_insert'])
+    AddReviewReviewUpsert.fromJson(json['review_upsert'])
   
 
         
@@ -120,9 +120,9 @@ String reviewText;
     Map<String, dynamic> json = {};
     
       
-      json['review_insert'] = 
+      json['review_upsert'] = 
   
-      review_insert.toJson()
+      review_upsert.toJson()
   
 ;
       
@@ -132,7 +132,7 @@ String reviewText;
 
   AddReviewData({
     
-      required this.review_insert,
+      required this.review_upsert,
     
   });
 }

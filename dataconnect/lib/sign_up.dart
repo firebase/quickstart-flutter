@@ -1,3 +1,4 @@
+import 'package:dataconnect/movies_connector/movies.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +14,7 @@ class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   String _username = '';
   String _password = '';
-  String _confirmPassword = '';
+  String _name = '';
   Widget _buildForm() {
     return Form(
         key: _formKey,
@@ -36,22 +37,17 @@ class _SignUpState extends State<SignUp> {
             ),
             const SizedBox(height: 30),
             TextFormField(
-              obscureText: true,
               enableSuggestions: false,
-              autocorrect: false,
               decoration: const InputDecoration(
-                  hintText: "Password", border: OutlineInputBorder()),
+                  hintText: "Name", border: OutlineInputBorder()),
               onChanged: (value) {
                 setState(() {
-                  _password = value;
+                  _name = value;
                 });
               },
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter a password';
-                }
-                if (value != _confirmPassword) {
-                  return 'Passwords do not match';
+                  return 'Please enter a name';
                 }
                 return null;
               },
@@ -62,19 +58,16 @@ class _SignUpState extends State<SignUp> {
               enableSuggestions: false,
               autocorrect: false,
               decoration: const InputDecoration(
-                  hintText: "Confirm Password", border: OutlineInputBorder()),
+                  hintText: "Password", border: OutlineInputBorder()),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter some text';
-                }
-                if (value != _password) {
-                  return 'Passwords do not match';
                 }
                 return null;
               },
               onChanged: (value) {
                 setState(() {
-                  _confirmPassword = value;
+                  _password = value;
                 });
               },
             ),
@@ -95,6 +88,9 @@ class _SignUpState extends State<SignUp> {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _username, password: _password);
+      await MoviesConnector.instance
+          .upsertUser(username: _username, name: _name)
+          .execute();
       if (mounted) {
         context.go('/home');
       }

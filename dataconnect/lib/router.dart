@@ -1,6 +1,7 @@
 import 'package:dataconnect/destination.dart';
 import 'package:dataconnect/login.dart';
 import 'package:dataconnect/profile.dart';
+import 'package:dataconnect/search.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -55,7 +56,7 @@ var router = GoRouter(initialLocation: homePath.path, routes: [
         StatefulShellBranch(routes: [
           GoRoute(
             path: "/search",
-            builder: (context, state) => const Text('abc'),
+            builder: (context, state) => const Search(),
           ),
         ]),
         StatefulShellBranch(routes: [
@@ -68,6 +69,9 @@ var router = GoRouter(initialLocation: homePath.path, routes: [
           GoRoute(
             path: "/login",
             builder: (context, state) => const Login(),
+            redirect: (context, state) async {
+              return (await Auth.isLoggedIn()) ? '/profile' : null;
+            },
           ),
           GoRoute(
             path: "/signup",

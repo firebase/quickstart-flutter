@@ -1,4 +1,5 @@
 import 'package:dataconnect/movies_connector/movies.dart';
+import 'package:dataconnect/widgets/login_guard.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -14,20 +15,41 @@ class MovieDetail extends StatefulWidget {
 
 class _MovieDetailState extends State<MovieDetail> {
   double _ratingValue = 0;
+  String _reviewText = "";
   bool loading = true;
   GetMovieByIdData? data;
+  bool _watched = false;
+  bool _favorited = false;
+
+  TextEditingController _reviewTextController = TextEditingController();
   @override
   void initState() {
     super.initState();
     MoviesConnector.instance
         .getMovieById(id: widget.id)
-        .execute()
-        .then((value) {
+        .ref()
+        .subscribe()
+        .listen((value) {
       setState(() {
         loading = false;
         data = value.data;
       });
     });
+    MoviesConnector.instance
+        .getMovieInfoForUser(movieId: widget.id)
+        .ref()
+        .subscribe()
+        .listen((value) {
+      setState(() {
+        _watched = value.data.watched_movie != null;
+        _favorited = value.data.favorite_movie != null;
+      });
+    });
+  }
+
+  void _refreshData() {
+    MoviesConnector.instance.getMovieById(id: widget.id).execute();
+    MoviesConnector.instance.getMovieInfoForUser(movieId: widget.id).execute();
   }
 
   List<Widget> _buildMainDescription() {
@@ -79,21 +101,45 @@ class _MovieDetailState extends State<MovieDetail> {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // TODO(mtewani): Check if the movie has been watched by the user
-          OutlinedButton.icon(
+          LoginGuard(
+              widgetToGuard: OutlinedButton.icon(
             onPressed: () {
-              // TODO(mtewani): Check if user is logged in.
+              (_watched
+                      ? MoviesConnector.instance
+                          .deleteFavoritedMovie(movieId: widget.id)
+                          .execute()
+                      : MoviesConnector.instance
+                          .addFavoritedMovie(movieId: widget.id)
+                          .execute())
+                  .then(
+                (value) => setState(() {
+                  _watched = !_watched;
+                }),
+              );
             },
-            icon: const Icon(Icons.check_circle),
+            icon: Icon(
+                _watched ? Icons.check_circle : Icons.check_circle_outline),
             label: const Text('Watched'),
-          ),
-          OutlinedButton.icon(
+          )),
+          LoginGuard(
+              widgetToGuard: OutlinedButton.icon(
             onPressed: () {
-              // TODO(mtewani): Check if user is logged in.
+              (_favorited
+                      ? MoviesConnector.instance
+                          .deleteFavoritedMovie(movieId: widget.id)
+                          .execute()
+                      : MoviesConnector.instance
+                          .addFavoritedMovie(movieId: widget.id)
+                          .execute())
+                  .then((value) {
+                setState(() {
+                  _favorited = !_favorited;
+                });
+              });
             },
-            icon: const Icon(Icons.favorite),
+            icon: Icon(_favorited ? Icons.favorite : Icons.favorite_border),
             label: const Text('Add To Favorites'),
-          )
+          ))
         ],
       )
     ];
@@ -184,8 +230,8 @@ class _MovieDetailState extends State<MovieDetail> {
       Text("Rating: $_ratingValue"),
       Slider(
         value: _ratingValue,
-        max: 5,
-        divisions: 10,
+        max: 10,
+        divisions: 20,
         label: _ratingValue.toString(),
         onChanged: (double value) {
           setState(() {
@@ -193,17 +239,32 @@ class _MovieDetailState extends State<MovieDetail> {
           });
         },
       ),
-      const TextField(
-        decoration: InputDecoration(
-          hintText: "Write your review",
-          border: OutlineInputBorder(),
+      LoginGuard(
+          widgetToGuard: TextField(
+            decoration: const InputDecoration(
+              hintText: "Write your review",
+              border: OutlineInputBorder(),
+            ),
+            controller: _reviewTextController,
+          ),
+          message: "writing a review"),
+      LoginGuard(
+        widgetToGuard: OutlinedButton.icon(
+          onPressed: () {
+            // TODO(mtewani): Check if user is logged in.
+            MoviesConnector.instance
+                .addReview(
+                    movieId: widget.id,
+                    rating: _ratingValue.toInt(),
+                    reviewText: _reviewTextController.text)
+                .execute()
+                .then((_) {
+              _refreshData();
+              _reviewTextController.clear();
+            });
+          },
+          label: const Text('Submit Review'),
         ),
-      ),
-      OutlinedButton.icon(
-        onPressed: () {
-          // TODO(mtewani): Check if user is logged in.
-        },
-        label: const Text('Submit Review'),
       ),
       ...data!.movie!.reviews.map((review) {
         return Card(

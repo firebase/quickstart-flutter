@@ -114,6 +114,7 @@ query GetCurrentUser @auth(level: USER) {
   user(key: { id_expr: "auth.uid" }) {
     id
     username
+    name
     reviews: reviews_on_user {
       id
       rating
@@ -139,14 +140,41 @@ query GetCurrentUser @auth(level: USER) {
         }
       }
     }
+    favoriteActors: favorite_actors_on_user {
+      actor {
+        id
+        name
+        imageUrl
+      }
+    }
+    watchedMovies: watched_movies_on_user {
+      movie {
+        id
+        title
+        genre
+        imageUrl
+        releaseYear
+        rating
+        description
+        tags
+        metadata: movieMetadatas_on_movie {
+          director
+        }
+      }
+    }
+
   }
 }
 
-query GetIfFavoritedMovie($movieId: UUID!) @auth(level: USER) {
+query GetMovieInfoForUser($movieId: UUID!) @auth(level: USER) {
   favorite_movie(key: { userId_expr: "auth.uid", movieId: $movieId }) {
     movieId
   }
+  watched_movie(key: { userId_expr: "auth.uid", movieId: $movieId }) {
+    movieId
+  }
 }
+
 
 # Search for movies, actors, and reviews
 query SearchAll(
@@ -236,16 +264,16 @@ query SearchAll(
 
 # # The queries below are unused by the application, but are useful examples for more complex cases
 
-# # List movies by partial title match
-# query ListMoviesByPartialTitle($input: String!) @auth(level: PUBLIC) {
-#   movies(where: { title: { contains: $input } }) {
-#     id
-#     title
-#     genre
-#     rating
-#     imageUrl
-#   }
-# }
+# List movies by partial title match
+query ListMoviesByPartialTitle($input: String!) @auth(level: PUBLIC) {
+  movies(where: { title: { contains: $input } }) {
+    id
+    title
+    genre
+    rating
+    imageUrl
+  }
+}
 
 # # List movies by tag
 # query ListMoviesByTag($tag: String!) @auth(level: PUBLIC) {

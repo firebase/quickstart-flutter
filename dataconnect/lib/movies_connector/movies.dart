@@ -8,6 +8,10 @@ part 'add_favorited_movie.dart';
 
 part 'delete_favorited_movie.dart';
 
+part 'delete_favorited_actor.dart';
+
+part 'delete_watched_movie.dart';
+
 part 'add_review.dart';
 
 part 'update_review.dart';
@@ -26,9 +30,11 @@ part 'get_actor_by_id.dart';
 
 part 'get_current_user.dart';
 
-part 'get_if_favorited_movie.dart';
+part 'get_movie_info_for_user.dart';
 
 part 'search_all.dart';
+
+part 'list_movies_by_partial_title.dart';
 
 
 
@@ -54,8 +60,8 @@ String enumSerializer(Enum e) {
 class MoviesConnector {
   
   
-  UpsertUserVariablesBuilder upsertUser ({required String username,}) {
-    return UpsertUserVariablesBuilder(dataConnect, username: username,);
+  UpsertUserVariablesBuilder upsertUser ({required String username,required String name,}) {
+    return UpsertUserVariablesBuilder(dataConnect, username: username,name: name,);
   }
   
   
@@ -66,6 +72,16 @@ class MoviesConnector {
   
   DeleteFavoritedMovieVariablesBuilder deleteFavoritedMovie ({required String movieId,}) {
     return DeleteFavoritedMovieVariablesBuilder(dataConnect, movieId: movieId,);
+  }
+  
+  
+  DeleteFavoritedActorVariablesBuilder deleteFavoritedActor ({required String actorId,}) {
+    return DeleteFavoritedActorVariablesBuilder(dataConnect, actorId: actorId,);
+  }
+  
+  
+  DeleteWatchedMovieVariablesBuilder deleteWatchedMovie ({required String movieId,}) {
+    return DeleteWatchedMovieVariablesBuilder(dataConnect, movieId: movieId,);
   }
   
   
@@ -114,13 +130,18 @@ class MoviesConnector {
   }
   
   
-  GetIfFavoritedMovieVariablesBuilder getIfFavoritedMovie ({required String movieId,}) {
-    return GetIfFavoritedMovieVariablesBuilder(dataConnect, movieId: movieId,);
+  GetMovieInfoForUserVariablesBuilder getMovieInfoForUser ({required String movieId,}) {
+    return GetMovieInfoForUserVariablesBuilder(dataConnect, movieId: movieId,);
   }
   
   
   SearchAllVariablesBuilder searchAll ({required int minYear,required int maxYear,required double minRating,required double maxRating,required String genre,}) {
     return SearchAllVariablesBuilder(dataConnect, minYear: minYear,maxYear: maxYear,minRating: minRating,maxRating: maxRating,genre: genre,);
+  }
+  
+  
+  ListMoviesByPartialTitleVariablesBuilder listMoviesByPartialTitle ({required String input,}) {
+    return ListMoviesByPartialTitleVariablesBuilder(dataConnect, input: input,);
   }
   
 

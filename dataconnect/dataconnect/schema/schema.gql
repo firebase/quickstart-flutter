@@ -46,6 +46,7 @@ type User
   @table {
   id: String! @col(name: "user_auth")
   username: String! @col(name: "username", dataType: "varchar(50)")
+  name: String!
   # The following are generated from the @ref in the Review table
   # reviews_on_user
   # movies_via_Review
@@ -89,6 +90,18 @@ SELECT DISTINCT genre from "movie"
 # TODO: Fill out FavoriteMovie table
 type FavoriteMovie
   @table(name: "FavoriteMovies", singular: "favorite_movie", plural: "favorite_movies", key: ["user", "movie"]) {
+  # @ref is implicit
+  user: User!
+  movie: Movie!
+}
+type FavoriteActor
+  @table(name: "FavoriteActors", singular: "favorite_actor", plural: "favorite_actors", key: ["user", "actor"]) {
+  # @ref is implicit
+  user: User!
+  actor: Actor!
+}
+type WatchedMovie
+  @table(name: "WatchedMovies", singular: "watched_movie", plural: "watched_movies", key: ["user", "movie"]) {
   # @ref is implicit
   user: User!
   movie: Movie!

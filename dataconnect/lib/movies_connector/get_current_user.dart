@@ -26,10 +26,19 @@ class GetCurrentUserVariablesBuilder {
    String username;
 
   
+   String name;
+
+  
    List<GetCurrentUserUserReviews> reviews;
 
   
    List<GetCurrentUserUserFavoriteMovies> favoriteMovies;
+
+  
+   List<GetCurrentUserUserFavoriteActors> favoriteActors;
+
+  
+   List<GetCurrentUserUserWatchedMovies> watchedMovies;
 
   
   
@@ -48,6 +57,14 @@ class GetCurrentUserVariablesBuilder {
         username = 
  
     nativeFromJson<String>(json['username'])
+  
+
+        
+        ,
+      
+        name = 
+ 
+    nativeFromJson<String>(json['name'])
   
 
         
@@ -75,8 +92,38 @@ class GetCurrentUserVariablesBuilder {
   
 
         
+        ,
+      
+        favoriteActors = 
+ 
+    
+      (json['favoriteActors'] as List<dynamic>)
+        .map((e) => GetCurrentUserUserFavoriteActors.fromJson(e))
+        .toList()
+    
+  
+
+        
+        ,
+      
+        watchedMovies = 
+ 
+    
+      (json['watchedMovies'] as List<dynamic>)
+        .map((e) => GetCurrentUserUserWatchedMovies.fromJson(e))
+        .toList()
+    
+  
+
+        
         
        {
+      
+        
+      
+        
+      
+        
       
         
       
@@ -109,6 +156,14 @@ class GetCurrentUserVariablesBuilder {
       
     
       
+      json['name'] = 
+  
+    nativeToJson<String>(name)
+    
+;
+      
+    
+      
       json['reviews'] = 
   
     
@@ -128,6 +183,26 @@ class GetCurrentUserVariablesBuilder {
 ;
       
     
+      
+      json['favoriteActors'] = 
+  
+    
+      favoriteActors.map((e) => e.toJson()).toList()
+    
+  
+;
+      
+    
+      
+      json['watchedMovies'] = 
+  
+    
+      watchedMovies.map((e) => e.toJson()).toList()
+    
+  
+;
+      
+    
     return json;
   }
 
@@ -137,9 +212,15 @@ class GetCurrentUserVariablesBuilder {
     
       required this.username,
     
+      required this.name,
+    
       required this.reviews,
     
       required this.favoriteMovies,
+    
+      required this.favoriteActors,
+    
+      required this.watchedMovies,
     
   });
 }
@@ -700,6 +781,495 @@ class GetCurrentUserVariablesBuilder {
   }
 
   GetCurrentUserUserFavoriteMoviesMovieMetadata({
+    
+       this.director,
+    
+  });
+}
+
+
+
+  class GetCurrentUserUserFavoriteActors {
+  
+   GetCurrentUserUserFavoriteActorsActor actor;
+
+  
+  
+    
+    
+    
+    GetCurrentUserUserFavoriteActors.fromJson(dynamic json):
+        actor = 
+ 
+    GetCurrentUserUserFavoriteActorsActor.fromJson(json['actor'])
+  
+
+        
+        
+       {
+      
+        
+      
+    }
+
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    
+      
+      json['actor'] = 
+  
+      actor.toJson()
+  
+;
+      
+    
+    return json;
+  }
+
+  GetCurrentUserUserFavoriteActors({
+    
+      required this.actor,
+    
+  });
+}
+
+
+
+  class GetCurrentUserUserFavoriteActorsActor {
+  
+   String id;
+
+  
+   String name;
+
+  
+   String imageUrl;
+
+  
+  
+    
+    
+    
+    GetCurrentUserUserFavoriteActorsActor.fromJson(dynamic json):
+        id = 
+ 
+    nativeFromJson<String>(json['id'])
+  
+
+        
+        ,
+      
+        name = 
+ 
+    nativeFromJson<String>(json['name'])
+  
+
+        
+        ,
+      
+        imageUrl = 
+ 
+    nativeFromJson<String>(json['imageUrl'])
+  
+
+        
+        
+       {
+      
+        
+      
+        
+      
+        
+      
+    }
+
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    
+      
+      json['id'] = 
+  
+    nativeToJson<String>(id)
+    
+;
+      
+    
+      
+      json['name'] = 
+  
+    nativeToJson<String>(name)
+    
+;
+      
+    
+      
+      json['imageUrl'] = 
+  
+    nativeToJson<String>(imageUrl)
+    
+;
+      
+    
+    return json;
+  }
+
+  GetCurrentUserUserFavoriteActorsActor({
+    
+      required this.id,
+    
+      required this.name,
+    
+      required this.imageUrl,
+    
+  });
+}
+
+
+
+  class GetCurrentUserUserWatchedMovies {
+  
+   GetCurrentUserUserWatchedMoviesMovie movie;
+
+  
+  
+    
+    
+    
+    GetCurrentUserUserWatchedMovies.fromJson(dynamic json):
+        movie = 
+ 
+    GetCurrentUserUserWatchedMoviesMovie.fromJson(json['movie'])
+  
+
+        
+        
+       {
+      
+        
+      
+    }
+
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    
+      
+      json['movie'] = 
+  
+      movie.toJson()
+  
+;
+      
+    
+    return json;
+  }
+
+  GetCurrentUserUserWatchedMovies({
+    
+      required this.movie,
+    
+  });
+}
+
+
+
+  class GetCurrentUserUserWatchedMoviesMovie {
+  
+   String id;
+
+  
+   String title;
+
+  
+   String? genre;
+
+  
+   String imageUrl;
+
+  
+   int? releaseYear;
+
+  
+   double? rating;
+
+  
+   String? description;
+
+  
+   List<String>? tags;
+
+  
+   List<GetCurrentUserUserWatchedMoviesMovieMetadata> metadata;
+
+  
+  
+    
+    
+    
+    GetCurrentUserUserWatchedMoviesMovie.fromJson(dynamic json):
+        id = 
+ 
+    nativeFromJson<String>(json['id'])
+  
+
+        
+        ,
+      
+        title = 
+ 
+    nativeFromJson<String>(json['title'])
+  
+
+        
+        ,
+      
+        genre = json['genre'] == null ? null : 
+ 
+    nativeFromJson<String>(json['genre'])
+  
+
+        
+        ,
+      
+        imageUrl = 
+ 
+    nativeFromJson<String>(json['imageUrl'])
+  
+
+        
+        ,
+      
+        releaseYear = json['releaseYear'] == null ? null : 
+ 
+    nativeFromJson<int>(json['releaseYear'])
+  
+
+        
+        ,
+      
+        rating = json['rating'] == null ? null : 
+ 
+    nativeFromJson<double>(json['rating'])
+  
+
+        
+        ,
+      
+        description = json['description'] == null ? null : 
+ 
+    nativeFromJson<String>(json['description'])
+  
+
+        
+        ,
+      
+        tags = json['tags'] == null ? null : 
+ 
+    
+      (json['tags'] as List<dynamic>)
+        .map((e) => nativeFromJson<String>(e))
+        .toList()
+    
+  
+
+        
+        ,
+      
+        metadata = 
+ 
+    
+      (json['metadata'] as List<dynamic>)
+        .map((e) => GetCurrentUserUserWatchedMoviesMovieMetadata.fromJson(e))
+        .toList()
+    
+  
+
+        
+        
+       {
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    }
+
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    
+      
+      json['id'] = 
+  
+    nativeToJson<String>(id)
+    
+;
+      
+    
+      
+      json['title'] = 
+  
+    nativeToJson<String>(title)
+    
+;
+      
+    
+      
+        if (genre != null) {
+          json['genre'] = 
+  
+    nativeToJson<String?>(genre)
+    
+;
+        }
+      
+    
+      
+      json['imageUrl'] = 
+  
+    nativeToJson<String>(imageUrl)
+    
+;
+      
+    
+      
+        if (releaseYear != null) {
+          json['releaseYear'] = 
+  
+    nativeToJson<int?>(releaseYear)
+    
+;
+        }
+      
+    
+      
+        if (rating != null) {
+          json['rating'] = 
+  
+    nativeToJson<double?>(rating)
+    
+;
+        }
+      
+    
+      
+        if (description != null) {
+          json['description'] = 
+  
+    nativeToJson<String?>(description)
+    
+;
+        }
+      
+    
+      
+        if (tags != null) {
+          json['tags'] = 
+  
+    
+      tags?.map((e) => nativeToJson<String>(e)).toList()
+    
+  
+;
+        }
+      
+    
+      
+      json['metadata'] = 
+  
+    
+      metadata.map((e) => e.toJson()).toList()
+    
+  
+;
+      
+    
+    return json;
+  }
+
+  GetCurrentUserUserWatchedMoviesMovie({
+    
+      required this.id,
+    
+      required this.title,
+    
+       this.genre,
+    
+      required this.imageUrl,
+    
+       this.releaseYear,
+    
+       this.rating,
+    
+       this.description,
+    
+       this.tags,
+    
+      required this.metadata,
+    
+  });
+}
+
+
+
+  class GetCurrentUserUserWatchedMoviesMovieMetadata {
+  
+   String? director;
+
+  
+  
+    
+    
+    
+    GetCurrentUserUserWatchedMoviesMovieMetadata.fromJson(dynamic json):
+        director = json['director'] == null ? null : 
+ 
+    nativeFromJson<String>(json['director'])
+  
+
+        
+        
+       {
+      
+        
+      
+    }
+
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    
+      
+        if (director != null) {
+          json['director'] = 
+  
+    nativeToJson<String?>(director)
+    
+;
+        }
+      
+    
+    return json;
+  }
+
+  GetCurrentUserUserWatchedMoviesMovieMetadata({
     
        this.director,
     
