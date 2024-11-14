@@ -79,12 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _refreshData() {
-    // Gets the data, then notifies the subscriber(s) of the new data.
-    // TODO: Uncomment the following line to execute the query
-    // MoviesConnector.instance.listMovies.ref().build().execute();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
