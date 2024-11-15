@@ -113,13 +113,14 @@ class _MovieDetailState extends State<MovieDetail> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           LoginGuard(
-              widgetToGuard: OutlinedButton.icon(
-            onPressed: () {
-              _toggleFavorite();
-            },
-            icon: Icon(_favorited ? Icons.favorite : Icons.favorite_border),
-            label: Text(_getFavoriteLabelText()),
-          ))
+            builder: (context) => OutlinedButton.icon(
+              onPressed: () {
+                _toggleFavorite();
+              },
+              icon: Icon(_favorited ? Icons.favorite : Icons.favorite_border),
+              label: Text(_getFavoriteLabelText()),
+            ),
+          )
         ],
       )
     ];
@@ -224,16 +225,17 @@ class _MovieDetailState extends State<MovieDetail> {
         },
       ),
       LoginGuard(
-          widgetToGuard: TextField(
-            decoration: const InputDecoration(
-              hintText: "Write your review",
-              border: OutlineInputBorder(),
-            ),
-            controller: _reviewTextController,
+        builder: (context) => TextField(
+          decoration: const InputDecoration(
+            hintText: "Write your review",
+            border: OutlineInputBorder(),
           ),
-          message: "writing a review"),
+          controller: _reviewTextController,
+        ),
+        message: "writing a review",
+      ),
       LoginGuard(
-        widgetToGuard: OutlinedButton.icon(
+        builder: (context) => OutlinedButton.icon(
           onPressed: () {
             MoviesConnector.instance
                 .addReview(
@@ -241,11 +243,13 @@ class _MovieDetailState extends State<MovieDetail> {
                     rating: _ratingValue.toInt(),
                     reviewText: _reviewTextController.text)
                 .execute()
-                .then((_) {
-              _refreshData();
-              _reviewTextController.clear();
-              MovieState.triggerUpdateFavorite();
-            });
+                .then(
+              (_) {
+                _refreshData();
+                _reviewTextController.clear();
+                MovieState.triggerUpdateFavorite();
+              },
+            );
           },
           label: const Text('Submit Review'),
         ),

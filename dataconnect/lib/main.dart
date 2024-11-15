@@ -6,6 +6,7 @@ import 'movies_connector/movies.dart';
 import 'models/movie.dart';
 import 'movie_state.dart';
 import 'router.dart';
+import 'util/auth.dart';
 import 'widgets/list_movies.dart';
 
 void main() async {
@@ -13,6 +14,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Auth.instance.init();
   MoviesConnector.instance.dataConnect
       .useDataConnectEmulator('localhost', 9399);
   FirebaseAuth.instance.useAuthEmulator('localhost', 9400);

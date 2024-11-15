@@ -11,8 +11,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
-  String _username = '';
-  String _password = '';
+  final _username = TextEditingController();
+  final _password = TextEditingController();
 
   Future<void> logIn(BuildContext context) async {
     final messenger = ScaffoldMessenger.of(context);
@@ -20,8 +20,8 @@ class _LoginState extends State<Login> {
     messenger.showSnackBar(const SnackBar(content: Text('Signing In')));
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _username,
-        password: _password,
+        email: _username.text,
+        password: _password.text,
       );
       if (mounted) {
         navigator.go('/home');
@@ -51,11 +51,7 @@ class _LoginState extends State<Login> {
                       hintText: "Username",
                       border: OutlineInputBorder(),
                     ),
-                    onChanged: (value) {
-                      setState(() {
-                        _username = value;
-                      });
-                    },
+                    controller: _username,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter some text';
@@ -71,11 +67,7 @@ class _LoginState extends State<Login> {
                       hintText: "Password",
                       border: OutlineInputBorder(),
                     ),
-                    onChanged: (value) {
-                      setState(() {
-                        _password = value;
-                      });
-                    },
+                    controller: _password,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter a password';

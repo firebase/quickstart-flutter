@@ -47,14 +47,14 @@ var router = GoRouter(initialLocation: homePath.path, routes: [
           GoRoute(
               path: "/profile",
               redirect: (context, state) async {
-                return (await Auth.isLoggedIn()) ? null : '/login';
+                return Auth.instance.isLoggedIn ? null : '/login';
               },
               builder: (context, state) => const Profile()),
           GoRoute(
             path: "/login",
             builder: (context, state) => const Login(),
             redirect: (context, state) async {
-              return (await Auth.isLoggedIn()) ? '/profile' : null;
+              return Auth.instance.isLoggedIn ? '/profile' : null;
             },
           ),
           GoRoute(

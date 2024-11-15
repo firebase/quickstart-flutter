@@ -31,13 +31,6 @@ class _ProfileState extends State<Profile>
   @override
   void initState() {
     super.initState();
-    Auth.getCurrentUser().then((user) {
-      if (mounted) {
-        setState(() {
-          _currentUser = user;
-        });
-      }
-    });
     _listener = MovieState.subscribeToCurrentUser().listen((res) {
       if (mounted) {
         setState(() {

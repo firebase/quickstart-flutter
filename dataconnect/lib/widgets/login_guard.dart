@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 class LoginGuard extends StatelessWidget {
   const LoginGuard({
     super.key,
-    required this.widgetToGuard,
+    required this.builder,
     this.message,
   });
 
-  final Widget widgetToGuard;
+  final WidgetBuilder builder;
   final String? message;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Auth.isLoggedIn(),
-      builder: (context, state) {
-        final isLoggedIn = state.data ?? false;
+    return ValueListenableBuilder(
+      valueListenable: Auth.instance,
+      builder: (context, state, _) {
+        final isLoggedIn = Auth.instance.isLoggedIn;
         if (!isLoggedIn) {
           if (message == null) {
             return const SizedBox();
@@ -26,7 +26,7 @@ class LoginGuard extends StatelessWidget {
             'to log in before $message',
           );
         }
-        return widgetToGuard;
+        return builder(context);
       },
     );
   }
