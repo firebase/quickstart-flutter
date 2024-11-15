@@ -4,7 +4,6 @@ import 'package:dataconnect/movie_state.dart';
 import 'package:dataconnect/models/movie.dart';
 import 'package:dataconnect/movies_connector/movies.dart';
 import 'package:dataconnect/util/auth.dart';
-import 'package:dataconnect/widgets/list_actors.dart';
 import 'package:dataconnect/widgets/list_movies.dart';
 import 'package:dataconnect/widgets/list_reviews.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,7 +11,6 @@ import 'package:firebase_data_connect/firebase_data_connect.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -62,7 +60,7 @@ class _ProfileState extends State<Profile>
     MoviesConnector.instance.getCurrentUser().execute();
   }
 
-  Widget _UserInfo() {
+  Widget _buildUserInfo() {
     return Container(
       child: Column(
         children: [
@@ -95,7 +93,7 @@ class _ProfileState extends State<Profile>
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _UserInfo(),
+                      _buildUserInfo(),
                       ListMovies(
                           title: "Favorite Movies",
                           movies: _favoriteMovies
