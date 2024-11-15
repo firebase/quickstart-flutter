@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 
-class Route {
+class Route extends NavigationDestination {
   Route({
+    super.key,
     required this.path,
-    required this.label,
+    required super.label,
     required this.iconData,
-  });
+  }) : super(icon: Icon(iconData));
   final String path;
-  final String label;
   final IconData iconData;
-
-  NavigationDestination toDestination() {
-    return NavigationDestination(
-      icon: Icon(iconData),
-      label: label,
-    );
-  }
 }
 
 final homePath = Route(

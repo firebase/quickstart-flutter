@@ -176,7 +176,7 @@ class _MovieDetailState extends State<MovieDetail> {
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: 125,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,

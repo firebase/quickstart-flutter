@@ -1,6 +1,6 @@
-import 'package:dataconnect/movies_connector/movies.dart';
 import 'package:firebase_data_connect/firebase_data_connect.dart';
 
+import 'movies_connector/movies.dart';
 import 'models/movie.dart';
 
 class MovieState {

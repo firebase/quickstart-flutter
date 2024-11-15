@@ -29,9 +29,7 @@ class NavigationShell extends StatelessWidget {
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: _goBranch,
-        destinations: paths //
-            .map((destination) => destination.toDestination())
-            .toList(),
+        destinations: paths,
       ),
     );
   }
