@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dataconnect/movie_state.dart';
 import 'package:dataconnect/movies_connector/movies.dart';
 import 'package:dataconnect/widgets/login_guard.dart';
@@ -20,24 +22,59 @@ class _MovieDetailState extends State<MovieDetail> {
   GetMovieByIdData? data;
   bool _favorited = false;
 
-  final TextEditingController _reviewTextController = TextEditingController();
+  final _reviewTextController = TextEditingController();
+  StreamSubscription? _movieByIdSub, _movieInfoSub;
+
   @override
   void initState() {
     super.initState();
+    init(widget.id);
+  }
 
-    MovieState.subscribeToMovieById(widget.id).listen((value) {
+  @override
+  void dispose() {
+    _movieByIdSub?.cancel();
+    _movieInfoSub?.cancel();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant MovieDetail oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.id != widget.id) {
+      init(widget.id);
+    }
+  }
+
+  Future<void> init(String id) async {
+    _movieByIdSub?.cancel();
+    _movieInfoSub?.cancel();
+    _movieByIdSub = MovieState.subscribeToMovieById(widget.id).listen(
+      (value) {
+        if (mounted) {
+          setState(() {
+            loading = false;
+            data = value.data;
+          });
+        }
+      },
+    );
+    _movieInfoSub = MovieState.subscribeToGetMovieInfo(widget.id).listen(
+      (value) {
+        if (mounted) {
+          setState(() {
+            _favorited = value.data.favorite_movie != null;
+          });
+        }
+      },
+    );
+  }
+
+  void _toggleFavorite() {
+    MovieState.toggleFavorite(widget.id, _favorited).then((_) {
       if (mounted) {
         setState(() {
-          loading = false;
-          data = value.data;
-        });
-      }
-    });
-
-    MovieState.subscribeToGetMovieInfo(widget.id).listen((value) {
-      if (mounted) {
-        setState(() {
-          _favorited = value.data.favorite_movie != null;
+          _favorited = !_favorited;
         });
       }
     });
@@ -45,14 +82,6 @@ class _MovieDetailState extends State<MovieDetail> {
 
   void _refreshData() {
     MovieState.refreshMovieDetail(widget.id);
-  }
-
-  void _toggleFavorite() {
-    MovieState.toggleFavorite(widget.id, _favorited).then((_) {
-      setState(() {
-        _favorited = !_favorited;
-      });
-    });
   }
 
   @override
