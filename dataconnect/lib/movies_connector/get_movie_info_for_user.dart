@@ -67,59 +67,9 @@ class GetMovieInfoForUserVariablesBuilder {
 
 
 
-  class GetMovieInfoForUserWatchedMovie {
-  
-   String movieId;
-
-  
-  
-    
-    
-    
-    GetMovieInfoForUserWatchedMovie.fromJson(dynamic json):
-        movieId = 
- 
-    nativeFromJson<String>(json['movieId'])
-  
-
-        
-        
-       {
-      
-        
-      
-    }
-
-
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    
-      
-      json['movieId'] = 
-  
-    nativeToJson<String>(movieId)
-    
-;
-      
-    
-    return json;
-  }
-
-  GetMovieInfoForUserWatchedMovie({
-    
-      required this.movieId,
-    
-  });
-}
-
-
-
   class GetMovieInfoForUserData {
   
    GetMovieInfoForUserFavoriteMovie? favorite_movie;
-
-  
-   GetMovieInfoForUserWatchedMovie? watched_movie;
 
   
   
@@ -133,18 +83,8 @@ class GetMovieInfoForUserVariablesBuilder {
   
 
         
-        ,
-      
-        watched_movie = json['watched_movie'] == null ? null : 
- 
-    GetMovieInfoForUserWatchedMovie.fromJson(json['watched_movie'])
-  
-
-        
         
        {
-      
-        
       
         
       
@@ -164,24 +104,12 @@ class GetMovieInfoForUserVariablesBuilder {
         }
       
     
-      
-        if (watched_movie != null) {
-          json['watched_movie'] = 
-  
-      watched_movie!.toJson()
-  
-;
-        }
-      
-    
     return json;
   }
 
   GetMovieInfoForUserData({
     
        this.favorite_movie,
-    
-       this.watched_movie,
     
   });
 }

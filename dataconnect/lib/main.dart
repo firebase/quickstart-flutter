@@ -1,8 +1,10 @@
+import 'package:dataconnect/models/movie.dart';
+import 'package:dataconnect/movie_state.dart';
 import 'package:dataconnect/router.dart';
+import 'package:dataconnect/widgets/list_movies.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:go_router/go_router.dart';
 import 'firebase_options.dart';
 import 'movies_connector/movies.dart';
 
@@ -14,6 +16,7 @@ void main() async {
   MoviesConnector.instance.dataConnect
       .useDataConnectEmulator('localhost', 9399);
   FirebaseAuth.instance.useAuthEmulator('localhost', 9400);
+
   runApp(const MyApp());
 }
 
@@ -33,15 +36,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -54,25 +48,13 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    /// TODO: Uncomment the following lines to update the movies state when data
-    /// comes back from the server.
-
-    MoviesConnector.instance
-        .listMovies()
-        .orderByRating(OrderDirection.DESC)
-        .limit(10)
-        .execute()
-        .then((res) {
+    MovieState.getTopTenMovies().then((res) {
       setState(() {
         _topMovies = res.data.movies;
       });
     });
 
-    MoviesConnector.instance
-        .listMovies()
-        .orderByReleaseYear(OrderDirection.DESC)
-        .execute()
-        .then((res) {
+    MovieState.getTopTenMovies().then((res) {
       setState(() {
         _latestMovies = res.data.movies;
       });
@@ -86,74 +68,25 @@ class _MyHomePageState extends State<MyHomePage> {
           child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            _buildMovieList('Top 10 Movies', _topMovies),
-            _buildMovieList('Latest Movies', _latestMovies),
+            ListMovies(
+                title: 'Top 10 Movies',
+                movies: _topMovies
+                    .map(
+                      (e) =>
+                          Movie(id: e.id, title: e.title, imageUrl: e.imageUrl),
+                    )
+                    .toList()),
+            ListMovies(
+                title: 'Latest Movies',
+                movies: _latestMovies
+                    .map(
+                      (e) =>
+                          Movie(id: e.id, title: e.title, imageUrl: e.imageUrl),
+                    )
+                    .toList()),
           ],
         ),
       )),
-    );
-  }
-
-  Widget _buildMovieList(String title, List<ListMoviesMovies> movies) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-        ),
-        SizedBox(
-          height: 300, // Adjust the height as needed
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: movies.length,
-            itemBuilder: (context, index) {
-              return _buildMovieItem(movies[index]);
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _visitDetail(String id) {
-    context.push("/movies/$id");
-  }
-
-  Widget _buildMovieItem(ListMoviesMovies movie) {
-    return Container(
-      width: 150, // Adjust the width as needed
-      padding: const EdgeInsets.all(4.0),
-      child: Card(
-        child: InkWell(
-            onTap: () {
-              _visitDetail(movie.id);
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AspectRatio(
-                  aspectRatio: 9 / 16, // 9:16 aspect ratio for the image
-                  child: Image.network(
-                    movie.imageUrl,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    movie.title,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            )),
-      ),
     );
   }
 }

@@ -13,18 +13,9 @@ mutation AddFavoritedMovie($movieId: UUID!) @auth(level: USER) {
   favorite_movie_upsert(data: { userId_expr: "auth.uid", movieId: $movieId })
 }
 
-
 # Remove a movie from the user's favorites list
 mutation DeleteFavoritedMovie($movieId: UUID!) @auth(level: USER) {
   favorite_movie_delete(key: { userId_expr: "auth.uid", movieId: $movieId })
-}
-
-# Add a movie to the user's favorites list
-mutation DeleteFavoritedActor($actorId: UUID!) @auth(level: USER) {
-  favorite_actor_delete(key: { userId_expr: "auth.uid", actorId: $actorId })
-}
-mutation DeleteWatchedMovie($movieId: UUID!) @auth(level: USER) {
-  watched_movie_delete(key: { userId_expr: "auth.uid", movieId: $movieId })
 }
 
 # Add a review for a movie

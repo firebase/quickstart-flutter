@@ -1,4 +1,4 @@
-import 'package:dataconnect/extensions.dart';
+import 'package:dataconnect/models/movie.dart';
 import 'package:dataconnect/movies_connector/movies.dart';
 import 'package:dataconnect/widgets/list_actors.dart';
 import 'package:dataconnect/widgets/list_movies.dart';
@@ -226,12 +226,14 @@ class _SearchState extends State<Search> {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
         ListMovies(
             movies: _resultsMovieMatchingTitle
-                .map((e) => e.toListMoviesMovies)
+                .map((e) =>
+                    Movie(id: e.id, title: e.title, imageUrl: e.imageUrl))
                 .toList(),
             title: "Movies Matching Title"),
         ListMovies(
             movies: _resultsMovieMatchingDescription
-                .map((e) => e.toListMoviesMovies)
+                .map((e) =>
+                    Movie(id: e.id, title: e.title, imageUrl: e.imageUrl))
                 .toList(),
             title: "Movies Matching Description"),
         const Text('Results matching reviews',

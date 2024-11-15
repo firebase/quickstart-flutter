@@ -94,15 +94,3 @@ type FavoriteMovie
   user: User!
   movie: Movie!
 }
-type FavoriteActor
-  @table(name: "FavoriteActors", singular: "favorite_actor", plural: "favorite_actors", key: ["user", "actor"]) {
-  # @ref is implicit
-  user: User!
-  actor: Actor!
-}
-type WatchedMovie
-  @table(name: "WatchedMovies", singular: "watched_movie", plural: "watched_movies", key: ["user", "movie"]) {
-  # @ref is implicit
-  user: User!
-  movie: Movie!
-}

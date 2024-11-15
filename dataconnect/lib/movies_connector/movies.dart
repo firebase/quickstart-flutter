@@ -8,10 +8,6 @@ part 'add_favorited_movie.dart';
 
 part 'delete_favorited_movie.dart';
 
-part 'delete_favorited_actor.dart';
-
-part 'delete_watched_movie.dart';
-
 part 'add_review.dart';
 
 part 'update_review.dart';
@@ -72,16 +68,6 @@ class MoviesConnector {
   
   DeleteFavoritedMovieVariablesBuilder deleteFavoritedMovie ({required String movieId,}) {
     return DeleteFavoritedMovieVariablesBuilder(dataConnect, movieId: movieId,);
-  }
-  
-  
-  DeleteFavoritedActorVariablesBuilder deleteFavoritedActor ({required String actorId,}) {
-    return DeleteFavoritedActorVariablesBuilder(dataConnect, actorId: actorId,);
-  }
-  
-  
-  DeleteWatchedMovieVariablesBuilder deleteWatchedMovie ({required String movieId,}) {
-    return DeleteWatchedMovieVariablesBuilder(dataConnect, movieId: movieId,);
   }
   
   

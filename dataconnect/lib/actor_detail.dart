@@ -1,4 +1,6 @@
+import 'package:dataconnect/movie_state.dart';
 import 'package:dataconnect/movies_connector/movies.dart';
+import 'package:dataconnect/widgets/list_movies.dart';
 import 'package:flutter/material.dart';
 
 class ActorDetail extends StatefulWidget {
@@ -16,10 +18,8 @@ class _ActorDetailState extends State<ActorDetail> {
   @override
   void initState() {
     super.initState();
-    MoviesConnector.instance
-        .getActorById(id: widget.actorId)
-        .execute()
-        .then((value) {
+
+    MovieState.getActorById(widget.actorId).then((value) {
       setState(() {
         loading = false;
         actor = value.data.actor;
@@ -50,26 +50,21 @@ class _ActorDetailState extends State<ActorDetail> {
                 ),
               ),
             ),
-            Expanded(
-                child: Padding(
-              padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-              // child: Column(children: [Text(actor!.info!)]),
-            ))
           ]),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // TODO(mtewani): Check if the movie has been watched by the user
-          OutlinedButton.icon(
-            onPressed: () {
-              // TODO(mtewani): Check if user is logged in.
-            },
-            icon: const Icon(Icons.favorite),
-            label: const Text('Add To Favorites'),
-          )
-        ],
-      )
     ];
+  }
+
+  Widget _buildMainRoles() {
+    return ListMovies(
+        movies: MovieState.convertMainActorDetail(actor!.mainActors),
+        title: "Main Roles");
+  }
+
+  Widget _buildSupportingRoles() {
+    return ListMovies(
+        movies:
+            MovieState.convertSupportingActorDetail(actor!.supportingActors),
+        title: "Supporting Roles");
   }
 
   @override
@@ -86,7 +81,11 @@ class _ActorDetailState extends State<ActorDetail> {
                   padding: const EdgeInsets.all(30),
                   child: SingleChildScrollView(
                       child: Column(
-                    children: [..._buildActorInfo()],
+                    children: [
+                      ..._buildActorInfo(),
+                      _buildMainRoles(),
+                      _buildSupportingRoles()
+                    ],
                   )))),
     );
   }

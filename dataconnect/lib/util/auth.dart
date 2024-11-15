@@ -8,7 +8,6 @@ class Auth {
     }
     try {
       String? idToken = await user.getIdToken();
-      print(idToken);
       return idToken != null;
     } catch (_) {
       return false;

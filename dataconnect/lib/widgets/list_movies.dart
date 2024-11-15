@@ -1,3 +1,4 @@
+import 'package:dataconnect/models/movie.dart';
 import 'package:dataconnect/movies_connector/movies.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -5,14 +6,14 @@ import 'package:go_router/go_router.dart';
 class ListMovies extends StatefulWidget {
   const ListMovies({super.key, required this.movies, required this.title});
 
-  final List<ListMoviesMovies> movies;
+  final List<Movie> movies;
   final String title;
   @override
   State<ListMovies> createState() => _ListMoviesState();
 }
 
 class _ListMoviesState extends State<ListMovies> {
-  Widget _buildMovieList(String title, List<ListMoviesMovies> movies) {
+  Widget _buildMovieList(String title, List<Movie> movies) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +51,7 @@ class _ListMoviesState extends State<ListMovies> {
     context.push("/movies/$id");
   }
 
-  Widget _buildMovieItem(ListMoviesMovies movie) {
+  Widget _buildMovieItem(Movie movie) {
     return Container(
       width: 150, // Adjust the width as needed
       padding: const EdgeInsets.all(4.0),

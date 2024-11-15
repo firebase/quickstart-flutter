@@ -140,37 +140,11 @@ query GetCurrentUser @auth(level: USER) {
         }
       }
     }
-    favoriteActors: favorite_actors_on_user {
-      actor {
-        id
-        name
-        imageUrl
-      }
-    }
-    watchedMovies: watched_movies_on_user {
-      movie {
-        id
-        title
-        genre
-        imageUrl
-        releaseYear
-        rating
-        description
-        tags
-        metadata: movieMetadatas_on_movie {
-          director
-        }
-      }
-    }
-
   }
 }
 
 query GetMovieInfoForUser($movieId: UUID!) @auth(level: USER) {
   favorite_movie(key: { userId_expr: "auth.uid", movieId: $movieId }) {
-    movieId
-  }
-  watched_movie(key: { userId_expr: "auth.uid", movieId: $movieId }) {
     movieId
   }
 }

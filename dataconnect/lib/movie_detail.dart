@@ -1,3 +1,4 @@
+import 'package:dataconnect/movie_state.dart';
 import 'package:dataconnect/movies_connector/movies.dart';
 import 'package:dataconnect/widgets/login_guard.dart';
 import 'package:flutter/material.dart';
@@ -15,41 +16,47 @@ class MovieDetail extends StatefulWidget {
 
 class _MovieDetailState extends State<MovieDetail> {
   double _ratingValue = 0;
-  String _reviewText = "";
   bool loading = true;
   GetMovieByIdData? data;
-  bool _watched = false;
   bool _favorited = false;
 
-  TextEditingController _reviewTextController = TextEditingController();
+  final TextEditingController _reviewTextController = TextEditingController();
   @override
   void initState() {
     super.initState();
-    MoviesConnector.instance
-        .getMovieById(id: widget.id)
-        .ref()
-        .subscribe()
-        .listen((value) {
-      setState(() {
-        loading = false;
-        data = value.data;
-      });
+
+    MovieState.subscribeToMovieById(widget.id).listen((value) {
+      if (mounted) {
+        setState(() {
+          loading = false;
+          data = value.data;
+        });
+      }
     });
-    MoviesConnector.instance
-        .getMovieInfoForUser(movieId: widget.id)
-        .ref()
-        .subscribe()
-        .listen((value) {
-      setState(() {
-        _watched = value.data.watched_movie != null;
-        _favorited = value.data.favorite_movie != null;
-      });
+
+    MovieState.subscribeToGetMovieInfo(widget.id).listen((value) {
+      if (mounted) {
+        setState(() {
+          _favorited = value.data.favorite_movie != null;
+        });
+      }
     });
   }
 
   void _refreshData() {
-    MoviesConnector.instance.getMovieById(id: widget.id).execute();
-    MoviesConnector.instance.getMovieInfoForUser(movieId: widget.id).execute();
+    MovieState.refreshMovieDetail(widget.id);
+  }
+
+  void _toggleFavorite() {
+    MovieState.toggleFavorite(widget.id, _favorited).then((_) {
+      setState(() {
+        _favorited = !_favorited;
+      });
+    });
+  }
+
+  String _getFavoriteLabelText() {
+    return _favorited ? 'Remove From Favorites' : 'Add To Favorites';
   }
 
   List<Widget> _buildMainDescription() {
@@ -91,7 +98,11 @@ class _MovieDetailState extends State<MovieDetail> {
               child: Column(children: [
                 Row(
                   children: movie.tags!.map((tag) {
-                    return TextButton(onPressed: () {}, child: Text(tag));
+                    return Chip(
+                        label: Text(
+                      tag,
+                      overflow: TextOverflow.ellipsis,
+                    ));
                   }).toList(),
                 ),
                 Text(movie.description!)
@@ -104,41 +115,10 @@ class _MovieDetailState extends State<MovieDetail> {
           LoginGuard(
               widgetToGuard: OutlinedButton.icon(
             onPressed: () {
-              (_watched
-                      ? MoviesConnector.instance
-                          .deleteFavoritedMovie(movieId: widget.id)
-                          .execute()
-                      : MoviesConnector.instance
-                          .addFavoritedMovie(movieId: widget.id)
-                          .execute())
-                  .then(
-                (value) => setState(() {
-                  _watched = !_watched;
-                }),
-              );
-            },
-            icon: Icon(
-                _watched ? Icons.check_circle : Icons.check_circle_outline),
-            label: const Text('Watched'),
-          )),
-          LoginGuard(
-              widgetToGuard: OutlinedButton.icon(
-            onPressed: () {
-              (_favorited
-                      ? MoviesConnector.instance
-                          .deleteFavoritedMovie(movieId: widget.id)
-                          .execute()
-                      : MoviesConnector.instance
-                          .addFavoritedMovie(movieId: widget.id)
-                          .execute())
-                  .then((value) {
-                setState(() {
-                  _favorited = !_favorited;
-                });
-              });
+              _toggleFavorite();
             },
             icon: Icon(_favorited ? Icons.favorite : Icons.favorite_border),
-            label: const Text('Add To Favorites'),
+            label: Text(_getFavoriteLabelText()),
           ))
         ],
       )
@@ -174,8 +154,10 @@ class _MovieDetailState extends State<MovieDetail> {
                           radius: 30,
                           child:
                               ClipOval(child: Image.network(actor.imageUrl))),
-                      Text(actor
-                          .name) // TODO(mtewani): Clip if there's not enough width
+                      Text(
+                        actor.name,
+                        overflow: TextOverflow.ellipsis,
+                      )
                     ]);
               },
               itemCount: data!.movie!.mainActors.length,
@@ -210,8 +192,10 @@ class _MovieDetailState extends State<MovieDetail> {
                               radius: 30,
                               child: ClipOval(
                                   child: Image.network(actor.imageUrl))),
-                          Text(actor
-                              .name) // TODO(mtewani): Clip if there's not enough width
+                          Text(
+                            actor.name,
+                            overflow: TextOverflow.ellipsis,
+                          )
                         ]),
                     onTap: () {
                       _visitActorDetail(actor.id);
@@ -251,7 +235,6 @@ class _MovieDetailState extends State<MovieDetail> {
       LoginGuard(
         widgetToGuard: OutlinedButton.icon(
           onPressed: () {
-            // TODO(mtewani): Check if user is logged in.
             MoviesConnector.instance
                 .addReview(
                     movieId: widget.id,
@@ -261,6 +244,7 @@ class _MovieDetailState extends State<MovieDetail> {
                 .then((_) {
               _refreshData();
               _reviewTextController.clear();
+              MovieState.triggerUpdateFavorite();
             });
           },
           label: const Text('Submit Review'),

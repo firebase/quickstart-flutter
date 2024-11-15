@@ -14,9 +14,8 @@ class Route {
 }
 
 var homePath = Route(path: '/home', label: 'Home', iconData: Icons.home);
-var genrePath = Route(path: '/genres', label: 'Genres', iconData: Icons.list);
 var searchPath =
     Route(path: '/search', label: 'Search', iconData: Icons.search);
 var profilePath =
     Route(path: '/profile', label: 'Profile', iconData: Icons.person);
-var paths = [homePath, genrePath, searchPath, profilePath];
+var paths = [homePath, searchPath, profilePath];
