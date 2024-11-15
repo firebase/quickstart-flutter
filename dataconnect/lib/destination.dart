@@ -9,6 +9,13 @@ class Route {
   final String path;
   final String label;
   final IconData iconData;
+
+  NavigationDestination toDestination() {
+    return NavigationDestination(
+      icon: Icon(iconData),
+      label: label,
+    );
+  }
 }
 
 final homePath = Route(
