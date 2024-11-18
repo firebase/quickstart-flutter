@@ -1,9 +1,10 @@
-import 'package:dataconnect/models/movie.dart';
-import 'package:dataconnect/movies_connector/movies.dart';
-import 'package:dataconnect/widgets/list_actors.dart';
-import 'package:dataconnect/widgets/list_movies.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import 'models/movie.dart';
+import 'movies_connector/movies.dart';
+import 'widgets/list_actors.dart';
+import 'widgets/list_movies.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});
