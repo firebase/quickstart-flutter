@@ -1,4 +1,17 @@
 {
-  "dataconnect": { "source": "dataconnect" },
-  "emulators": { "dataconnect": { "port": 9399 }, "auth": { "port": 9400 } }
+  "dataconnect": {
+    "source": "dataconnect"
+  },
+  "emulators": {
+    "dataconnect": {
+      "port": 9399
+    },
+    "auth": {
+      "port": 9400
+    },
+    "ui": {
+      "enabled": false
+    },
+    "singleProjectMode": true
+  }
 }

@@ -1,4 +1,6 @@
+import 'package:dataconnect/widgets/list_title.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Actor {
   Actor({
@@ -28,31 +30,31 @@ class ListActors extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
+          ListTitle(title: title),
           Expanded(
               child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               final actor = actors[index];
               return SizedBox(
-                width: 100,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                        radius: 30,
-                        child: ClipOval(child: Image.network(actor.imageUrl))),
-                    Text(
-                      actor.name,
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  ],
-                ),
-              );
+                  width: 100,
+                  child: InkWell(
+                    onTap: () => context.push("/actors/${actor.id}"),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                            radius: 30,
+                            child:
+                                ClipOval(child: Image.network(actor.imageUrl))),
+                        Text(
+                          actor.name,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      ],
+                    ),
+                  ));
             },
             itemCount: actors.length,
           ))

@@ -22,6 +22,7 @@ var router = GoRouter(
       branches: [
         StatefulShellBranch(
           routes: [
+            GoRoute(path: '/', redirect: (context, path) => homePath.path),
             GoRoute(
               path: homePath.path,
               builder: (context, state) => const MyHomePage(),
@@ -68,6 +69,9 @@ var router = GoRouter(
             GoRoute(
               path: "/signup",
               builder: (context, state) => const SignUp(),
+              redirect: (context, state) async {
+                return Auth.instance.isLoggedIn ? '/profile' : null;
+              },
             )
           ],
         )

@@ -1,14 +1,9 @@
+import 'package:dataconnect/destination.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'destination.dart';
-
 class NavigationShell extends StatelessWidget {
-  const NavigationShell({
-    super.key,
-    required this.navigationShell,
-  });
-
+  const NavigationShell({required this.navigationShell, super.key});
   final StatefulNavigationShell navigationShell;
 
   void _goBranch(int index) {
@@ -29,7 +24,10 @@ class NavigationShell extends StatelessWidget {
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: _goBranch,
-        destinations: paths,
+        destinations: paths
+            .map((destination) => NavigationDestination(
+                icon: Icon(destination.iconData), label: destination.label))
+            .toList(),
       ),
     );
   }

@@ -1,6 +1,6 @@
+import 'package:dataconnect/movies_connector/movies.dart';
 import 'package:firebase_data_connect/firebase_data_connect.dart';
 
-import 'movies_connector/movies.dart';
 import 'models/movie.dart';
 
 class MovieState {
@@ -22,6 +22,12 @@ class MovieState {
     return MoviesConnector.instance
         .listMovies()
         .orderByReleaseYear(OrderDirection.DESC)
+        .execute();
+  }
+
+  static searchByPartialTitle(String input) {
+    return MoviesConnector.instance
+        .listMoviesByPartialTitle(input: input)
         .execute();
   }
 

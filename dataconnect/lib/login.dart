@@ -1,3 +1,5 @@
+import 'package:dataconnect/movies_connector/movies.dart';
+import 'package:dataconnect/widgets/auth_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -14,7 +16,7 @@ class _LoginState extends State<Login> {
   final _username = TextEditingController();
   final _password = TextEditingController();
 
-  Future<void> logIn(BuildContext context) async {
+  Future<void> logIn() async {
     final messenger = ScaffoldMessenger.of(context);
     final navigator = GoRouter.of(context);
     messenger.showSnackBar(const SnackBar(content: Text('Signing In')));
@@ -23,14 +25,24 @@ class _LoginState extends State<Login> {
         email: _username.text,
         password: _password.text,
       );
+      final isLoggedIn =
+          await MoviesConnector.instance.getCurrentUser().execute();
+      if (isLoggedIn.data.user == null) {
+        await MoviesConnector.instance
+            .upsertUser(username: _username.text, name: _username.text)
+            .execute();
+      }
       if (mounted) {
         navigator.go('/home');
       }
-    } catch (_) {
+    } on FirebaseAuthException catch (e) {
       if (mounted) {
-        messenger.showSnackBar(const SnackBar(
-          content: Text('There was an error when creating a user.'),
-        ));
+        String message = e.code.contains('configuration-not-found')
+            ? 'Email/Password authentication has not been enabled'
+            : e.message!;
+        bool shouldLaunch = e.code.contains('operation-not-allowed') ||
+            e.code.contains('configuration-not-found');
+        AuthDialog.showAuthDialog(context, message, shouldLaunch);
       }
     }
   }
@@ -45,6 +57,8 @@ class _LoginState extends State<Login> {
             child: Form(
               key: _formKey,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   TextFormField(
                     decoration: const InputDecoration(
@@ -78,7 +92,7 @@ class _LoginState extends State<Login> {
                   ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          logIn(context);
+                          logIn();
                         }
                       },
                       child: const Text('Sign In')),
