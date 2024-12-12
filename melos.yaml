@@ -5,6 +5,7 @@ packages:
   - admob
   - analytics
   - authentication
+  - data_connect
   - cloud_functions
   - crashlytics
   - dynamic_links
