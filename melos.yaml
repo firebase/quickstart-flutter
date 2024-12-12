@@ -5,6 +5,7 @@ packages:
   - admob
   - analytics
   - authentication
+  - data_connect
   - cloud_functions
   - crashlytics
   - dynamic_links
@@ -14,6 +15,7 @@ packages:
   - performance
   - remote_config
   - storage
+  - vertexai
 
 scripts:
   analyze: melos exec -- "dart analyze ."
