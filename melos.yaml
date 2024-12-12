@@ -15,6 +15,7 @@ packages:
   - performance
   - remote_config
   - storage
+  - vertexai
 
 scripts:
   analyze: melos exec -- "dart analyze ."
