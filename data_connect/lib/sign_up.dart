@@ -1,3 +1,4 @@
+import 'package:dataconnect/movie_state.dart';
 import 'package:dataconnect/movies_connector/movies.dart';
 import 'package:dataconnect/widgets/auth_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,6 +26,7 @@ class _SignUpState extends State<SignUp> {
           email: _username, password: _password);
       await FirebaseAuth.instance.currentUser!.updateDisplayName(_name);
       await MoviesConnector.instance.upsertUser(username: _username).execute();
+      MovieState.triggerUpdateFavorite();
       if (mounted) {
         context.go('/home');
       }

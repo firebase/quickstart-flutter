@@ -20,15 +20,16 @@ class Profile extends StatelessWidget {
           stream: MovieState.subscribeToCurrentUser(),
           builder: (context, snapshot) {
             final res = snapshot.data;
-            if (res == null) {
+            if (res == null || res.data.user == null) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
-            final displayName = Auth.instance.currentUser?.displayName;
+            final displayName =
+                FirebaseAuth.instance.currentUser?.displayName ?? '';
             final favoriteMovies =
                 res.data.user!.favoriteMovies.map((e) => e.movie).toList();
-            final reviews = res.data.user!.reviews;
+            final reviews = res.data.user == null ? [] : res.data.user!.reviews;
             return RefreshIndicator(
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -40,7 +41,7 @@ class Profile extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          Text('Welcome back $displayName !'),
+                          Text('Welcome back $displayName!'),
                           TextButton(
                               onPressed: () async {
                                 FirebaseAuth.instance.signOut();
