@@ -24,8 +24,6 @@ class GetCurrentUserUser {
 
   String username;
 
-  String name;
-
   List<GetCurrentUserUserReviews> reviews;
 
   List<GetCurrentUserUserFavoriteMovies> favoriteMovies;
@@ -33,7 +31,6 @@ class GetCurrentUserUser {
   GetCurrentUserUser.fromJson(dynamic json)
       : id = nativeFromJson<String>(json['id']),
         username = nativeFromJson<String>(json['username']),
-        name = nativeFromJson<String>(json['name']),
         reviews = (json['reviews'] as List<dynamic>)
             .map((e) => GetCurrentUserUserReviews.fromJson(e))
             .toList(),
@@ -48,8 +45,6 @@ class GetCurrentUserUser {
 
     json['username'] = nativeToJson<String>(username);
 
-    json['name'] = nativeToJson<String>(name);
-
     json['reviews'] = reviews.map((e) => e.toJson()).toList();
 
     json['favoriteMovies'] = favoriteMovies.map((e) => e.toJson()).toList();
@@ -60,7 +55,6 @@ class GetCurrentUserUser {
   GetCurrentUserUser({
     required this.id,
     required this.username,
-    required this.name,
     required this.reviews,
     required this.favoriteMovies,
   });

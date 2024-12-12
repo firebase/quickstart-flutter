@@ -50,12 +50,10 @@ String enumSerializer(Enum e) {
 class MoviesConnector {
   UpsertUserVariablesBuilder upsertUser({
     required String username,
-    required String name,
   }) {
     return UpsertUserVariablesBuilder(
       dataConnect,
       username: username,
-      name: name,
     );
   }
 

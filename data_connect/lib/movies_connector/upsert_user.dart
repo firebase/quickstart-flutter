@@ -2,14 +2,12 @@ part of movies_connector;
 
 class UpsertUserVariablesBuilder {
   String username;
-  String name;
 
   FirebaseDataConnect _dataConnect;
 
   UpsertUserVariablesBuilder(
     this._dataConnect, {
     required String this.username,
-    required String this.name,
   });
   Deserializer<UpsertUserData> dataDeserializer =
       (dynamic json) => UpsertUserData.fromJson(jsonDecode(json));
@@ -22,7 +20,6 @@ class UpsertUserVariablesBuilder {
   MutationRef<UpsertUserData, UpsertUserVariables> ref() {
     UpsertUserVariables vars = UpsertUserVariables(
       username: username,
-      name: name,
     );
 
     return _dataConnect.mutation(
@@ -71,26 +68,20 @@ class UpsertUserData {
 class UpsertUserVariables {
   String username;
 
-  String name;
-
   @Deprecated(
       'fromJson is deprecated for Variable classes as they are no longer required for deserialization.')
   UpsertUserVariables.fromJson(Map<String, dynamic> json)
-      : username = nativeFromJson<String>(json['username']),
-        name = nativeFromJson<String>(json['name']) {}
+      : username = nativeFromJson<String>(json['username']) {}
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
 
     json['username'] = nativeToJson<String>(username);
 
-    json['name'] = nativeToJson<String>(name);
-
     return json;
   }
 
   UpsertUserVariables({
     required this.username,
-    required this.name,
   });
 }
