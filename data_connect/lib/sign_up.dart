@@ -1,7 +1,6 @@
 import 'package:dataconnect/movies_connector/movies.dart';
 import 'package:dataconnect/widgets/auth_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
