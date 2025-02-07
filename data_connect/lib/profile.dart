@@ -40,7 +40,7 @@ class Profile extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          Text('Welcome back $displayName !'),
+                          Text('Welcome back $displayName!'),
                           TextButton(
                               onPressed: () async {
                                 FirebaseAuth.instance.signOut();

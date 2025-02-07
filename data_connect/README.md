@@ -9,13 +9,20 @@ This quickstart is a movie review app to demonstrate the use of Firebase Data Co
 
 Follow these steps to get up and running with Firebase Data Connect. For more detailed instructions, check out the [official documentation](https://firebase.google.com/docs/data-connect/quickstart).
 
+### 0. Prerequisites
+- Flutter 3.5.3 or above
+- Latest version of [Visual Studio Code](https://code.visualstudio.com/)
+- The [Firebase Data Connect VS Code Extension](https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.firebase-dataconnect-vscode)
+
 ### 1. Connect to your Firebase project
 
 1. If you haven't already, create a Firebase project.
     1. In the [Firebase console](https://console.firebase.google.com), click
         **Add project**, then follow the on-screen instructions.
-2. Enable Email/Password Sign-in method [here](https://console.firebase.google.com/project/_/authentication/providers).
-
+2. Install flutterfire:
+```sh
+dart pub global activate flutterfire_cli
+```
 ### 2. Cloning the repository
 
 1. Clone this repository to your local machine:
@@ -31,10 +38,11 @@ flutterfire configure -y -a com.example.dataconnect
 
 ### 3. Open in Visual Studio Code (VS Code)
 
-1. Click on the Firebase Data Connect icon on the VS Code sidebar to load the Extension.
+1. Open the `quickstart-flutter/dataconnect` directory in VS Code.
+2. Click on the Firebase Data Connect icon on the VS Code sidebar to load the Extension.
    a. Sign in with your Google Account if you haven't already.
-2. Click on "Connect a Firebase project" and choose the project where you have set up Data Connect.
-3. Click on "Start Emulators" - this should generate the Kotlin SDK for you and start the emulators.
+3. Click on "Connect a Firebase project" and choose the project where you have set up Data Connect.
+4. Click on "Start Emulators" - this should generate the Kotlin SDK for you and start the emulators.
 
 ### 4. Populate the database
 In VS Code, open the `quickstart-flutter/dataconnect/dataconnect/moviedata_insert.gql` file and click the

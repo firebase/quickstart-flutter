@@ -1,5 +1,4 @@
 library movies_connector;
-
 import 'package:firebase_data_connect/firebase_data_connect.dart';
 import 'dart:convert';
 
@@ -33,162 +32,104 @@ part 'search_all.dart';
 
 part 'list_movies_by_partial_title.dart';
 
-enum OrderDirection {
-  ASC,
 
-  DESC,
-}
 
-OrderDirection orderDirectionDeserializer(dynamic data) {
-  return OrderDirection.values.byName(data);
-}
+  enum OrderDirection {
+    
+      ASC,
+    
+      DESC,
+    
+  }
+  OrderDirection orderDirectionDeserializer(dynamic data) {
+    return OrderDirection.values.byName(data);
+  }
+
+
 
 String enumSerializer(Enum e) {
   return e.name;
 }
 
+
+
 class MoviesConnector {
-  UpsertUserVariablesBuilder upsertUser({
-    required String username,
-  }) {
-    return UpsertUserVariablesBuilder(
-      dataConnect,
-      username: username,
-    );
+  
+  
+  UpsertUserVariablesBuilder upsertUser ({required String username, }) {
+    return UpsertUserVariablesBuilder(dataConnect, username: username,);
   }
-
-  AddFavoritedMovieVariablesBuilder addFavoritedMovie({
-    required String movieId,
-  }) {
-    return AddFavoritedMovieVariablesBuilder(
-      dataConnect,
-      movieId: movieId,
-    );
+  
+  
+  AddFavoritedMovieVariablesBuilder addFavoritedMovie ({required String movieId, }) {
+    return AddFavoritedMovieVariablesBuilder(dataConnect, movieId: movieId,);
   }
-
-  DeleteFavoritedMovieVariablesBuilder deleteFavoritedMovie({
-    required String movieId,
-  }) {
-    return DeleteFavoritedMovieVariablesBuilder(
-      dataConnect,
-      movieId: movieId,
-    );
+  
+  
+  DeleteFavoritedMovieVariablesBuilder deleteFavoritedMovie ({required String movieId, }) {
+    return DeleteFavoritedMovieVariablesBuilder(dataConnect, movieId: movieId,);
   }
-
-  AddReviewVariablesBuilder addReview({
-    required String movieId,
-    required int rating,
-    required String reviewText,
-  }) {
-    return AddReviewVariablesBuilder(
-      dataConnect,
-      movieId: movieId,
-      rating: rating,
-      reviewText: reviewText,
-    );
+  
+  
+  AddReviewVariablesBuilder addReview ({required String movieId, required int rating, required String reviewText, }) {
+    return AddReviewVariablesBuilder(dataConnect, movieId: movieId,rating: rating,reviewText: reviewText,);
   }
-
-  UpdateReviewVariablesBuilder updateReview({
-    required String movieId,
-    required int rating,
-    required String reviewText,
-  }) {
-    return UpdateReviewVariablesBuilder(
-      dataConnect,
-      movieId: movieId,
-      rating: rating,
-      reviewText: reviewText,
-    );
+  
+  
+  UpdateReviewVariablesBuilder updateReview ({required String movieId, required int rating, required String reviewText, }) {
+    return UpdateReviewVariablesBuilder(dataConnect, movieId: movieId,rating: rating,reviewText: reviewText,);
   }
-
-  DeleteReviewVariablesBuilder deleteReview({
-    required String movieId,
-  }) {
-    return DeleteReviewVariablesBuilder(
-      dataConnect,
-      movieId: movieId,
-    );
+  
+  
+  DeleteReviewVariablesBuilder deleteReview ({required String movieId, }) {
+    return DeleteReviewVariablesBuilder(dataConnect, movieId: movieId,);
   }
-
-  ListMoviesVariablesBuilder listMovies() {
-    return ListMoviesVariablesBuilder(
-      dataConnect,
-    );
+  
+  
+  ListMoviesVariablesBuilder listMovies () {
+    return ListMoviesVariablesBuilder(dataConnect, );
   }
-
-  ListMoviesByGenreVariablesBuilder listMoviesByGenre({
-    required String genre,
-  }) {
-    return ListMoviesByGenreVariablesBuilder(
-      dataConnect,
-      genre: genre,
-    );
+  
+  
+  ListMoviesByGenreVariablesBuilder listMoviesByGenre ({required String genre, }) {
+    return ListMoviesByGenreVariablesBuilder(dataConnect, genre: genre,);
   }
-
-  ListGenresVariablesBuilder listGenres() {
-    return ListGenresVariablesBuilder(
-      dataConnect,
-    );
+  
+  
+  ListGenresVariablesBuilder listGenres () {
+    return ListGenresVariablesBuilder(dataConnect, );
   }
-
-  GetMovieByIdVariablesBuilder getMovieById({
-    required String id,
-  }) {
-    return GetMovieByIdVariablesBuilder(
-      dataConnect,
-      id: id,
-    );
+  
+  
+  GetMovieByIdVariablesBuilder getMovieById ({required String id, }) {
+    return GetMovieByIdVariablesBuilder(dataConnect, id: id,);
   }
-
-  GetActorByIdVariablesBuilder getActorById({
-    required String id,
-  }) {
-    return GetActorByIdVariablesBuilder(
-      dataConnect,
-      id: id,
-    );
+  
+  
+  GetActorByIdVariablesBuilder getActorById ({required String id, }) {
+    return GetActorByIdVariablesBuilder(dataConnect, id: id,);
   }
-
-  GetCurrentUserVariablesBuilder getCurrentUser() {
-    return GetCurrentUserVariablesBuilder(
-      dataConnect,
-    );
+  
+  
+  GetCurrentUserVariablesBuilder getCurrentUser () {
+    return GetCurrentUserVariablesBuilder(dataConnect, );
   }
-
-  GetMovieInfoForUserVariablesBuilder getMovieInfoForUser({
-    required String movieId,
-  }) {
-    return GetMovieInfoForUserVariablesBuilder(
-      dataConnect,
-      movieId: movieId,
-    );
+  
+  
+  GetMovieInfoForUserVariablesBuilder getMovieInfoForUser ({required String movieId, }) {
+    return GetMovieInfoForUserVariablesBuilder(dataConnect, movieId: movieId,);
   }
-
-  SearchAllVariablesBuilder searchAll({
-    required int minYear,
-    required int maxYear,
-    required double minRating,
-    required double maxRating,
-    required String genre,
-  }) {
-    return SearchAllVariablesBuilder(
-      dataConnect,
-      minYear: minYear,
-      maxYear: maxYear,
-      minRating: minRating,
-      maxRating: maxRating,
-      genre: genre,
-    );
+  
+  
+  SearchAllVariablesBuilder searchAll ({required int minYear, required int maxYear, required double minRating, required double maxRating, required String genre, }) {
+    return SearchAllVariablesBuilder(dataConnect, minYear: minYear,maxYear: maxYear,minRating: minRating,maxRating: maxRating,genre: genre,);
   }
-
-  ListMoviesByPartialTitleVariablesBuilder listMoviesByPartialTitle({
-    required String input,
-  }) {
-    return ListMoviesByPartialTitleVariablesBuilder(
-      dataConnect,
-      input: input,
-    );
+  
+  
+  ListMoviesByPartialTitleVariablesBuilder listMoviesByPartialTitle ({required String input, }) {
+    return ListMoviesByPartialTitleVariablesBuilder(dataConnect, input: input,);
   }
+  
 
   static ConnectorConfig connectorConfig = ConnectorConfig(
     'us-central1',
@@ -206,3 +147,4 @@ class MoviesConnector {
 
   FirebaseDataConnect dataConnect;
 }
+

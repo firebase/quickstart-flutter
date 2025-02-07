@@ -4,11 +4,13 @@
   },
   "emulators": {
     "dataconnect": {
-      "port": 9403
+      "port": 9399
+    },
+    "auth": {
+      "port": 9400
     },
     "ui": {
       "enabled": false
-    },
-    "singleProjectMode": true
+    }
   }
 }
