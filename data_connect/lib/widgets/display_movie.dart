@@ -39,5 +39,6 @@ class DisplayMovie extends StatelessWidget {
         ),
       ),
     );
+    ;
   }
 }
