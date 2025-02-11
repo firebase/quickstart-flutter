@@ -18,23 +18,18 @@ Follow these steps to get up and running with Firebase Data Connect. For more de
 
 ### 2. Cloning the repository
 
-1. Clone this repository to your local machine:
-   ```sh
-   git clone https://github.com/firebase/quickstart-flutter.git
-   ```
-2. Configure flutterfire
+1. Configure flutterfire
 This will automatically download and set up firebase for your project:
 ```sh
 flutterfire configure -y -a com.example.dataconnect
 ```
 
-
-### 3. Open in Visual Studio Code (VS Code)
+### 3. Start Emulators
 
 1. Click on the Firebase Data Connect icon on the VS Code sidebar to load the Extension.
    a. Sign in with your Google Account if you haven't already.
 2. Click on "Connect a Firebase project" and choose the project where you have set up Data Connect.
-3. Click on "Start Emulators" - this should generate the Kotlin SDK for you and start the emulators.
+3. Click on "Start Emulators" - this should generate the Flutter SDK for you and start the emulators.
 
 ### 4. Populate the database
 In VS Code, open the `quickstart-flutter/dataconnect/dataconnect/moviedata_insert.gql` file and click the
@@ -45,4 +40,6 @@ open `quickstart-flutter/dataconnect/movie-connector/queries.gql` and run the `L
 
 ### 5. Running the app
 
-Press the Run button in VS Code to run the sample app on your device.
+The app should already be running in the preview. If there's no preview, try one of the following:
+* Ctrl/Cmd + SHIFT + P, Reload Window
+* Ctrl/Cmd + SHIFT + P, Open Web Preview
