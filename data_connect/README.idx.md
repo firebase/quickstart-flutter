@@ -16,13 +16,11 @@ Follow these steps to get up and running with Firebase Data Connect. For more de
         **Add project**, then follow the on-screen instructions.
 2. Enable Email/Password Sign-in method [here](https://console.firebase.google.com/project/_/authentication/providers).
 
-### 2. Cloning the repository
+### 2. Configure flutterfire
 
-1. Configure flutterfire
 This will automatically download and set up firebase for your project:
 ```sh
 flutterfire configure -y -a com.example.dataconnect
-```
 
 ### 3. Start Emulators
 
