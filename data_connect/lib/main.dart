@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: _showMessage
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                       padding: const EdgeInsets.all(30.0),

@@ -20,16 +20,15 @@ class Profile extends StatelessWidget {
           stream: MovieState.subscribeToCurrentUser(),
           builder: (context, snapshot) {
             final res = snapshot.data;
-            if (res == null || res.data.user == null) {
+            if (res == null) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
-            final displayName =
-                FirebaseAuth.instance.currentUser?.displayName ?? '';
+            final displayName = FirebaseAuth.instance.currentUser!.displayName;
             final favoriteMovies =
                 res.data.user!.favoriteMovies.map((e) => e.movie).toList();
-            final reviews = res.data.user == null ? [] : res.data.user!.reviews;
+            final reviews = res.data.user!.reviews;
             return RefreshIndicator(
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
