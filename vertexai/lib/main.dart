@@ -88,10 +88,10 @@ class _ChatWidgetState extends State<ChatWidget> {
 
     initFirebase().then((value) {
       _model = FirebaseVertexAI.instance.generativeModel(
-        model: 'gemini-1.5-flash-preview-0514',
+        model: 'gemini-2.0-flash',
       );
       _functionCallModel = FirebaseVertexAI.instance.generativeModel(
-        model: 'gemini-1.5-flash-preview-0514',
+        model: 'gemini-2.0-flash',
         tools: [
           Tool(functionDeclarations: [
             FunctionDeclaration(
