@@ -17,16 +17,22 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:firebase_vertexai/firebase_vertexai.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:vertexai/lib/image_generation_screen.dart';
 
 void main() {
   runApp(const GenerativeAISample());
 }
 
-class GenerativeAISample extends StatelessWidget {
+class GenerativeAISample extends StatefulWidget {
   const GenerativeAISample({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<GenerativeAISample> createState() => _GenerativeAISampleState();
+}
+
+class _GenerativeAISampleState extends State<GenerativeAISample>{
+  @override
+  Widget build(BuildContext context){
     return MaterialApp(
       title: 'Flutter + Vertex AI',
       theme: ThemeData(
@@ -36,9 +42,39 @@ class GenerativeAISample extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const ChatScreen(title: 'Flutter + Vertex AI'),
-    );
-  }
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Flutter + Vertex AI'),
+        ),
+        body: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ChatScreen(title: 'Flutter + Vertex AI')),
+                    );
+                  },
+                  child: const Text('Chat'),
+                ),
+                 const SizedBox(width: 20),
+                 ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ImageGenerationScreen()),
+                    );
+                  },
+                  child: const Text('Image Generation'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
 }
 
 class ChatScreen extends StatefulWidget {
