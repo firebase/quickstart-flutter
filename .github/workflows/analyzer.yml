@@ -15,6 +15,6 @@ jobs:
       - run: dart pub get
       - run: dart pub global activate melos
       - run: melos bootstrap
-      - uses: invertase/github-action-dart-analyzer@v1
+      - uses: invertase/github-action-dart-analyzer@v3
         with:
           fatal-infos: true
