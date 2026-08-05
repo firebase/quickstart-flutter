@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 5
     steps:
     - name: "checkout"
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
     - name: "install flutter"
       uses: subosito/flutter-action@v2
     - name: "Run widget tests"
