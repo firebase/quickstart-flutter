@@ -69,4 +69,8 @@ class Restaurant {
       photo: getRandomPhoto(),
     );
   }
+  @override
+  String toString() {
+    return 'Restaurant{id: $id, name: $name, category: $category, city: $city, avgRating: $avgRating, numRatings: $numRatings, price: $price, photo: $photo, reference: $reference}';
+  }
 }
